@@ -1,4 +1,4 @@
-# CLAUDE.md - TASKMASTER CLI Addon
+# CLAUDE_TASKMASTER.md - TASKMASTER CLI Addon
 ## Integrazione TASKMASTER per Planning Ottimizzato
 
 ---

@@ -10,7 +10,7 @@
 
 ### 🟢 NEW to TASKMASTER?
 **Read in this order**:
-1. `.claude/knowledge/README.md` - Overview & navigation
+1. `.claude/knowledge/README_TASKMASTER.md` - Overview & navigation
 2. `.claude/TASKMASTER_ADDON.md` - When/why to use
 3. This file - Quick reference
 
@@ -32,12 +32,12 @@
 
 ```
 .claude/
-├── CLAUDE.md                    ⭐ MAIN ORCHESTRATOR (Step 0 added!)
+├── CLAUDE_TASKMASTER.md                    ⭐ MAIN ORCHESTRATOR (Step 0 added!)
 ├── TASKMASTER_ADDON.md         📖 WHEN/HOW TO USE
 ├── TASKMASTER_INDEX.md         ← YOU ARE HERE
 │
 └── knowledge/
-    ├── README.md               🏠 NAVIGATION HUB
+    ├── README_TASKMASTER.md               🏠 NAVIGATION HUB
     ├── TASKMASTER_CLI_GUIDE.md 📖 COMPLETE REFERENCE
     ├── TASKMASTER_SETUP.md     ⚙️  INSTALLATION & CONFIG
     └── [other files]
@@ -70,7 +70,7 @@ See: `.claude/TASKMASTER_ADDON.md` → "QUANDO USARE TASKMASTER"
 ```
 1. USER: "Build X"
    ↓
-2. YOU: Run TASKMASTER (Step 0 in CLAUDE.md)
+2. YOU: Run TASKMASTER (Step 0 in CLAUDE_TASKMASTER.md)
    → npx @raja-rakoto/taskmaster-cli [command]
    ↓
 3. YOU: Analyze output
@@ -85,7 +85,7 @@ See: `.claude/TASKMASTER_ADDON.md` → "QUANDO USARE TASKMASTER"
 ✅ BETTER PROJECTS
 ```
 
-See: `.claude/CLAUDE.md` → "Step 0: INTELLIGENT PLANNING"
+See: `.claude/CLAUDE_TASKMASTER.md` → "Step 0: INTELLIGENT PLANNING"
 
 ---
 
@@ -123,8 +123,8 @@ npx @raja-rakoto/taskmaster-cli --help
 | **TASKMASTER_CLI_GUIDE.md** | Complete command reference | Need specific command syntax |
 | **TASKMASTER_ADDON.md** | Usage guidelines & integration | Want to know when/why/how |
 | **TASKMASTER_SETUP.md** | Installation & config | Installing or troubleshooting |
-| **knowledge/README.md** | Navigation & learning paths | Lost or confused |
-| **CLAUDE.md** | Main orchestrator workflow | Planning new project |
+| **knowledge/README_TASKMASTER.md** | Navigation & learning paths | Lost or confused |
+| **CLAUDE_TASKMASTER.md** | Main orchestrator workflow | Planning new project |
 
 ---
 
@@ -138,7 +138,7 @@ npx @raja-rakoto/taskmaster-cli --help
 
 ### Path 3: "Full Deep Dive"
 → Read in order:
-1. `.claude/knowledge/README.md`
+1. `.claude/knowledge/README_TASKMASTER.md`
 2. `.claude/TASKMASTER_ADDON.md`
 3. `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
 4. `.claude/knowledge/TASKMASTER_SETUP.md`
@@ -162,7 +162,7 @@ npx @raja-rakoto/taskmaster-cli --help
 ✅ [ -f /root/workspace/.claude/TASKMASTER_ADDON.md ]
    → Usage guide should exist
 
-✅ grep "TASKMASTER" /root/workspace/.claude/CLAUDE.md
+✅ grep "TASKMASTER" /root/workspace/.claude/CLAUDE_TASKMASTER.md
    → Should find TASKMASTER mentions
 ```
 
@@ -201,8 +201,8 @@ All should pass ✅
 | "Where's the command reference?" | `.claude/knowledge/TASKMASTER_CLI_GUIDE.md` |
 | "When should I use this?" | `.claude/TASKMASTER_ADDON.md` → "QUANDO USARE" |
 | "Installation problems?" | `.claude/knowledge/TASKMASTER_SETUP.md` → Troubleshooting |
-| "How does this fit in my workflow?" | `.claude/CLAUDE.md` → "Step 0 & Integration" |
-| "I'm lost" | `.claude/knowledge/README.md` → Learning Paths |
+| "How does this fit in my workflow?" | `.claude/CLAUDE_TASKMASTER.md` → "Step 0 & Integration" |
+| "I'm lost" | `.claude/knowledge/README_TASKMASTER.md` → Learning Paths |
 
 ---
 
@@ -227,7 +227,7 @@ All should pass ✅
 **Can't find what you need?** Search in this order:
 
 1. This file (TASKMASTER_INDEX.md)
-2. `.claude/knowledge/README.md`
+2. `.claude/knowledge/README_TASKMASTER.md`
 3. `.claude/TASKMASTER_ADDON.md`
 4. `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
 
@@ -248,7 +248,7 @@ Your orchestrator agent now has:
 - ✅ Clear when/how/why guidance
 - ✅ Ready for complex projects
 
-**Next step**: Read `.claude/knowledge/README.md` or start using TASKMASTER in your next project!
+**Next step**: Read `.claude/knowledge/README_TASKMASTER.md` or start using TASKMASTER in your next project!
 
 ---
 

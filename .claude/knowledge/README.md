@@ -31,7 +31,7 @@ Welcome to the knowledge base for the Claude Code Orchestrator Agent. This direc
 #### 3. **TASKMASTER_ADDON.md** - Usage Guidelines 📚
    - 🎯 When to use TASKMASTER (mandatory scenarios)
    - 🚀 New orchestrator workflow
-   - 🔧 Integration with CLAUDE.md
+   - 🔧 Integration with CLAUDE_TASKMASTER.md
    - 💡 Pro tips & best practices
    - 📋 Feature matrix
 
@@ -45,7 +45,7 @@ Welcome to the knowledge base for the Claude Code Orchestrator Agent. This direc
 
 | File | Purpose |
 |------|---------|
-| `.claude/CLAUDE.md` | Main orchestrator instructions (UPDATED with TASKMASTER) |
+| `.claude/CLAUDE_TASKMASTER.md` | Main orchestrator instructions (UPDATED with TASKMASTER) |
 | `.claude/TASKMASTER_ADDON.md` | TASKMASTER integration guide |
 | `.claude/agents/coder.md` | Coder subagent definition |
 | `.claude/agents/tester.md` | Tester subagent definition |
@@ -69,7 +69,7 @@ Welcome to the knowledge base for the Claude Code Orchestrator Agent. This direc
 **Steps**:
 1. Read: `TASKMASTER_ADDON.md` → "QUANDO USARE TASKMASTER"
 2. Use: TASKMASTER commands from `TASKMASTER_CLI_GUIDE.md`
-3. Reference: `.claude/CLAUDE.md` → "Step 0: INTELLIGENT PLANNING WITH TASKMASTER"
+3. Reference: `.claude/CLAUDE_TASKMASTER.md` → "Step 0: INTELLIGENT PLANNING WITH TASKMASTER"
 
 **Commands you'll need**:
 ```bash
@@ -114,7 +114,7 @@ ORCHESTRATOR:
 1. Read: TASKMASTER_ADDON.md (understand WHEN to use)
 2. Run: TASKMASTER commands (see TASKMASTER_CLI_GUIDE.md)
 3. Analyze: TASKMASTER output
-4. Use CLAUDE.md: Step 0 - Follow the workflow
+4. Use CLAUDE_TASKMASTER.md: Step 0 - Follow the workflow
     ↓
 TASKMASTER:
 - Automatically decomposes requirements
@@ -140,10 +140,10 @@ ORCHESTRATOR:
 | Tool | Best For | Read | Command |
 |------|----------|------|---------|
 | **TASKMASTER** | Initial planning, complex projects, PRD analysis | TASKMASTER_ADDON.md | `npx @raja-rakoto/taskmaster-cli` |
-| **TodoWrite** | Tracking progress, managing tasks | CLAUDE.md Step 1 | Use Task tool |
-| **Coder** | Implementation | CLAUDE.md Step 2 | Use Task tool |
-| **Tester** | Verification | CLAUDE.md Step 3 | Use Task tool |
-| **Stuck** | Problem solving | CLAUDE.md Step 4 | Use Task tool |
+| **TodoWrite** | Tracking progress, managing tasks | CLAUDE_TASKMASTER.md Step 1 | Use Task tool |
+| **Coder** | Implementation | CLAUDE_TASKMASTER.md Step 2 | Use Task tool |
+| **Tester** | Verification | CLAUDE_TASKMASTER.md Step 3 | Use Task tool |
+| **Stuck** | Problem solving | CLAUDE_TASKMASTER.md Step 4 | Use Task tool |
 
 ---
 
@@ -220,8 +220,8 @@ npm list -g @raja-rakoto/taskmaster-cli
 # 2. Documentation exists?
 ls -la /root/workspace/.claude/knowledge/TASKMASTER*.md
 
-# 3. CLAUDE.md updated?
-grep "TASKMASTER" /root/workspace/.claude/CLAUDE.md
+# 3. CLAUDE_TASKMASTER.md updated?
+grep "TASKMASTER" /root/workspace/.claude/CLAUDE_TASKMASTER.md
 
 # 4. Can run TASKMASTER?
 npx @raja-rakoto/taskmaster-cli --version
@@ -234,7 +234,7 @@ All checks should pass ✅
 ## 🎓 Learning Path
 
 ### For Complete Beginners
-1. Read: `.claude/CLAUDE.md` (sections: "Your Role", "YOUR MANDATORY WORKFLOW")
+1. Read: `.claude/CLAUDE_TASKMASTER.md` (sections: "Your Role", "YOUR MANDATORY WORKFLOW")
 2. Read: `.claude/TASKMASTER_ADDON.md` (sections: "QUANDO USARE TASKMASTER")
 3. Skim: `TASKMASTER_SETUP.md` (verification checklist)
 
@@ -244,7 +244,7 @@ All checks should pass ✅
 3. Troubleshoot: Use search or specific sections as needed
 
 ### For Implementation
-1. Follow: `.claude/CLAUDE.md` → Step 0 (TASKMASTER planning)
+1. Follow: `.claude/CLAUDE_TASKMASTER.md` → Step 0 (TASKMASTER planning)
 2. Use: `TASKMASTER_CLI_GUIDE.md` → Specific command section
 3. Create: TodoWrite from TASKMASTER output
 4. Delegate: To subagents (coder/tester/stuck)
@@ -278,8 +278,8 @@ All checks should pass ✅
 | When should I use TASKMASTER? | TASKMASTER_ADDON.md → QUANDO USARE |
 | What's the syntax for X command? | TASKMASTER_CLI_GUIDE.md → Comandi Core |
 | How do I fix X error? | TASKMASTER_CLI_GUIDE.md → Troubleshooting |
-| What's the orchestrator workflow? | CLAUDE.md → YOUR MANDATORY WORKFLOW |
-| How does TASKMASTER fit in? | CLAUDE.md → Step 0 & TASKMASTER Integration |
+| What's the orchestrator workflow? | CLAUDE_TASKMASTER.md → YOUR MANDATORY WORKFLOW |
+| How does TASKMASTER fit in? | CLAUDE_TASKMASTER.md → Step 0 & TASKMASTER Integration |
 
 ---
 
@@ -293,7 +293,7 @@ You now have:
 - Usage guidelines & best practices
 
 ✅ **Integration with Orchestrator**
-- CLAUDE.md updated with TASKMASTER
+- CLAUDE_TASKMASTER.md updated with TASKMASTER
 - Step 0: Intelligent Planning workflow
 - Guidelines on when/how to use
 

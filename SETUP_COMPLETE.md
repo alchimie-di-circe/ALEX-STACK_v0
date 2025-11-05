@@ -29,17 +29,17 @@ Your orchestrator agent has been successfully enhanced with **TASKMASTER CLI** f
 | **TASKMASTER_CLI_GUIDE.md** | `.claude/knowledge/` | 18KB | Complete command reference |
 | **TASKMASTER_ADDON.md** | `.claude/` | 9.4KB | Usage guidelines & integration |
 | **TASKMASTER_SETUP.md** | `.claude/knowledge/` | 7.5KB | Installation & configuration |
-| **README.md** | `.claude/knowledge/` | 8.3KB | Navigation hub |
+| **README_TASKMASTER.md** | `.claude/knowledge/` | 8.3KB | Navigation hub |
 | **TASKMASTER_INDEX.md** | `.claude/` | Quick ref | Fast lookup guide |
 
 #### Additional Files
 | File | Location | Purpose |
 |------|----------|---------|
-| **CLAUDE.md** | `.claude/` | ✅ UPDATED with Step 0 & Integration |
+| **CLAUDE_TASKMASTER.md** | `.claude/` | ✅ UPDATED with Step 0 & Integration |
 | **TASKMASTER_INTEGRATION_SUMMARY.md** | Root | Integration report |
 | **SETUP_COMPLETE.md** | Root | This file |
 
-### 3. ✅ CLAUDE.md Integration
+### 3. ✅ CLAUDE_TASKMASTER.md Integration
 **Changes**:
 - Added **Step 0: INTELLIGENT PLANNING WITH TASKMASTER**
 - Added **TASKMASTER CLI Integration** section at end
@@ -49,7 +49,7 @@ Your orchestrator agent has been successfully enhanced with **TASKMASTER CLI** f
 ### 4. ✅ Knowledge Base Organization
 ```
 .claude/knowledge/
-├── README.md                  (Navigation hub)
+├── README_TASKMASTER.md                  (Navigation hub)
 ├── TASKMASTER_CLI_GUIDE.md    (Complete reference - 40+ commands)
 ├── TASKMASTER_SETUP.md        (Installation & troubleshooting)
 └── [other knowledge files]
@@ -88,31 +88,31 @@ Your orchestrator agent has been successfully enhanced with **TASKMASTER CLI** f
 ## 📊 Documentation Statistics
 
 - **Total Files Created**: 5 new documentation files
-- **Total Files Updated**: 1 (CLAUDE.md)
+- **Total Files Updated**: 1 (CLAUDE_TASKMASTER.md)
 - **Total Documentation**: ~52KB
 - **Commands Documented**: 20+
 - **Examples Provided**: 50+
 - **Usage Scenarios**: 10+
 - **Troubleshooting Guides**: 15+
-- **TASKMASTER Mentions in CLAUDE.md**: 27
+- **TASKMASTER Mentions in CLAUDE_TASKMASTER.md**: 27
 
 ---
 
 ## 🎓 How to Get Started
 
 ### For New Users
-1. Read: `.claude/knowledge/README.md` (navigation hub)
+1. Read: `.claude/knowledge/README_TASKMASTER.md` (navigation hub)
 2. Skim: `.claude/TASKMASTER_INDEX.md` (quick reference)
 3. Learn: `.claude/TASKMASTER_ADDON.md` (when/how to use)
 
 ### For Experienced Users
 1. Bookmark: `.claude/knowledge/TASKMASTER_CLI_GUIDE.md` (commands)
 2. Reference: `.claude/TASKMASTER_ADDON.md` (usage rules)
-3. Implement: Follow Step 0 in `.claude/CLAUDE.md`
+3. Implement: Follow Step 0 in `.claude/CLAUDE_TASKMASTER.md`
 
 ### For Your First Project
 ```bash
-1. Follow: .claude/CLAUDE.md → Step 0: INTELLIGENT PLANNING
+1. Follow: .claude/CLAUDE_TASKMASTER.md → Step 0: INTELLIGENT PLANNING
 2. Run: npx @raja-rakoto/taskmaster-cli [command]
 3. Analyze: TASKMASTER output
 4. Create: TodoWrite (informed by TASKMASTER)
@@ -136,14 +136,14 @@ Your orchestrator agent has been successfully enhanced with **TASKMASTER CLI** f
 ✅ TASKMASTER_CLI_GUIDE.md (18KB) - Complete reference
 ✅ TASKMASTER_ADDON.md (9.4KB) - Usage guidelines
 ✅ TASKMASTER_SETUP.md (7.5KB) - Setup & troubleshooting
-✅ README.md (8.3KB) - Navigation hub
+✅ README_TASKMASTER.md (8.3KB) - Navigation hub
 ✅ TASKMASTER_INDEX.md - Quick reference
 ```
 
 ### Integration
 ```
-✅ CLAUDE.md updated with Step 0
-✅ 27 TASKMASTER mentions in CLAUDE.md
+✅ CLAUDE_TASKMASTER.md updated with Step 0
+✅ 27 TASKMASTER mentions in CLAUDE_TASKMASTER.md
 ✅ TASKMASTER_ADDON.md created
 ✅ TASKMASTER_INDEX.md created
 ✅ Knowledge base organized
@@ -201,13 +201,13 @@ Delegate with confidence ✅
    - Integration guide
    - When to use TASKMASTER
 
-4. **`.claude/CLAUDE.md`** ⭐
+4. **`.claude/CLAUDE_TASKMASTER.md`** ⭐
    - Main orchestrator instructions
    - Now includes TASKMASTER
 
 ### Support Files
 
-5. **`.claude/knowledge/README.md`**
+5. **`.claude/knowledge/README_TASKMASTER.md`**
    - Navigation hub
    - Learning paths
 
@@ -244,7 +244,7 @@ Delegate with confidence ✅
 Before starting a project:
 - [ ] Read `.claude/TASKMASTER_ADDON.md` (when/why)
 - [ ] Review relevant commands in `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
-- [ ] Follow Step 0 in `.claude/CLAUDE.md`
+- [ ] Follow Step 0 in `.claude/CLAUDE_TASKMASTER.md`
 - [ ] Run TASKMASTER planning
 - [ ] Analyze output
 - [ ] Create TodoWrite (informed by TASKMASTER)
@@ -255,7 +255,7 @@ Before starting a project:
 ## 🚀 Next Steps
 
 ### Immediate (Today)
-1. ✅ Review `.claude/knowledge/README.md`
+1. ✅ Review `.claude/knowledge/README_TASKMASTER.md`
 2. ✅ Skim `.claude/TASKMASTER_INDEX.md`
 3. ✅ Bookmark command reference
 
@@ -306,7 +306,7 @@ You now have:
 
 ✅ **TASKMASTER CLI** fully installed and operational (v1.0.0)
 ✅ **Complete documentation** (52KB across 5 files)
-✅ **CLAUDE.md updated** with Step 0 and integration
+✅ **CLAUDE_TASKMASTER.md updated** with Step 0 and integration
 ✅ **Knowledge base organized** with navigation hub
 ✅ **Clear usage guidelines** (when/how/why)
 ✅ **All commands documented** with examples
@@ -319,14 +319,14 @@ You now have:
 
 ### Can't Remember Something?
 1. Check: `.claude/TASKMASTER_INDEX.md` (fast lookup)
-2. Read: `.claude/knowledge/README.md` (learning paths)
+2. Read: `.claude/knowledge/README_TASKMASTER.md` (learning paths)
 3. Search: `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
 
 ### Need Help?
 1. **When to use**: `.claude/TASKMASTER_ADDON.md`
 2. **How to use**: `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
 3. **Troubleshooting**: `.claude/knowledge/TASKMASTER_SETUP.md`
-4. **Integration**: `.claude/CLAUDE.md` → Step 0
+4. **Integration**: `.claude/CLAUDE_TASKMASTER.md` → Step 0
 
 ### Something Broken?
 1. Check installation: `.claude/knowledge/TASKMASTER_SETUP.md`
@@ -343,8 +343,8 @@ You now have:
 | Choose best version | ✅ Complete | @raja-rakoto/taskmaster-cli selected |
 | Install globally | ✅ Complete | npm install successful, v1.0.0 |
 | Create guide | ✅ Complete | 18KB TASKMASTER_CLI_GUIDE.md |
-| Create addon for CLAUDE.md | ✅ Complete | 9.4KB TASKMASTER_ADDON.md |
-| Update CLAUDE.md | ✅ Complete | Step 0 added, 27 mentions |
+| Create addon for CLAUDE_TASKMASTER.md | ✅ Complete | 9.4KB TASKMASTER_ADDON.md |
+| Update CLAUDE_TASKMASTER.md | ✅ Complete | Step 0 added, 27 mentions |
 | Organize knowledge base | ✅ Complete | Navigation hub created |
 | Document integration | ✅ Complete | All files cross-referenced |
 | Verify installation | ✅ Complete | npm list shows v1.0.0 |
@@ -388,6 +388,6 @@ All while maintaining the orchestrator's 200k context for overall coordination.
 
 **Setup Completed**: 2025-11-05
 **Status**: ✅ PRODUCTION READY
-**Next**: Read `.claude/knowledge/README.md` or start your first TASKMASTER-powered project!
+**Next**: Read `.claude/knowledge/README_TASKMASTER.md` or start your first TASKMASTER-powered project!
 
 🎉 **Welcome to superior project orchestration!** 🎉

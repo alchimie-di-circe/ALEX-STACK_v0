@@ -11,7 +11,7 @@
 │
 ├── .claude/
 │   │
-│   ├── 📄 CLAUDE.md                         ⭐ MAIN ORCHESTRATOR
+│   ├── 📄 CLAUDE_TASKMASTER.md                         ⭐ MAIN ORCHESTRATOR
 │   │   └─ Updated: Added Step 0 (TASKMASTER)
 │   │   └─ Added: TASKMASTER Integration section
 │   │   └─ Status: ✅ Ready to use
@@ -29,7 +29,7 @@
 │   │
 │   ├── 📁 knowledge/                        📚 KNOWLEDGE BASE
 │   │   │
-│   │   ├── 📄 README.md                    🏠 NAVIGATION HUB
+│   │   ├── 📄 README_TASKMASTER.md                    🏠 NAVIGATION HUB
 │   │   │   ├─ Quick links to all resources
 │   │   │   ├─ Usage scenarios
 │   │   │   ├─ Learning paths
@@ -75,7 +75,7 @@
 
 | File | Purpose | Size | Status |
 |------|---------|------|--------|
-| `CLAUDE.md` | Main orchestrator (UPDATED) | 11KB | ✅ UPDATED |
+| `CLAUDE_TASKMASTER.md` | Main orchestrator (UPDATED) | 11KB | ✅ UPDATED |
 | `TASKMASTER_ADDON.md` | Usage guidelines | 9.4KB | ✅ NEW |
 | `TASKMASTER_INDEX.md` | Quick reference | 3KB | ✅ NEW |
 | `knowledge/` | Knowledge base | - | ✅ ORGANIZED |
@@ -84,7 +84,7 @@
 
 | File | Purpose | Size | Status |
 |------|---------|------|--------|
-| `README.md` | Navigation hub | 8.3KB | ✅ NEW |
+| `README_TASKMASTER.md` | Navigation hub | 8.3KB | ✅ NEW |
 | `TASKMASTER_CLI_GUIDE.md` | Complete reference | 18KB | ✅ NEW |
 | `TASKMASTER_SETUP.md` | Setup guide | 7.5KB | ✅ NEW |
 
@@ -104,7 +104,7 @@
 ```
 SETUP_COMPLETE.md (READ FIRST)
     ↓
-.claude/knowledge/README.md
+.claude/knowledge/README_TASKMASTER.md
     ↓
 .claude/TASKMASTER_INDEX.md
     ↓
@@ -133,7 +133,7 @@ Check mandatory/optional scenarios
 
 ### "How does this integrate?"
 ```
-.claude/CLAUDE.md
+.claude/CLAUDE_TASKMASTER.md
     ↓
 "Step 0: INTELLIGENT PLANNING WITH TASKMASTER"
     ↓
@@ -154,7 +154,7 @@ Check mandatory/optional scenarios
 ```
 NEW PROJECT START
     ↓
-Read: .claude/CLAUDE.md (Main orchestrator)
+Read: .claude/CLAUDE_TASKMASTER.md (Main orchestrator)
     ↓
 Follow: Step 0 - TASKMASTER Planning
     ↓
@@ -170,23 +170,23 @@ Delegate: To coder subagent
     ↓
 Test: With tester subagent
     ↓
-Complete: Steps 1-5 of .claude/CLAUDE.md
+Complete: Steps 1-5 of .claude/CLAUDE_TASKMASTER.md
 ```
 
 ---
 
 ## 📚 Documentation Cross-References
 
-### CLAUDE.md Links To
+### CLAUDE_TASKMASTER.md Links To
 - ✅ `.claude/TASKMASTER_ADDON.md` (Step 0 reference)
 - ✅ `.claude/knowledge/TASKMASTER_CLI_GUIDE.md` (Command reference)
 
 ### TASKMASTER_ADDON.md Links To
-- ✅ `.claude/CLAUDE.md` (Main workflow)
+- ✅ `.claude/CLAUDE_TASKMASTER.md` (Main workflow)
 - ✅ `.claude/knowledge/TASKMASTER_CLI_GUIDE.md` (Commands)
 
-### README.md (knowledge/) Links To
-- ✅ `.claude/CLAUDE.md` (Orchestration)
+### README_TASKMASTER.md (knowledge/) Links To
+- ✅ `.claude/CLAUDE_TASKMASTER.md` (Orchestration)
 - ✅ `.claude/TASKMASTER_ADDON.md` (Usage guide)
 - ✅ `.claude/knowledge/TASKMASTER_CLI_GUIDE.md` (Commands)
 
@@ -200,21 +200,21 @@ Complete: Steps 1-5 of .claude/CLAUDE.md
 
 ### Path 1: Complete Beginners
 **Time**: ~30 minutes
-1. `.claude/knowledge/README.md` (overview)
+1. `.claude/knowledge/README_TASKMASTER.md` (overview)
 2. `.claude/TASKMASTER_INDEX.md` (quick ref)
 3. `.claude/TASKMASTER_ADDON.md` (when to use)
-4. Back to `.claude/CLAUDE.md` Step 0
+4. Back to `.claude/CLAUDE_TASKMASTER.md` Step 0
 
 ### Path 2: Experienced Users
 **Time**: ~15 minutes
 1. `.claude/TASKMASTER_INDEX.md` (quick ref)
 2. Bookmark `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
-3. Check `.claude/CLAUDE.md` Step 0
+3. Check `.claude/CLAUDE_TASKMASTER.md` Step 0
 4. Ready to use!
 
 ### Path 3: Power Users / Deep Dive
 **Time**: ~60 minutes
-1. `.claude/knowledge/README.md` (full read)
+1. `.claude/knowledge/README_TASKMASTER.md` (full read)
 2. `.claude/TASKMASTER_ADDON.md` (deep understanding)
 3. `.claude/knowledge/TASKMASTER_CLI_GUIDE.md` (all commands)
 4. `.claude/knowledge/TASKMASTER_SETUP.md` (config)
@@ -255,10 +255,10 @@ npx @raja-rakoto/taskmaster-cli [command]
 ✅ ls -la /root/workspace/SETUP_COMPLETE.md
 ✅ ls -la /root/workspace/.claude/TASKMASTER_*.md
 ✅ ls -la /root/workspace/.claude/knowledge/TASKMASTER_*.md
-✅ ls -la /root/workspace/.claude/knowledge/README.md
+✅ ls -la /root/workspace/.claude/knowledge/README_TASKMASTER.md
 
-# CLAUDE.md updated?
-✅ grep "Step 0" /root/workspace/.claude/CLAUDE.md
+# CLAUDE_TASKMASTER.md updated?
+✅ grep "Step 0" /root/workspace/.claude/CLAUDE_TASKMASTER.md
 
 # TASKMASTER installed?
 ✅ npm list -g @raja-rakoto/taskmaster-cli
@@ -284,7 +284,7 @@ npx @raja-rakoto/taskmaster-cli [command]
 → Read: **.claude/TASKMASTER_INDEX.md**
 
 ### Main Orchestrator?
-→ Read: **.claude/CLAUDE.md**
+→ Read: **.claude/CLAUDE_TASKMASTER.md**
 
 ---
 
@@ -293,11 +293,11 @@ npx @raja-rakoto/taskmaster-cli [command]
 | Question | Answer Location |
 |----------|-----------------|
 | What's installed? | SETUP_COMPLETE.md |
-| How do I start? | .claude/knowledge/README.md |
+| How do I start? | .claude/knowledge/README_TASKMASTER.md |
 | When use TASKMASTER? | .claude/TASKMASTER_ADDON.md |
 | What's the syntax? | .claude/knowledge/TASKMASTER_CLI_GUIDE.md |
 | Installation issues? | .claude/knowledge/TASKMASTER_SETUP.md |
-| Orchestration flow? | .claude/CLAUDE.md → Step 0 |
+| Orchestration flow? | .claude/CLAUDE_TASKMASTER.md → Step 0 |
 
 ---
 
@@ -306,7 +306,7 @@ npx @raja-rakoto/taskmaster-cli [command]
 ✅ **Everything is set up and ready to use**
 ✅ **All files are documented and cross-referenced**
 ✅ **Installation is verified and working**
-✅ **Integration with CLAUDE.md is complete**
+✅ **Integration with CLAUDE_TASKMASTER.md is complete**
 ✅ **Knowledge base is organized with navigation**
 
 **You're ready to orchestrate complex projects!** 🚀

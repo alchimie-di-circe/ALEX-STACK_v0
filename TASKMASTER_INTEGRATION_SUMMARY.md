@@ -45,7 +45,7 @@ npx @raja-rakoto/taskmaster-cli --version
    - New orchestrator workflow comparison
    - Critical usage rules
    - Feature matrix
-   - Integration points with CLAUDE.md
+   - Integration points with CLAUDE_TASKMASTER.md
    - Practical workflows & scenarios
 
 #### C. **TASKMASTER_SETUP.md** (5KB)
@@ -56,7 +56,7 @@ npx @raja-rakoto/taskmaster-cli --version
    - First-time usage scenarios
    - Troubleshooting guide
 
-#### D. **README.md** (Navigation Hub)
+#### D. **README_TASKMASTER.md** (Navigation Hub)
    - Quick links to all resources
    - Usage scenarios with step-by-step guidance
    - Quick reference table
@@ -64,7 +64,7 @@ npx @raja-rakoto/taskmaster-cli --version
    - Pro tips for orchestrators
    - Learning path for different experience levels
 
-### 3. ✅ CLAUDE.md Integration
+### 3. ✅ CLAUDE_TASKMASTER.md Integration
 
 **Updated with NEW Step 0: INTELLIGENT PLANNING WITH TASKMASTER**
 
@@ -125,10 +125,10 @@ npx @raja-rakoto/taskmaster-cli --version
 ```
 /root/workspace/
 ├── .claude/
-│   ├── CLAUDE.md                          # ✅ Updated with TASKMASTER
+│   ├── CLAUDE_TASKMASTER.md                          # ✅ Updated with TASKMASTER
 │   ├── TASKMASTER_ADDON.md               # ✅ NEW: Usage Guidelines
 │   ├── knowledge/
-│   │   ├── README.md                     # ✅ NEW: Navigation Hub
+│   │   ├── README_TASKMASTER.md                     # ✅ NEW: Navigation Hub
 │   │   ├── TASKMASTER_CLI_GUIDE.md       # ✅ NEW: Complete Reference
 │   │   ├── TASKMASTER_SETUP.md           # ✅ NEW: Setup Guide
 │   │   └── [other knowledge files]
@@ -152,14 +152,14 @@ npx @raja-rakoto/taskmaster-cli --version
 npx @raja-rakoto/taskmaster-cli --version
 
 # Use in your workflow
-# Follow Step 0 in CLAUDE.md for planning
+# Follow Step 0 in CLAUDE_TASKMASTER.md for planning
 ```
 
 ### For Every New Project
 
 1. **Initial Planning Phase** (NEW!)
    ```bash
-   # Step 0 from CLAUDE.md
+   # Step 0 from CLAUDE_TASKMASTER.md
    npx @raja-rakoto/taskmaster-cli [command] [options]
    
    # Generate tasks from requirements
@@ -192,9 +192,9 @@ See: `.claude/TASKMASTER_ADDON.md` → "IL TUO NUOVO WORKFLOW ORCHESTRATOR"
 | **Get started** | TASKMASTER_SETUP.md | `.claude/knowledge/` |
 | **All commands** | TASKMASTER_CLI_GUIDE.md | `.claude/knowledge/` |
 | **When to use** | TASKMASTER_ADDON.md | `.claude/` |
-| **Navigate docs** | README.md | `.claude/knowledge/` |
-| **Orchestration** | CLAUDE.md | `.claude/` |
-| **Integration** | CLAUDE.md → Step 0 | `.claude/` |
+| **Navigate docs** | README_TASKMASTER.md | `.claude/knowledge/` |
+| **Orchestration** | CLAUDE_TASKMASTER.md | `.claude/` |
+| **Integration** | CLAUDE_TASKMASTER.md → Step 0 | `.claude/` |
 
 ---
 
@@ -215,11 +215,11 @@ Run these to verify everything:
 ✅ ls -la /root/workspace/.claude/knowledge/TASKMASTER*.md
    → Should show 3 files
 
-✅ ls -la /root/workspace/.claude/knowledge/README.md
+✅ ls -la /root/workspace/.claude/knowledge/README_TASKMASTER.md
    → Should exist
 
 # 4. Check integration
-✅ grep -c "TASKMASTER" /root/workspace/.claude/CLAUDE.md
+✅ grep -c "TASKMASTER" /root/workspace/.claude/CLAUDE_TASKMASTER.md
    → Should be > 10 occurrences
 
 # 5. Check addon
@@ -232,14 +232,14 @@ Run these to verify everything:
 ## 🎓 Learning Resources Provided
 
 ### For Beginners
-- Start with: `.claude/knowledge/README.md`
+- Start with: `.claude/knowledge/README_TASKMASTER.md`
 - Then read: `.claude/TASKMASTER_ADDON.md` → "QUANDO USARE TASKMASTER"
 - Reference: `.claude/knowledge/TASKMASTER_SETUP.md`
 
 ### For Advanced Users
 - Primary reference: `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
 - Integration guide: `.claude/TASKMASTER_ADDON.md`
-- Workflow: `.claude/CLAUDE.md` → "Step 0 & TASKMASTER Integration"
+- Workflow: `.claude/CLAUDE_TASKMASTER.md` → "Step 0 & TASKMASTER Integration"
 
 ### For Troubleshooting
 - Installation: `.claude/knowledge/TASKMASTER_SETUP.md` → Troubleshooting
@@ -279,7 +279,7 @@ Run these to verify everything:
 
 ## 🔗 Integration Points
 
-### In CLAUDE.md
+### In CLAUDE_TASKMASTER.md
 
 ```markdown
 ## Step 0: INTELLIGENT PLANNING WITH TASKMASTER
@@ -316,7 +316,7 @@ STEP 5 (Iterate)
 
 ✅ **TASKMASTER installed and verified** (v1.0.0)
 ✅ **Complete documentation created** (4 files, 30KB)
-✅ **CLAUDE.md updated** with Step 0 and integration section
+✅ **CLAUDE_TASKMASTER.md updated** with Step 0 and integration section
 ✅ **Usage guidelines provided** (when/how/why)
 ✅ **Knowledge base organized** with navigation hub
 ✅ **All commands documented** with examples
@@ -328,10 +328,10 @@ STEP 5 (Iterate)
 ## 🚀 Next Actions
 
 1. **First time using?**
-   → Read: `.claude/knowledge/README.md`
+   → Read: `.claude/knowledge/README_TASKMASTER.md`
 
 2. **Need to plan a project?**
-   → Follow: `.claude/CLAUDE.md` → Step 0
+   → Follow: `.claude/CLAUDE_TASKMASTER.md` → Step 0
    → Reference: `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
 
 3. **Confused about timing?**
@@ -371,7 +371,7 @@ alias tm='npx @raja-rakoto/taskmaster-cli'
 
 - **Package Installed**: @raja-rakoto/taskmaster-cli v1.0.0
 - **Documentation Created**: 4 files (30KB)
-- **Files Updated**: CLAUDE.md
+- **Files Updated**: CLAUDE_TASKMASTER.md
 - **Commands Documented**: 20+
 - **Examples Provided**: 50+
 - **Usage Scenarios**: 10+

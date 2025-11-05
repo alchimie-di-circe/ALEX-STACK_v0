@@ -90,7 +90,7 @@ project-root/
 │   │   ├── TASKMASTER_SETUP.md        # This file
 │   │   └── ...
 │   ├── TASKMASTER_ADDON.md     # Usage guidelines
-│   ├── CLAUDE.md               # Main orchestrator (updated)
+│   ├── CLAUDE_TASKMASTER.md               # Main orchestrator (updated)
 │   └── agents/
 └── [your project files]
 ```
@@ -209,9 +209,9 @@ npx @raja-rakoto/taskmaster-cli --version
 npx @raja-rakoto/taskmaster-cli --help
 ```
 
-### Integration in CLAUDE.md
+### Integration in CLAUDE_TASKMASTER.md
 
-The main `CLAUDE.md` has been updated to include TASKMASTER in **Step 0** of the workflow. When you (the orchestrator) receive a new project:
+The main `CLAUDE_TASKMASTER.md` has been updated to include TASKMASTER in **Step 0** of the workflow. When you (the orchestrator) receive a new project:
 
 ```bash
 # Step 0: Run TASKMASTER planning first
@@ -267,8 +267,8 @@ npx @raja-rakoto/taskmaster-cli --version
 ls -la /root/workspace/.claude/knowledge/TASKMASTER*.md
 # ✅ Should show all 3 files
 
-# 4. Check CLAUDE.md updated
-grep -c "TASKMASTER" /root/workspace/.claude/CLAUDE.md
+# 4. Check CLAUDE_TASKMASTER.md updated
+grep -c "TASKMASTER" /root/workspace/.claude/CLAUDE_TASKMASTER.md
 # ✅ Should show count > 10
 
 # 5. Verify knowledge directory
@@ -285,7 +285,7 @@ Your orchestrator agent is now equipped with:
 ✅ **TASKMASTER CLI** - Installed globally (v1.0.0)
 ✅ **Full Documentation** - In `.claude/knowledge/`
 ✅ **Integration Guide** - In `.claude/TASKMASTER_ADDON.md`
-✅ **Updated Workflow** - In `.claude/CLAUDE.md` (Step 0)
+✅ **Updated Workflow** - In `.claude/CLAUDE_TASKMASTER.md` (Step 0)
 
 ### Next Steps
 
@@ -359,6 +359,6 @@ This is normal - it means you haven't initialized a project yet. Follow the exam
 
 - **Full Reference**: `.claude/knowledge/TASKMASTER_CLI_GUIDE.md`
 - **Usage Guidelines**: `.claude/TASKMASTER_ADDON.md`
-- **Integration**: `.claude/CLAUDE.md` (see section: TASKMASTER CLI Integration)
+- **Integration**: `.claude/CLAUDE_TASKMASTER.md` (see section: TASKMASTER CLI Integration)
 
 🎉 **You're all set!** Your orchestrator agent is now TASKMASTER-enabled for superior AI-powered planning!

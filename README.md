@@ -7,16 +7,18 @@ A simple yet powerful orchestration system for Claude Code that uses specialized
 This is a **custom Claude Code orchestration system** that transforms how you build software projects. Claude Code itself acts as the orchestrator with its 200k context window, managing the big picture while delegating individual tasks to specialized subagents:
 
 - **🧠 Claude (You)** - The orchestrator with 200k context managing todos and the big picture
+- **🔍 Jino Agent** - Web research specialist powered by Jina.ai MCP for docs extraction and searches
 - **✍️ Coder Subagent** - Implements one todo at a time in its own clean context
 - **👁️ Tester Subagent** - Verifies implementations using Playwright in its own context
 - **🆘 Stuck Subagent** - Human escalation point when ANY problem occurs
 
 ## ⚡ Key Features
 
+- **AI-Powered Research**: Jino Agent proactively fetches docs and extracts web content using Jina.ai
 - **No Fallbacks**: When ANY agent hits a problem, you get asked - no assumptions, no workarounds
 - **Visual Testing**: Playwright MCP integration for screenshot-based verification
 - **Todo Tracking**: Always see exactly where your project stands
-- **Simple Flow**: Claude creates todos → delegates to coder → tester verifies → repeat
+- **Smart Flow**: Claude creates todos → Jino researches → coder implements → tester verifies → repeat
 - **Human Control**: The stuck agent ensures you're always in the loop
 
 ## 🚀 Quick Start
@@ -24,7 +26,8 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 ### Prerequisites
 
 1. **Claude Code CLI** installed ([get it here](https://docs.claude.com/en/docs/claude-code))
-2. **Node.js** (for Playwright MCP)
+2. **Node.js** (for MCP servers)
+3. **Jina AI API Key** (optional but recommended) - Get it free at [jina.ai](https://jina.ai/)
 
 ### Installation
 
@@ -51,23 +54,29 @@ You: "Build a todo app with React and TypeScript"
 
 Claude will automatically:
 1. Create a detailed todo list using TodoWrite
-2. Delegate the first todo to the **coder** subagent
-3. The coder implements in its own clean context window
-4. Delegate verification to the **tester** subagent (Playwright screenshots)
-5. If ANY problem occurs, the **stuck** subagent asks you what to do
-6. Mark todo complete and move to the next one
-7. Repeat until project complete
+2. Check if research is needed - if yes, invoke **Jino Agent** to fetch docs/search
+3. Delegate the first todo to the **coder** subagent (with research if available)
+4. The coder implements in its own clean context window
+5. Delegate verification to the **tester** subagent (Playwright screenshots)
+6. If ANY problem occurs, the **stuck** subagent asks you what to do
+7. Mark todo complete and move to the next one
+8. Repeat until project complete
 
 ### The Workflow
 
 ```
-USER: "Build X"
+USER: "Build X with latest best practices"
     ↓
 CLAUDE: Creates detailed todos with TodoWrite
     ↓
-CLAUDE: Invokes coder subagent for todo #1
+    ├─→ Need docs? → JINO AGENT (own context): Uses Jina AI MCP
+    │                  ├─→ Extracts clean documentation
+    │                  ├─→ Searches web for best practices
+    │                  └─→ Returns structured research
     ↓
-CODER (own context): Implements feature
+CLAUDE: Invokes coder subagent for todo #1 (+ research from Jino)
+    ↓
+CODER (own context): Implements feature with best practices
     ↓
     ├─→ Problem? → Invokes STUCK → You decide → Continue
     ↓
@@ -98,6 +107,27 @@ Repeat until all todos done ✅
 - Maintains project state and context
 
 **How it works**: Claude IS the orchestrator - it uses its 200k context to manage everything
+
+### Jino Agent (Research Specialist)
+**Fresh Context Per Research Task**
+
+- Gets invoked proactively when web research or documentation is needed
+- Works in its own clean context window
+- Uses **Jina AI Remote MCP Server** for powerful web capabilities:
+  - **Jina Reader**: Extracts clean markdown from any URL
+  - **Web Search**: AI-powered search for current information
+  - **Image Search**: Finds and analyzes images
+  - **Embeddings & Reranker**: Semantic search and ranking
+- **Preferred over native WebSearch** for documentation and deep content extraction
+- **Never uses fallbacks** - invokes stuck agent immediately on errors
+- Reports clean, formatted research back to Claude
+
+**When it's used**:
+- Fetching documentation (React docs, API references, tutorials)
+- Extracting content from URLs (articles, blog posts, guides)
+- Web research requiring current best practices
+- Finding code examples or technical resources
+- Any task where Jina AI's extraction is superior to basic web fetch
 
 ### Coder Subagent
 **Fresh Context Per Task**
@@ -148,46 +178,72 @@ Every agent is **hardwired** to invoke the stuck agent rather than use fallbacks
 ## 💡 Example Session
 
 ```
-You: "Build a landing page with a contact form"
+You: "Build a modern landing page with React and Tailwind using latest best practices"
 
 Claude creates todos:
-  [ ] Set up HTML structure
-  [ ] Create hero section
+  [ ] Research React + Tailwind best practices
+  [ ] Set up project with Vite
+  [ ] Create hero section component
   [ ] Add contact form with validation
-  [ ] Style with CSS
-  [ ] Test form submission
+  [ ] Implement responsive design
+  [ ] Test all components
 
-Claude invokes coder(todo #1: "Set up HTML structure")
+Claude invokes jino-agent(todo #1: "Research React + Tailwind best practices")
 
-Coder (own context): Creates index.html
-Coder: Reports completion to Claude
-
-Claude invokes tester("Verify HTML structure loads")
-
-Tester (own context): Uses Playwright to navigate
-Tester: Takes screenshot
-Tester: Verifies HTML structure visible
-Tester: Reports success to Claude
+Jino Agent (own context): Uses Jina AI MCP
+  - Uses Jina Reader to extract React 19 docs
+  - Uses Jina Reader to extract Tailwind v4 docs
+  - Uses Jina Web Search for "React Tailwind 2025 best practices"
+  - Synthesizes findings into clean guide
+Jino: Reports comprehensive research to Claude
 
 Claude: Marks todo #1 complete ✓
 
-Claude invokes coder(todo #2: "Create hero section")
+Claude invokes coder(todo #2: "Set up project with Vite" + research from Jino)
+
+Coder (own context): Creates Vite project with React + Tailwind
+  - Follows best practices from Jino's research
+  - Configures Tailwind v4 correctly
+Coder: Reports completion to Claude
+
+Claude invokes tester("Verify project setup and dev server runs")
+
+Tester (own context): Uses Playwright
+  - Starts dev server
+  - Navigates to localhost
+  - Takes screenshot
+  - Verifies React app renders
+Tester: Reports success to Claude
+
+Claude: Marks todo #2 complete ✓
+
+Claude invokes coder(todo #3: "Create hero section component")
 
 Coder (own context): Implements hero section
-Coder: ERROR - image file not found
+Coder: ERROR - Need hero image
 Coder: Invokes stuck subagent
 
 Stuck (own context): Asks YOU:
-  "Hero image 'hero.jpg' not found. How to proceed?"
+  "Hero section needs an image. How to proceed?"
   Options:
-  - Use placeholder image
-  - Download from Unsplash
+  - Search with Jino Agent for free stock images
+  - Use placeholder from placeholder.com
   - Skip image for now
 
-You choose: "Download from Unsplash"
+You choose: "Search with Jino Agent for free stock images"
 
-Stuck: Returns your decision to coder
-Coder: Proceeds with Unsplash download
+Stuck: Returns your decision to Claude
+
+Claude invokes jino-agent("Search for hero section stock images")
+
+Jino Agent: Uses Jina Image Search
+  - Finds relevant hero images
+  - Provides URLs and metadata
+Jino: Reports image options to Claude
+
+Claude invokes coder(todo #3 continued: "Create hero with image from Jino")
+
+Coder: Implements hero section with selected image
 Coder: Reports completion to Claude
 
 ... and so on until all todos done
@@ -200,13 +256,56 @@ Coder: Reports completion to Claude
 ├── .claude/
 │   ├── CLAUDE.md              # Orchestration instructions for main Claude
 │   └── agents/
+│       ├── jino-agent.md     # Jino Agent - Web research specialist (Jina.ai MCP)
 │       ├── coder.md          # Coder subagent definition
 │       ├── tester.md         # Tester subagent definition
 │       └── stuck.md          # Stuck subagent definition
-├── .mcp.json                  # Playwright MCP configuration
+├── .mcp.json                  # MCP servers configuration (Playwright + Jina AI)
 ├── .gitignore
 └── README.md
 ```
+
+## 🔌 MCP Servers Configuration
+
+This system uses two powerful MCP servers to enhance agent capabilities:
+
+### 1. Jina AI Remote MCP Server ⭐
+**Purpose:** Web search, content extraction, and AI-powered research
+
+**Used by:** Jino Agent for intelligent web research
+
+**Features:**
+- **Jina Reader:** Convert any URL to clean, LLM-friendly markdown
+  - Removes ads, popups, navigation clutter
+  - Extracts main content with perfect formatting
+  - Perfect for documentation and articles
+- **Web Search:** AI-powered web search with intelligent results
+  - Natural language queries
+  - Ranked, relevant results
+  - Current information
+- **Image Search:** Find and analyze images across the web
+- **Embeddings & Reranker:** Semantic search and content ranking
+
+**API Key Setup:**
+1. Get a free API key from [jina.ai](https://jina.ai/)
+2. Set the environment variable: `export JINA_API_KEY="your-api-key-here"`
+3. Or add it to your shell profile for persistence:
+   ```bash
+   echo 'export JINA_API_KEY="your-api-key-here"' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+
+**Note:** Some Jina AI tools work without an API key but have rate limits. Using an API key provides higher limits and better performance.
+
+### 2. Playwright MCP
+**Purpose:** Visual testing and browser automation
+
+**Used by:** Tester Agent for visual verification
+
+- Takes screenshots of rendered pages
+- Tests UI interactions (clicks, forms, navigation)
+- Verifies responsive design
+- Checks console errors
 
 ## 🎓 Learn More
 
@@ -239,12 +338,14 @@ This system leverages Claude Code's [subagent system](https://docs.claude.com/en
 2. **Subagents** are defined in `.claude/agents/*.md` files
 3. **Each subagent** gets its own fresh context window
 4. **Main Claude** maintains the 200k context with todos and project state
-5. **Playwright MCP** is configured in `.mcp.json` for visual testing
+5. **MCP Servers** are configured in `.mcp.json` for enhanced capabilities:
+   - **Playwright MCP** for visual testing
+   - **Jina AI MCP** for web search, content extraction, and embeddings
 
 The magic happens because:
 - **Claude (200k context)** = Maintains big picture, manages todos
 - **Coder (fresh context)** = Implements one task at a time
-- **Tester (fresh context)** = Verifies one implementation at a time
+- **Tester (fresh context)** = Verifies one implementation at a time with Playwright + Jina AI
 - **Stuck (fresh context)** = Handles one problem at a time with human input
 - **Each subagent** has specific tools and hardwired escalation rules
 
@@ -272,7 +373,7 @@ MIT - Use it, modify it, share it!
 
 Built by [Income Stream Surfer](https://www.youtube.com/incomestreamsurfers)
 
-Powered by Claude Code's agent system and Playwright MCP.
+Powered by Claude Code's agent system, Playwright MCP, and Jina AI MCP.
 
 ---
 

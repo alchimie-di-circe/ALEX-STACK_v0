@@ -113,7 +113,14 @@ async function createSandbox() {
     
     console.log('🔗 MCP Gateway Information:');
     console.log(`   URL: ${mcpUrl}`);
-    console.log(`   Token: ${mcpToken.substring(0, 20)}...`);
+    // Do not print secrets by default. Provide a masked fingerprint for troubleshooting.
+    const tokenFingerprint = Buffer.from(await crypto.subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(mcpToken)
+    ))
+      .toString('hex')
+      .slice(0, 8);
+    console.log(`   Token fingerprint: ${tokenFingerprint} (full token hidden)`);
     console.log(`   Internal URL: http://localhost:50005/mcp\n`);
     
     console.log('📦 Installing GitHub Copilot CLI...');

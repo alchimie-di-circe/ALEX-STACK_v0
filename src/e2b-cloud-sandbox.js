@@ -116,22 +116,33 @@ async function createSandbox() {
     console.log(`   Token: ${mcpToken.substring(0, 20)}...`);
     console.log(`   Internal URL: http://localhost:50005/mcp\n`);
     
-    // Install GitHub Copilot CLI in the sandbox
     console.log('📦 Installing GitHub Copilot CLI...');
-    
-    const installResult = await sandbox.commands.run(
-      'npm install -g @github/copilot',
-      { 
-        timeoutMs: 120000,
-        onStdout: (data) => process.stdout.write(data.line + '\n'),
-        onStderr: (data) => process.stderr.write(data.line + '\n')
+    const installCopilot = async () => {
+      const attempt = async (label) => {
+        return sandbox.commands.run(
+          'npm install -g @github/copilot',
+          {
+            timeoutMs: 180000,
+            onStdout: (data) => process.stdout.write(data.line + '\n'),
+            onStderr: (data) => process.stderr.write(data.line + '\n')
+          }
+        );
+      };
+      let result = await attempt('first');
+      if (result.exitCode !== 0) {
+        console.warn('⚠️  Copilot CLI install failed. Retrying once after 3s...');
+        await new Promise(r => setTimeout(r, 3000));
+        result = await attempt('retry');
       }
-    );
-    
-    if (installResult.exitCode === 0) {
+      return result;
+    };
+
+    const installResult = await installCopilot();
+    const verifyInstall = await sandbox.commands.run('command -v copilot || which copilot || echo "NOT_FOUND"', { timeoutMs: 10000 });
+    if (installResult.exitCode === 0 && verifyInstall.stdout && !verifyInstall.stdout.includes('NOT_FOUND')) {
       console.log('✅ GitHub Copilot CLI installed successfully\n');
     } else {
-      console.warn('⚠️  GitHub Copilot CLI installation failed (may need manual install)\n');
+      console.warn('⚠️  GitHub Copilot CLI installation failed or binary not found. You may need to install it manually.\n');
     }
     
     // Verify Copilot CLI installation

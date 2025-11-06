@@ -15,3 +15,20 @@ Thumbs.db
 *.tmp
 *.bak
 *.backup
+
+# E2B and Docker
+.e2b/
+*.env
+.env.local
+.env.*.local
+
+# GitHub Copilot
+.github-copilot/
+copilot-auth.json
+
+# Node modules (if local testing)
+node_modules/
+
+# Build artifacts
+dist/
+build/

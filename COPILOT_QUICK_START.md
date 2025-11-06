@@ -4,6 +4,18 @@ Get started with GitHub Copilot CLI in a secure E2B sandbox in under 5 minutes.
 
 ## 🚀 One-Command Setup
 
+### Using the Launch Script (Recommended)
+
+```bash
+# Make the script executable (first time only)
+chmod +x start-e2b-sandbox.sh
+
+# Start the sandbox
+./start-e2b-sandbox.sh
+```
+
+### Manual Setup
+
 ```bash
 # Build and run the E2B sandbox
 docker build -f Dockerfile.e2b -t alex-stack-e2b:latest . && \

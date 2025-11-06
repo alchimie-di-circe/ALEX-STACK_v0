@@ -1,0 +1,40 @@
+# Git
+.git
+.gitignore
+
+# Documentation (not needed in container)
+*.md
+!README.md
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# E2B
+.e2b/
+
+# Environment files
+*.env
+.env.local
+.env.*.local
+
+# Node modules
+node_modules/
+
+# Build artifacts
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db

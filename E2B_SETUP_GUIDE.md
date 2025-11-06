@@ -62,7 +62,22 @@ Before starting, ensure you have:
 
 ## Quick Start
 
-### Using Docker (Recommended)
+### Method 1: Using the Launch Script (Easiest)
+
+```bash
+# Make the script executable (first time only)
+chmod +x start-e2b-sandbox.sh
+
+# Start the sandbox - it will auto-build if needed
+./start-e2b-sandbox.sh
+
+# Inside the container, install and authenticate Copilot CLI
+npm install -g @github/copilot
+copilot /login
+copilot
+```
+
+### Method 2: Using Docker (Manual)
 
 ```bash
 # 1. Build the E2B sandbox Docker image
@@ -77,7 +92,8 @@ docker run -it --rm \
   -p 8081:8081 \
   alex-stack-e2b:latest
 
-# 3. Inside the container, authenticate Copilot CLI
+# 3. Inside the container, install and authenticate Copilot CLI
+npm install -g @github/copilot
 copilot /login
 
 # 4. Start using Copilot

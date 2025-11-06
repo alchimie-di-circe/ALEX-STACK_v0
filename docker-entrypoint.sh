@@ -9,8 +9,17 @@ echo ""
 # Display versions
 echo "Node.js version: $(node --version)"
 echo "npm version: $(npm --version)"
-echo "Copilot CLI installed: $(which copilot || echo 'Not found')"
-echo ""
+
+# Check if Copilot CLI is installed
+if command -v copilot &> /dev/null; then
+    echo "Copilot CLI: $(copilot --version 2>/dev/null || echo 'Installed')"
+else
+    echo "Copilot CLI: Not installed"
+    echo ""
+    echo "To install GitHub Copilot CLI, run:"
+    echo "  npm install -g @github/copilot"
+    echo ""
+fi
 
 # Check if GitHub token is set
 if [ -z "$GITHUB_TOKEN" ]; then

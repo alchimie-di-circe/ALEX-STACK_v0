@@ -36,7 +36,7 @@ RUN echo "#!/bin/bash\n\
 if ! command -v copilot &> /dev/null; then\n\
     echo 'Installing GitHub Copilot CLI...'\n\
     npm install -g @github/copilot || echo 'Failed to install Copilot CLI. Install manually with: npm install -g @github/copilot'\n\
-fi" > /usr/local/bin/install-copilot.sh && chmod +x /usr/local/bin/install-copilot.sh
+fi" > /etc/profile.d/install-copilot.sh && chmod +x /etc/profile.d/install-copilot.sh
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["bash"]

@@ -4,6 +4,15 @@
       "command": "npx",
       "args": ["@playwright/mcp@latest"],
       "env": {}
+    },
+    "jina-mcp-server": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.jina.ai/sse",
+        "--header",
+        "Authorization: Bearer ${JINA_API_KEY}"
+      ]
     }
   }
 }

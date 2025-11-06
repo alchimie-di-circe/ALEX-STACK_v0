@@ -221,16 +221,10 @@ async function listSandboxes() {
   
   validateConfig();
   
-  try {
-    // Note: E2B SDK doesn't provide a direct list method
-    // This is a placeholder for when the API supports it
-    console.log('ℹ️  Sandbox listing via SDK is not yet available');
-    console.log('   Visit https://e2b.dev/dashboard to view your sandboxes\n');
-    
-  } catch (error) {
-    console.error('❌ Error listing sandboxes:', error.message);
-    process.exit(1);
-  }
+  // Note: E2B SDK doesn't provide a method for listing active sandboxes.
+  // This functionality is available in the E2B dashboard.
+  console.log('ℹ️  The E2B SDK does not support listing sandboxes directly.');
+  console.log('   Please visit your dashboard to view active sandboxes: https://e2b.dev/dashboard\n');
 }
 
 /**

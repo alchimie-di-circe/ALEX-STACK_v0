@@ -20,7 +20,8 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 - **Todo Tracking**: Always see exactly where your project stands
 - **Smart Flow**: Claude creates todos → Jino researches → coder implements → tester verifies → repeat
 - **Human Control**: The stuck agent ensures you're always in the loop
-- **🆕 E2B Sandbox**: Secure environment for running GitHub Copilot CLI with MCP integrations
+- **🆕 Local E2B Sandbox**: Secure Docker container for running GitHub Copilot CLI with MCP integrations
+- **🆕 E2B Cloud Sandbox**: Cloud-powered sandboxes with Docker MCP Gateway (200+ tools)
 - **🆕 Awesome Copilot MCP**: Access community prompts and instructions directly
 
 ## 🚀 Quick Start
@@ -339,50 +340,65 @@ docker run -i --rm -p 8080:8080 awesome-copilot:latest
 }
 ```
 
-## 🔒 E2B Sandbox for Secure Code Execution
+## 🔒 E2B Sandboxes for Secure Code Execution
 
 ### What is E2B?
 
-E2B (Execute to Build) provides secure, isolated sandbox environments for running AI-generated code safely. This integration allows you to:
+E2B (Execute to Build) provides secure, isolated sandbox environments for running AI-generated code safely. We offer **two deployment options**:
 
-- **Run GitHub Copilot CLI** in an isolated container
-- **Execute AI-generated code** without risking your host system
-- **Access MCP servers** from within the sandbox
-- **Test code safely** before committing to your main environment
+#### Option 1: Local Docker Container 🐳
+Self-hosted Docker container on your machine with manual MCP configuration.
 
-### Quick Setup
+**Best for:** Development, testing, offline work
 
 ```bash
-# Build the E2B sandbox
+# Quick start with launcher script
+./start-e2b-sandbox.sh
+
+# Or build manually
 docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .
-
-# Run the sandbox
-docker run -it --rm \
-  -v $(pwd):/workspace \
-  -e GITHUB_TOKEN=$GITHUB_TOKEN \
-  -e JINA_API_KEY=$JINA_API_KEY \
-  -p 8080:8080 \
-  alex-stack-e2b:latest
-
-# Inside the sandbox, start using Copilot
-copilot /login
-copilot
+docker run -it --rm -v $(pwd):/workspace alex-stack-e2b:latest
 ```
 
-### Features
+#### Option 2: E2B Cloud Sandbox ☁️
+Cloud-managed sandboxes with automatic Docker MCP Gateway integration.
 
-- **GitHub Copilot CLI** pre-installed and ready to use
-- **Node.js 22+** with npm 10+ for modern JavaScript development
-- **All MCP servers** configured and available
-- **Port mappings** for MCP server communication
-- **Volume mounting** for seamless file access
-- **Automatic cleanup** when container exits
+**Best for:** Production, collaboration, scaling
+
+```bash
+# Install dependencies
+npm install
+
+# Configure credentials in .env
+cp .env.example .env
+# Edit .env with your E2B_API_KEY and GITHUB_TOKEN
+
+# Create cloud sandbox
+npm run create-sandbox
+```
+
+### Feature Comparison
+
+| Feature | Local Docker | E2B Cloud |
+|---------|-------------|-----------|
+| **Setup** | Minutes | Seconds |
+| **MCP Tools** | 3 servers (manual) | 200+ servers (auto) |
+| **Cost** | Free | Free tier + paid |
+| **Scalability** | Limited | Unlimited |
+| **GitHub Copilot CLI** | ✅ Manual install | ✅ Pre-installed |
+| **Docker MCP Gateway** | ❌ | ✅ Automatic |
 
 ### Documentation
 
-For comprehensive setup instructions, troubleshooting, and advanced usage:
-- 📖 [E2B Setup Guide](./E2B_SETUP_GUIDE.md) - Full documentation
-- ⚡ [Quick Start Guide](./COPILOT_QUICK_START.md) - Get started in 5 minutes
+Choose your path:
+
+**Local Docker Container:**
+- 📖 [E2B Setup Guide](./E2B_SETUP_GUIDE.md) - Docker container setup
+- ⚡ [Quick Start Guide](./COPILOT_QUICK_START.md) - 5-minute local setup
+
+**E2B Cloud Sandbox:**
+- ☁️ [E2B Cloud Guide](./E2B_CLOUD_GUIDE.md) - Cloud sandbox with MCP Gateway
+- 🏗️ [Architecture Docs](./E2B_ARCHITECTURE.md) - System architecture
 
 ### Use Cases
 
@@ -391,6 +407,7 @@ For comprehensive setup instructions, troubleshooting, and advanced usage:
 3. **CI/CD Integration**: Run automated tests in clean environments
 4. **Team Development**: Share consistent development environments
 5. **Security**: Prevent untrusted code from accessing sensitive systems
+6. **Production Workloads**: Scale with cloud sandboxes (E2B Cloud only)
 
 ## 🎓 Learn More
 

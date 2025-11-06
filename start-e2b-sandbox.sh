@@ -29,6 +29,12 @@ if ! docker image inspect alex-stack-e2b:latest &> /dev/null; then
     docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .
     echo -e "${GREEN}Build complete!${NC}"
     echo ""
+else
+    # Check if Dockerfile is newer than the image
+    if [[ "Dockerfile.e2b" -nt $(docker image inspect -f '{{.Created}}' alex-stack-e2b:latest) ]]; then
+        echo -e "${YELLOW}Dockerfile.e2b has been updated. Consider rebuilding the image with 'docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .'${NC}"
+        echo ""
+    fi
 fi
 
 # Check for environment variables

@@ -13,6 +13,14 @@
         "--header",
         "Authorization: Bearer ${JINA_API_KEY}"
       ]
+    },
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@suekou/mcp-notion-server"],
+      "env": {
+        "NOTION_API_TOKEN": "${NOTION_API_TOKEN}",
+        "NOTION_MARKDOWN_CONVERSION": "true"
+      }
     }
   }
 }

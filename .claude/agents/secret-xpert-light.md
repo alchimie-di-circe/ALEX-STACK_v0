@@ -283,7 +283,9 @@ direnv allow
 ### Remove Secret
 ```bash
 # Remove from .envrc
-sed -i '/OLD_API_KEY/d' .envrc
+# Portable removal (works on macOS and Linux)
+tmpfile="$(mktemp .envrc.XXXXXX)"
+sed '/OLD_API_KEY/d' .envrc > "$tmpfile" && mv "$tmpfile" .envrc
 
 # Reload
 direnv allow

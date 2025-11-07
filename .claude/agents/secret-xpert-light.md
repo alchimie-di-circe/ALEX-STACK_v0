@@ -520,7 +520,9 @@ git commit -m "Add .envrc to gitignore"
 cp .envrc .envrc.example
 
 # Replace real values with placeholders
-sed -i 's/=.*/="REPLACE_WITH_YOUR_VALUE"/' .envrc.example
+# Replace real values with placeholders (portable across macOS and Linux)
+tmpfile="$(mktemp .envrc.example.XXXXXX)"
+sed 's/=.*/="REPLACE_WITH_YOUR_VALUE"/' .envrc.example > "$tmpfile" && mv "$tmpfile" .envrc.example
 
 # Commit .envrc.example
 git add .envrc.example

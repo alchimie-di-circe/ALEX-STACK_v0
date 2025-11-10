@@ -23,6 +23,7 @@
       "env": {},
       "disabled": true,
       "description": "Awesome Copilot MCP server for discovering community prompts and instructions. Enable after starting the server locally."
+    },
     "notion": {
       "command": "npx",
       "args": ["-y", "@suekou/mcp-notion-server"],

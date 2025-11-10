@@ -22,8 +22,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /workspace
 
 # Copy MCP configuration
-COPY .mcp.json /workspace/.mcp.json
-COPY e2b-sandbox.config.json /workspace/e2b-sandbox.config.json
+# Do not bake potentially sensitive MCP config into image layers.
+# Expect it to be mounted with the workspace at runtime.
+# COPY .mcp.json /workspace/.mcp.json
+# COPY e2b-sandbox.config.json /workspace/e2b-sandbox.config.json
 
 # Install additional npm tools
 RUN npm install -g npx || true

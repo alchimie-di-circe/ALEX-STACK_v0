@@ -1,0 +1,56 @@
+{
+  "name": "@alex-stack/secret-manager-pro",
+  "version": "1.0.0",
+  "description": "Production-grade secrets management for Claude Code using direnv + 1Password CLI. Supports cloud and local workflows with automatic vault integration and graceful fallback.",
+  "keywords": [
+    "claude-code",
+    "secrets",
+    "1password",
+    "direnv",
+    "security",
+    "mcp",
+    "credentials",
+    "environment-variables"
+  ],
+  "author": "Alex Stack Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alchimie-di-circe/ALEX-STACK_v0.git",
+    "directory": "marketplace/secret-manager-pro"
+  },
+  "claude": {
+    "plugin": true,
+    "pluginType": "standalone",
+    "agents": [
+      "secret-xpert-light"
+    ],
+    "requires": {
+      "direnv": ">=2.30.0",
+      "1password-cli": ">=2.0.0 (optional but recommended)"
+    },
+    "features": [
+      "1Password CLI integration",
+      "direnv automatic loading",
+      "Graceful fallback to manual credentials",
+      "Cloud + local environment sync",
+      "Template generation",
+      "Security best practices"
+    ]
+  },
+  "scripts": {
+    "setup": "./scripts/setup.sh",
+    "check": "./scripts/check-requirements.sh",
+    "test": "./scripts/test-integration.sh"
+  },
+  "metadata": {
+    "category": "Security & Credentials",
+    "difficulty": "intermediate",
+    "setupTime": "5-10 minutes",
+    "compatibility": {
+      "claude-web": true,
+      "claude-local": true,
+      "platforms": ["macOS", "Linux", "WSL"]
+    }
+  }
+}

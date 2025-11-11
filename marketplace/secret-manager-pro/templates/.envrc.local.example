@@ -1,0 +1,59 @@
+# .envrc.local.example - Manual Fallback Credentials Template
+# ============================================
+#
+# This file is a template for .envrc.local
+# Use this when 1Password CLI is not available
+#
+# Setup:
+# 1. Copy this file: cp .envrc.local.example .envrc.local
+# 2. Edit .envrc.local with your actual API keys
+# 3. Ensure .envrc.local is in .gitignore
+# 4. Run: direnv allow
+#
+# Note: This file is safe to commit to Git (placeholder values only)
+#       Never commit .envrc.local with real credentials!
+#
+# ============================================
+
+# ============================================
+# CLAUDE CODE MCP SERVERS
+# ============================================
+
+# Jina AI - Web research and content extraction
+# Get your API key from: https://jina.ai/
+export JINA_API_KEY="your_jina_api_key_here"
+
+# Notion MCP Server - Workspace integration
+# Get your token from: https://www.notion.so/my-integrations
+export NOTION_API_TOKEN="your_notion_token_here"
+
+# ============================================
+# OPTIONAL: ADDITIONAL SERVICES
+# ============================================
+
+# Anthropic API (if using Claude API directly)
+# export ANTHROPIC_API_KEY="your_anthropic_key_here"
+
+# GitHub CLI / API access
+# export GITHUB_TOKEN="your_github_token_here"
+
+# OpenAI (if using alongside Claude)
+# export OPENAI_API_KEY="your_openai_key_here"
+
+# ============================================
+# INSTRUCTIONS
+# ============================================
+#
+# After copying to .envrc.local:
+# 1. Replace "your_*_here" with actual credentials
+# 2. Run: direnv allow
+# 3. Verify: echo $JINA_API_KEY
+#
+# Want better security?
+# Consider upgrading to 1Password CLI:
+# - brew install 1password-cli
+# - op signin
+# - Use templates/.envrc.1password.template
+# - Enjoy automatic secret sync!
+#
+# ============================================

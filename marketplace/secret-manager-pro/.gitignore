@@ -1,0 +1,36 @@
+# Secret Manager Pro - .gitignore
+# ============================================
+
+# NEVER commit these files with real secrets!
+.envrc.local
+.env
+.env.local
+.env.*.local
+
+# Backup files
+*.backup.*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test files
+test-results/
+*.test
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Note: .envrc with 1Password integration CAN be committed
+# (it contains no secrets, only references to vault)
+# But .envrc.local should NEVER be committed!

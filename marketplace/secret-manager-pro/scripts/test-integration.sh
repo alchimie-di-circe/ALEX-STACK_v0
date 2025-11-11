@@ -115,8 +115,7 @@ if command -v op &> /dev/null; then
         if op read "op://$vault_name/Jina.ai/api_key" &> /dev/null; then
           print_success "READABLE"
         else
-          print_error "MISSING"
-          echo "  Create field: op item edit \"Jina.ai\" api_key=\"your_key\" --vault $vault_name"
+      vault_name=$( (source .envrc >/dev/null 2>&1; echo "$VAULT_NAME") )
         fi
       else
         print_warning "NOT FOUND"

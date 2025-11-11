@@ -87,7 +87,8 @@ fi
 run_test ".envrc file exists" "test -f .envrc"
 
 # Test 4: .envrc is allowed
-run_test ".envrc is allowed" "direnv status | grep -q 'Found RC allowed true'"
+# Reliable check: export succeeds only if .envrc is allowed
+run_test ".envrc is allowed" "direnv export bash >/dev/null 2>&1"
 
 # Test 5: Check for 1Password CLI (optional)
 echo -n "Testing 1Password CLI... "

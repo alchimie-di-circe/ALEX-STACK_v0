@@ -324,7 +324,7 @@ setup_gitignore() {
 
   # Check for .envrc.local (should be ignored)
   if ! grep -q "^\.envrc\.local$" .gitignore 2>/dev/null; then
-    echo ".envrc.local" >> .gitignore
+    grep -q "^\.envrc\.local$" .gitignore || echo ".envrc.local" >> .gitignore
     print_success "Added .envrc.local to .gitignore"
   else
     print_success ".envrc.local already in .gitignore"

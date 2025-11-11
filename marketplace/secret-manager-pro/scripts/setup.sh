@@ -294,13 +294,17 @@ setup_direnv() {
       if ask_yes_no "Add direnv hook to $shell_config?"; then
         case "$SHELL" in
           */bash)
-            echo 'eval "$(direnv hook bash)"' >> "$shell_config"
+        case "$SHELL" in
+          */bash)
+            grep -q 'eval "$(direnv hook bash)"' "$shell_config" || echo 'eval "$(direnv hook bash)"' >> "$shell_config"
             ;;
           */zsh)
-            echo 'eval "$(direnv hook zsh)"' >> "$shell_config"
+            grep -q 'eval "$(direnv hook zsh)"' "$shell_config" || echo 'eval "$(direnv hook zsh)"' >> "$shell_config"
             ;;
           */fish)
-            echo 'direnv hook fish | source' >> "$shell_config"
+            grep -q 'direnv hook fish | source' "$shell_config" || echo 'direnv hook fish | source' >> "$shell_config"
+            ;;
+        esac
             ;;
         esac
 

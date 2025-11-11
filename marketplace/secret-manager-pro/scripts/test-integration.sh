@@ -190,8 +190,7 @@ if [ -f ".gitignore" ]; then
     print_success "IGNORED"
   else
     print_warning "NOT IGNORED"
-    echo "  Add: echo '.envrc.local' >> .gitignore"
-  fi
+    echo "  Add: grep -q '^\.envrc\.local$' .gitignore || echo '.envrc.local' >> .gitignore"
 else
   print_warning "NO .gitignore"
   echo "  Create: echo '.envrc.local' > .gitignore"

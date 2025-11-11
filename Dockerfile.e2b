@@ -1,0 +1,52 @@
+# E2B Sandbox Dockerfile for GitHub Copilot CLI with MCP Servers
+# Based on E2B base images with Node.js support
+
+FROM node:22-bullseye-slim
+
+# Set environment variables
+ENV NODE_ENV=development
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    wget \
+    build-essential \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create working directory
+WORKDIR /workspace
+
+# Copy MCP configuration
+# Do not bake potentially sensitive MCP config into image layers.
+# Expect it to be mounted with the workspace at runtime.
+# COPY .mcp.json /workspace/.mcp.json
+# COPY e2b-sandbox.config.json /workspace/e2b-sandbox.config.json
+
+# Install additional npm tools
+RUN npm install -g npx || true
+
+# Note: GitHub Copilot CLI will be installed at runtime to avoid authentication issues
+# The installation command is: npm install -g @github/copilot
+
+# Verify Node.js and npm installations
+RUN node --version && npm --version
+
+# Set up entry point
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["bash"]
+
+# Expose ports for MCP servers
+EXPOSE 8080 8081
+
+# Add labels for E2B
+LABEL e2b.version="1.0.0"
+LABEL e2b.name="alex-stack-copilot-sandbox"
+LABEL e2b.description="Secure sandbox for GitHub Copilot CLI with MCP servers"

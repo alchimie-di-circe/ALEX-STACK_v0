@@ -1,6 +1,10 @@
-# OS files
-.DS_Store
-Thumbs.db
+# Git
+.git
+.gitignore
+
+# Documentation (not needed in container)
+*.md
+!README.md
 
 # Editor files
 .vscode/
@@ -16,19 +20,21 @@ Thumbs.db
 *.bak
 *.backup
 
-# E2B and Docker
+# E2B
 .e2b/
+
+# Environment files
 *.env
 .env.local
 .env.*.local
 
-# GitHub Copilot
-.github-copilot/
-copilot-auth.json
-
-# Node modules (if local testing)
+# Node modules
 node_modules/
 
 # Build artifacts
 dist/
 build/
+
+# OS files
+.DS_Store
+Thumbs.db

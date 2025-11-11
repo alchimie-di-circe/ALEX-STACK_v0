@@ -20,6 +20,9 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 - **Todo Tracking**: Always see exactly where your project stands
 - **Smart Flow**: Claude creates todos → Jino researches → coder implements → tester verifies → repeat
 - **Human Control**: The stuck agent ensures you're always in the loop
+- **🆕 Local E2B Sandbox**: Secure Docker container for running GitHub Copilot CLI with MCP integrations
+- **🆕 E2B Cloud Sandbox**: Cloud-powered sandboxes with Docker MCP Gateway (200+ tools)
+- **🆕 Awesome Copilot MCP**: Access community prompts and instructions directly
 
 ## 🚀 Quick Start
 
@@ -260,14 +263,19 @@ Coder: Reports completion to Claude
 │       ├── coder.md          # Coder subagent definition
 │       ├── tester.md         # Tester subagent definition
 │       └── stuck.md          # Stuck subagent definition
-├── .mcp.json                  # MCP servers configuration (Playwright + Jina AI)
+├── .mcp.json                  # MCP servers configuration (Playwright + Jina AI + Awesome Copilot)
+├── Dockerfile.e2b             # Docker configuration for E2B sandbox
+├── docker-entrypoint.sh       # Entry point script for E2B container
+├── e2b-sandbox.config.json    # E2B sandbox configuration
+├── E2B_SETUP_GUIDE.md         # Comprehensive E2B setup documentation
+├── COPILOT_QUICK_START.md     # Quick start guide for GitHub Copilot CLI
 ├── .gitignore
 └── README.md
 ```
 
 ## 🔌 MCP Servers Configuration
 
-This system uses two powerful MCP servers to enhance agent capabilities:
+This system uses three powerful MCP servers to enhance agent capabilities:
 
 ### 1. Jina AI Remote MCP Server ⭐
 **Purpose:** Web search, content extraction, and AI-powered research
@@ -306,6 +314,100 @@ This system uses two powerful MCP servers to enhance agent capabilities:
 - Tests UI interactions (clicks, forms, navigation)
 - Verifies responsive design
 - Checks console errors
+
+### 3. Awesome Copilot MCP Server 🆕
+**Purpose:** Community prompts and instructions discovery
+
+**Used by:** Developers and AI agents for enhanced Copilot capabilities
+
+**Features:**
+- **Search Instructions:** Find community-contributed prompts
+- **Load Instructions:** Import prompts directly into your workflow
+- **Browse Categories:** Explore organized collections
+- **Preview Content:** Review instruction details before use
+
+**Setup:**
+See [E2B_SETUP_GUIDE.md](./E2B_SETUP_GUIDE.md) for detailed installation instructions.
+
+**Quick Start:**
+```bash
+# Using Docker
+docker run -i --rm -p 8080:8080 awesome-copilot:latest
+
+# Enable in .mcp.json
+"awesome-copilot": {
+  "disabled": false
+}
+```
+
+## 🔒 E2B Sandboxes for Secure Code Execution
+
+### What is E2B?
+
+E2B (Execute to Build) provides secure, isolated sandbox environments for running AI-generated code safely. We offer **two deployment options**:
+
+#### Option 1: Local Docker Container 🐳
+Self-hosted Docker container on your machine with manual MCP configuration.
+
+**Best for:** Development, testing, offline work
+
+```bash
+# Quick start with launcher script
+./start-e2b-sandbox.sh
+
+# Or build manually
+docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .
+docker run -it --rm -v $(pwd):/workspace alex-stack-e2b:latest
+```
+
+#### Option 2: E2B Cloud Sandbox ☁️
+Cloud-managed sandboxes with automatic Docker MCP Gateway integration.
+
+**Best for:** Production, collaboration, scaling
+
+```bash
+# Install dependencies
+npm install
+
+# Configure credentials in .env
+cp .env.example .env
+# Edit .env with your E2B_API_KEY and GITHUB_TOKEN
+
+# Create cloud sandbox
+npm run create-sandbox
+```
+
+### Feature Comparison
+
+| Feature | Local Docker | E2B Cloud |
+|---------|-------------|-----------|
+| **Setup** | Minutes | Seconds |
+| **MCP Tools** | 3 servers (manual) | 200+ servers (auto) |
+| **Cost** | Free | Free tier + paid |
+| **Scalability** | Limited | Unlimited |
+| **GitHub Copilot CLI** | ✅ Manual install | ✅ Pre-installed |
+| **Docker MCP Gateway** | ❌ | ✅ Automatic |
+
+### Documentation
+
+Choose your path:
+
+**Local Docker Container:**
+- 📖 [E2B Setup Guide](./E2B_SETUP_GUIDE.md) - Docker container setup
+- ⚡ [Quick Start Guide](./COPILOT_QUICK_START.md) - 5-minute local setup
+
+**E2B Cloud Sandbox:**
+- ☁️ [E2B Cloud Guide](./E2B_CLOUD_GUIDE.md) - Cloud sandbox with MCP Gateway
+- 🏗️ [Architecture Docs](./E2B_ARCHITECTURE.md) - System architecture
+
+### Use Cases
+
+1. **Safe Code Testing**: Execute Copilot-generated code in isolation
+2. **Experimentation**: Try new tools and configurations without risk
+3. **CI/CD Integration**: Run automated tests in clean environments
+4. **Team Development**: Share consistent development environments
+5. **Security**: Prevent untrusted code from accessing sensitive systems
+6. **Production Workloads**: Scale with cloud sandboxes (E2B Cloud only)
 
 ## 🎓 Learn More
 

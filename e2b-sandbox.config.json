@@ -1,0 +1,55 @@
+{
+  "name": "alex-stack-copilot-sandbox",
+  "description": "E2B sandbox environment for GitHub Copilot CLI with awesome-copilot MCP server",
+  "dockerfile": "Dockerfile.e2b",
+  "metadata": {
+    "purpose": "Secure sandbox for running GitHub Copilot CLI with MCP server integrations",
+    "tools": [
+      "GitHub Copilot CLI",
+      "awesome-copilot MCP server",
+      "Node.js 22+",
+      "npm 10+"
+    ],
+    "security": "Isolated environment to safely execute AI-generated code suggestions"
+  },
+  "env": {
+    "NODE_VERSION": "22",
+    "NPM_VERSION": "10",
+    "COPILOT_CLI_VERSION": "latest"
+  },
+  "startup": {
+    "preInstall": [
+      "apt-get update",
+      "apt-get install -y git curl build-essential"
+    ],
+    "install": [
+      "npm install -g @github/copilot",
+      "npm install -g npx"
+    ],
+    "postInstall": [
+      "copilot --version"
+    ]
+  },
+  "mcp_servers": [
+    {
+      "name": "awesome-copilot",
+      "type": "remote",
+      "url": "http://localhost:8080",
+      "description": "Awesome Copilot MCP server for discovering community prompts and instructions"
+    },
+    {
+      "name": "playwright",
+      "type": "local",
+      "description": "Visual testing and browser automation"
+    },
+    {
+      "name": "jina-mcp-server",
+      "type": "remote",
+      "description": "Web search and content extraction"
+    }
+  ],
+  "ports": {
+    "mcp_server": 8080,
+    "copilot_cli": 8081
+  }
+}

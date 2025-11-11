@@ -1,0 +1,31 @@
+{
+  "name": "alex-stack-e2b-cloud",
+  "version": "1.0.0",
+  "description": "E2B Cloud sandbox integration with Docker MCP Gateway and GitHub Copilot CLI",
+  "type": "module",
+  "scripts": {
+    "start": "node src/e2b-cloud-sandbox.js",
+    "create-sandbox": "node src/e2b-cloud-sandbox.js create",
+    "list-sandboxes": "node src/e2b-cloud-sandbox.js list",
+    "setup": "npm install"
+  },
+  "keywords": [
+    "e2b",
+    "docker",
+    "mcp",
+    "github-copilot",
+    "sandbox"
+  ],
+  "author": "ALEX-STACK",
+  "license": "MIT",
+  "dependencies": {
+    "e2b": "^2.3.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

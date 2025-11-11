@@ -134,7 +134,9 @@ required_vars=(
 missing_vars=()
 for var in "${required_vars[@]}"; do
   # Check if variable is set and not placeholder
-  if [ -z "${!var}" ] || [[ "${!var}" == *"xxxx"* ]]; then
+  if [ -z "${!var}" ] || \
+     [[ "${!var}" == "jina_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]] || \
+     [[ "${!var}" == "secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]]; then
     missing_vars+=("$var")
   fi
 done

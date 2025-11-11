@@ -168,10 +168,15 @@ setup_with_1password() {
   cp "$plugin_dir/templates/.envrc.1password.template" .envrc
 
   # Replace vault name in template
+  # Use a different delimiter for sed to handle special characters in vault_name
+  local escaped_vault_name
+  escaped_vault_name=$(printf '%s\n' "$vault_name" | sed 's:[\\/&]:\\&:g;$!s/$/\\/')
+  escaped_vault_name=${escaped_vault_name%??}
+
   if [[ "$OSTYPE" == "darwin"* ]]; then
-    sed -i '' "s/VAULT_NAME=\"Private\"/VAULT_NAME=\"$vault_name\"/" .envrc
+    sed -i '' "s|VAULT_NAME=\"Private\"|VAULT_NAME=\"${escaped_vault_name}\"|" .envrc
   else
-    sed -i "s/VAULT_NAME=\"Private\"/VAULT_NAME=\"$vault_name\"/" .envrc
+    sed -i "s|VAULT_NAME=\"Private\"|VAULT_NAME=\"${escaped_vault_name}\"|" .envrc
   fi
 
   print_success "Created .envrc with 1Password integration"

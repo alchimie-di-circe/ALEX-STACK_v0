@@ -192,13 +192,31 @@ async function createSandbox() {
     
     // Keep sandbox alive for interactive use
     console.log('🔄 Sandbox is running. Press Ctrl+C to close and cleanup...\n');
-    
-    // Handle cleanup on exit
-    process.on('SIGINT', async () => {
-      console.log('\n\n🛑 Closing sandbox...');
-      await sandbox.close();
-      console.log('✅ Sandbox closed successfully');
-      process.exit(0);
+
+    let closing = false;
+    const cleanup = async (signal = 'SIGINT') => {
+      if (closing) return;
+      closing = true;
+      try {
+        console.log(`\n\n🛑 Closing sandbox (signal: ${signal})...`);
+        await sandbox.close();
+        console.log('✅ Sandbox closed successfully');
+      } catch (e) {
+        console.warn('⚠️  Error during sandbox close:', e?.message || e);
+      } finally {
+        process.exit(0);
+      }
+    };
+
+    process.on('SIGINT', () => { cleanup('SIGINT'); });
+    process.on('SIGTERM', () => { cleanup('SIGTERM'); });
+    process.on('uncaughtException', (err) => {
+      console.error('Uncaught exception:', err);
+      cleanup('uncaughtException');
+    });
+    process.on('unhandledRejection', (reason) => {
+      console.error('Unhandled promise rejection:', reason);
+      cleanup('unhandledRejection');
     });
     
     // Return sandbox instance for programmatic use

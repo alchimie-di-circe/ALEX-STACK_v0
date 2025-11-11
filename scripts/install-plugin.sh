@@ -157,7 +157,10 @@ if [ -d "$PLUGIN_INSTALL_DIR" ]; then
   fi
   echo
   print_info "Backing up existing installation..."
-  mv "$PLUGIN_INSTALL_DIR" "${PLUGIN_INSTALL_DIR}.backup.$(date +%Y%m%d_%H%M%S)"
+  if ! mv "$PLUGIN_INSTALL_DIR" "${PLUGIN_INSTALL_DIR}.backup.$(date +%Y%m%d_%H%M%S)"; then
+    print_error "Failed to back up existing installation. Aborting."
+    exit 1
+  fi
   print_success "Backup created"
 fi
 

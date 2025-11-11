@@ -101,7 +101,7 @@ if command -v op &> /dev/null; then
 
     # Test 7: Read vault name from .envrc
     if grep -q "VAULT_NAME=" .envrc 2>/dev/null; then
-      vault_name=$(grep "VAULT_NAME=" .envrc | head -1 | cut -d'"' -f2)
+      vault_name=$(grep "VAULT_NAME=" .envrc | head -1 | sed -n 's/^[[:space:]]*VAULT_NAME=["\x27]\([^"\x27]*\)["\x27].*/\1/p')
       print_info "Using vault: $vault_name"
 
       # Test 8: Check Jina.ai item

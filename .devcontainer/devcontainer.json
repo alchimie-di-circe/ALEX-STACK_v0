@@ -6,7 +6,7 @@
     "ghcr.io/devcontainers/features/node:1": {
       "version": "20"
     },
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
+    "ghcr.io/anthropic/devcontainer-features/claude-code:1": {}
   },
 
   "customizations": {
@@ -30,6 +30,6 @@
   "forwardPorts": [3000, 5173, 8080],
 
   "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached"
+    "source=~/.claude,target=/home/vscode/.claude,type=bind,consistency=cached"
   ]
 }

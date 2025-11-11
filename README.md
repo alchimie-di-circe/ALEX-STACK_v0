@@ -85,7 +85,7 @@ This repository includes an official Anthropic DevContainer configuration for sa
 **What's included in the DevContainer:**
 - ✅ Ubuntu base image
 - ✅ Node.js 20 LTS
-- ✅ Claude Code CLI (official Anthropic feature)
+- ✅ Claude Code CLI (official Anthropic feature with auto-update)
 - ✅ DevContainers CLI
 - ✅ Auto-configured MCP environment variables
 - ✅ Port forwarding (3000, 5173, 8080)

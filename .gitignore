@@ -16,6 +16,15 @@ Thumbs.db
 *.bak
 *.backup
 
+# Secret files (NEVER commit these!)
+.envrc.local
+.env
+.env.local
+.env.*.local
+
+# Note: .envrc is NOT in .gitignore because it contains
+# only 1Password vault references (no actual secrets)
+# and is safe to commit!
 # E2B and Docker
 .e2b/
 *.env

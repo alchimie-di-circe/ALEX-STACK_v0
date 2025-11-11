@@ -1,0 +1,205 @@
+# .envrc for Claude Code (Manual Credentials)
+# ============================================
+# AUTO-GENERATED TEMPLATE
+# ============================================
+#
+# ⚠️  WARNING: This file contains plaintext secrets!
+# Ensure .envrc is in .gitignore before adding credentials!
+#
+# This template is for users who:
+# - Don't have 1Password CLI
+# - Prefer manual credential management
+# - Need quick setup without additional tools
+#
+# Prerequisites:
+# 1. Install direnv: brew install direnv
+# 2. Setup shell hook: eval "$(direnv hook bash)"
+#
+# Usage:
+# 1. Copy this template to your project root as .envrc
+# 2. Replace placeholder values with your actual API keys
+# 3. Add .envrc to .gitignore
+# 4. Run: direnv allow
+# 5. Verify: echo $JINA_API_KEY
+#
+# Security Notes:
+# - NEVER commit this file to Git with real credentials
+# - Use .envrc.example for team sharing (with placeholders)
+# - Consider upgrading to 1Password CLI for better security
+
+# ============================================
+# PROJECT SETTINGS
+# ============================================
+export CLAUDE_PROJECT_ROOT="$(pwd)"
+export NODE_ENV="${NODE_ENV:-development}"
+
+# ============================================
+# CLAUDE CODE MCP SERVERS
+# ============================================
+
+# Jina AI - Web research and content extraction
+# Get your API key from: https://jina.ai/
+# Sign up → Dashboard → API Keys → Create Key
+export JINA_API_KEY="jina_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Notion MCP Server - Workspace integration
+# Get your token from: https://www.notion.so/my-integrations
+# Create New Integration → Copy Internal Integration Token
+export NOTION_API_TOKEN="secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# ============================================
+# PLAYWRIGHT MCP SERVER
+# ============================================
+# Playwright runs locally, no credentials needed
+# Automatically configured in .mcp.json
+
+# ============================================
+# OPTIONAL: ADDITIONAL SERVICES
+# ============================================
+
+# Anthropic API (if using Claude API directly)
+# Get from: https://console.anthropic.com/
+# export ANTHROPIC_API_KEY="sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# GitHub CLI / API access
+# Get from: https://github.com/settings/tokens
+# export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# OpenAI (if using alongside Claude)
+# Get from: https://platform.openai.com/api-keys
+# export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# AWS Credentials
+# Get from: https://console.aws.amazon.com/iam/
+# export AWS_ACCESS_KEY_ID="AKIA..."
+# export AWS_SECRET_ACCESS_KEY="..."
+# export AWS_DEFAULT_REGION="us-east-1"
+
+# Google Cloud
+# export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account-key.json"
+
+# Azure
+# export AZURE_SUBSCRIPTION_ID="..."
+# export AZURE_TENANT_ID="..."
+# export AZURE_CLIENT_ID="..."
+# export AZURE_CLIENT_SECRET="..."
+
+# ============================================
+# CUSTOM ENVIRONMENT VARIABLES
+# ============================================
+
+# Database connections
+# export DATABASE_URL="postgresql://user:pass@localhost:5432/dbname"
+# export REDIS_URL="redis://localhost:6379"
+
+# Application settings
+# export DEBUG="false"
+# export LOG_LEVEL="info"
+# export PORT="3000"
+
+# ============================================
+# PATH ADDITIONS (Optional)
+# ============================================
+
+# Add project bin directory to PATH
+# PATH_add bin
+
+# Add node_modules/.bin to PATH
+# PATH_add node_modules/.bin
+
+# ============================================
+# LOAD ADDITIONAL ENV FILES (Optional)
+# ============================================
+
+# Load .env if exists
+# if [ -f .env ]; then
+#   dotenv .env
+# fi
+
+# Load environment-specific files
+# if [ -f ".env.${NODE_ENV}" ]; then
+#   dotenv ".env.${NODE_ENV}"
+# fi
+
+# ============================================
+# VERIFICATION
+# ============================================
+
+# Check that required variables are set
+required_vars=(
+  "JINA_API_KEY"
+  "NOTION_API_TOKEN"
+)
+
+missing_vars=()
+for var in "${required_vars[@]}"; do
+  # Check if variable is set and not placeholder
+  if [ -z "${!var}" ] || [[ "${!var}" == *"xxxx"* ]]; then
+    missing_vars+=("$var")
+  fi
+done
+
+if [ ${#missing_vars[@]} -gt 0 ]; then
+  echo ""
+  echo "⚠️  Please set the following environment variables in .envrc:"
+  for var in "${missing_vars[@]}"; do
+    echo "   - $var"
+  done
+  echo ""
+  echo "   Edit this file and replace placeholder values with real credentials"
+  echo "   Then run: direnv allow"
+else
+  echo "✅ All required environment variables are set"
+fi
+
+# ============================================
+# SECURITY CHECKLIST
+# ============================================
+# Before using this file, ensure:
+#
+# [ ] .envrc is in .gitignore
+# [ ] Placeholder values replaced with real credentials
+# [ ] File permissions are restrictive (chmod 600 .envrc)
+# [ ] You've run: direnv allow
+#
+# To share with team:
+# [ ] Create .envrc.example with placeholder values
+# [ ] Commit .envrc.example to Git
+# [ ] Team members copy: cp .envrc.example .envrc
+# [ ] Team members edit .envrc with their credentials
+#
+# To upgrade to 1Password CLI (recommended):
+# [ ] Install 1Password CLI: brew install 1password-cli
+# [ ] Create vault items for each secret
+# [ ] Replace .envrc with .envrc.1password.template
+# [ ] Enjoy automatic secret sync across cloud + local!
+#
+# ============================================
+# NOTES
+# ============================================
+#
+# File Structure:
+# - .envrc           (this file - NEVER commit with real credentials!)
+# - .envrc.example   (template with placeholders - commit this)
+# - .gitignore       (must include .envrc)
+#
+# Rotating Keys:
+# 1. Get new API key from service provider
+# 2. Edit .envrc and replace old key
+# 3. Save file (direnv auto-reloads)
+# 4. Verify: echo $VARIABLE_NAME
+#
+# Common Issues:
+# - "direnv: error .envrc is blocked"
+#   Solution: direnv allow
+#
+# - "Variables not loading"
+#   Solution: Ensure direnv hook is in shell config
+#   bash: eval "$(direnv hook bash)"
+#   zsh:  eval "$(direnv hook zsh)"
+#
+# - "Need better security"
+#   Solution: Upgrade to 1Password CLI integration
+#   See: templates/.envrc.1password.template
+#
+# ============================================

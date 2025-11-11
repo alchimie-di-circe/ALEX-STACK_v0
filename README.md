@@ -42,6 +42,55 @@ claude
 
 That's it! The agents are automatically loaded from the `.claude/` directory.
 
+### 🐳 Using with DevContainer (Recommended for Local Development)
+
+This repository includes an official Anthropic DevContainer configuration for safe, isolated development on your local machine.
+
+**Benefits:**
+- 🔒 **Isolated environment** - Protects your Mac/system from bash commands and file operations
+- 🌐 **Consistent setup** - Same environment in cloud (Claude web) and local (IDE)
+- 📦 **Pre-configured** - Node.js, Claude Code CLI, and all dependencies ready to go
+- 🚀 **Zero setup** - One-click "Reopen in Container" from VS Code/IDE
+
+**Setup:**
+
+1. **Prerequisites:**
+   - [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running
+   - [VS Code](https://code.visualstudio.com/) with [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+   - Or any IDE with DevContainer support
+
+2. **Clone and open:**
+   ```bash
+   git clone https://github.com/alchimie-di-circe/ALEX-STACK_v0.git
+   cd ALEX-STACK_v0
+   code .
+   ```
+
+3. **Reopen in Container:**
+   - VS Code will prompt: "Reopen in Container" → Click it
+   - Or: Command Palette (⌘+Shift+P) → "Dev Containers: Reopen in Container"
+
+4. **Set up environment variables:**
+   ```bash
+   # Inside the container terminal
+   cp .env.example .env
+   # Edit .env and add your API keys
+   ```
+
+5. **Start Claude Code:**
+   ```bash
+   claude
+   ```
+
+**What's included in the DevContainer:**
+- ✅ Ubuntu base image
+- ✅ Node.js 20 LTS
+- ✅ Claude Code CLI (official Anthropic feature)
+- ✅ DevContainers CLI
+- ✅ Auto-configured MCP environment variables
+- ✅ Port forwarding (3000, 5173, 8080)
+- ✅ VS Code Claude Code extension
+
 ## 📖 How to Use
 
 ### Starting a Project
@@ -260,7 +309,10 @@ Coder: Reports completion to Claude
 │       ├── coder.md          # Coder subagent definition
 │       ├── tester.md         # Tester subagent definition
 │       └── stuck.md          # Stuck subagent definition
+├── .devcontainer/
+│   └── devcontainer.json      # DevContainer configuration (Anthropic official)
 ├── .mcp.json                  # MCP servers configuration (Playwright + Jina AI)
+├── .env.example               # Environment variables template
 ├── .gitignore
 └── README.md
 ```

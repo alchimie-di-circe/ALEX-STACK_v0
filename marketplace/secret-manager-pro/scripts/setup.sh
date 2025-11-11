@@ -173,12 +173,9 @@ setup_with_1password() {
   # Safely escape vault name for sed replacement without truncation
   escaped_vault_name=$(printf '%s' "$vault_name" | sed 's/[\/&]/\\&/g')
 
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    sed -i '' "s|VAULT_NAME=\"Private\"|VAULT_NAME=\"${escaped_vault_name}\"|" .envrc
-  else
-    sed -i "s|VAULT_NAME=\"Private\"|VAULT_NAME=\"${escaped_vault_name}\"|" .envrc
-  fi
-
+  # Use a portable method to replace VAULT_NAME in .envrc
+  tmpfile="$(mktemp)"
+  sed "s/VAULT_NAME=\"Private\"/VAULT_NAME=\"$vault_name\"/" .envrc > "$tmpfile" && mv "$tmpfile" .envrc
   print_success "Created .envrc with 1Password integration"
 
   # Create .envrc.local.example

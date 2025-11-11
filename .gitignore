@@ -25,3 +25,19 @@ Thumbs.db
 # Note: .envrc is NOT in .gitignore because it contains
 # only 1Password vault references (no actual secrets)
 # and is safe to commit!
+# E2B and Docker
+.e2b/
+*.env
+.env.local
+.env.*.local
+
+# GitHub Copilot
+.github-copilot/
+copilot-auth.json
+
+# Node modules (if local testing)
+node_modules/
+
+# Build artifacts
+dist/
+build/

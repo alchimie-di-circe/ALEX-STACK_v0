@@ -1,0 +1,50 @@
+# E2B Sandbox Dockerfile for Local Development
+# This version is optimized for local use without SSL certificate issues
+
+FROM node:22-bullseye-slim
+
+# Set environment variables
+ENV NODE_ENV=development
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    wget \
+    build-essential \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create working directory
+WORKDIR /workspace
+
+# Copy MCP configuration
+COPY .mcp.json /workspace/.mcp.json
+COPY e2b-sandbox.config.json /workspace/e2b-sandbox.config.json
+
+# Set up entry point
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Verify installations
+RUN node --version && npm --version
+
+# Install GitHub Copilot CLI at runtime
+# This allows proper authentication and avoids SSL issues
+RUN echo "#!/bin/bash\n\
+if ! command -v copilot &> /dev/null; then\n\
+    echo 'Installing GitHub Copilot CLI...'\n\
+    npm install -g @github/copilot || echo 'Failed to install Copilot CLI. Install manually with: npm install -g @github/copilot'\n\
+fi" > /etc/profile.d/install-copilot.sh && chmod +x /etc/profile.d/install-copilot.sh
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["bash"]
+
+# Expose ports for MCP servers
+EXPOSE 8080 8081
+
+# Add labels for E2B
+LABEL e2b.version="1.0.0"
+LABEL e2b.name="alex-stack-copilot-sandbox"
+LABEL e2b.description="Secure sandbox for GitHub Copilot CLI with MCP servers"

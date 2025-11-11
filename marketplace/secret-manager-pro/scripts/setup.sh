@@ -167,12 +167,9 @@ setup_with_1password() {
   # Copy and customize template
   cp "$plugin_dir/templates/.envrc.1password.template" .envrc
 
-  # Replace vault name in template
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    sed -i '' "s/VAULT_NAME=\"Private\"/VAULT_NAME=\"$vault_name\"/" .envrc
-  else
-    sed -i "s/VAULT_NAME=\"Private\"/VAULT_NAME=\"$vault_name\"/" .envrc
-  fi
+  # Replace vault name in template using portable method
+  tmpfile="$(mktemp)"
+  sed "s/VAULT_NAME=\"\${OP_VAULT_NAME:-AI DEV}\"/VAULT_NAME=\"\${OP_VAULT_NAME:-$vault_name}\"/" .envrc > "$tmpfile" && mv "$tmpfile" .envrc
 
   print_success "Created .envrc with 1Password integration"
 

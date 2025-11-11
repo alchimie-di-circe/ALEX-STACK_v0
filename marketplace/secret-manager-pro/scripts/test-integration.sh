@@ -201,13 +201,21 @@ fi
 print_header "Security Check"
 
 if [ -f ".envrc" ]; then
-  perms=$(stat -c "%a" .envrc 2>/dev/null || stat -f "%OLp" .envrc 2>/dev/null)
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    perms=$(stat -f "%OLp" .envrc)
+  else
+    perms=$(stat -c "%a" .envrc)
+  fi
   echo -n "Checking .envrc permissions... "
   print_info "$perms"
 fi
 
 if [ -f ".envrc.local" ]; then
-  perms=$(stat -c "%a" .envrc.local 2>/dev/null || stat -f "%OLp" .envrc.local 2>/dev/null)
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    perms=$(stat -f "%OLp" .envrc.local)
+  else
+    perms=$(stat -c "%a" .envrc.local)
+  fi
   echo -n "Checking .envrc.local permissions... "
   if [ "$perms" = "600" ] || [ "$perms" = "400" ]; then
     print_success "$perms (secure)"

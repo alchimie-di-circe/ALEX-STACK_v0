@@ -170,8 +170,8 @@ setup_with_1password() {
   # Replace vault name in template
   # Use a different delimiter for sed to handle special characters in vault_name
   local escaped_vault_name
-  escaped_vault_name=$(printf '%s\n' "$vault_name" | sed 's:[\\/&]:\\&:g;$!s/$/\\/')
-  escaped_vault_name=${escaped_vault_name%??}
+  # Safely escape vault name for sed replacement without truncation
+  escaped_vault_name=$(printf '%s' "$vault_name" | sed 's/[\/&]/\\&/g')
 
   if [[ "$OSTYPE" == "darwin"* ]]; then
     sed -i '' "s|VAULT_NAME=\"Private\"|VAULT_NAME=\"${escaped_vault_name}\"|" .envrc

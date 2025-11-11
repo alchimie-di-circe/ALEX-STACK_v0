@@ -140,11 +140,9 @@ brew install 1password-cli
 
 # Linux
 curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
-  sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] \
   https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" | \
   sudo tee /etc/apt/sources.list.d/1password.list
-sudo apt update && sudo apt install 1password-cli
 
 # 3. Sign in to 1Password
 op signin
@@ -383,7 +381,7 @@ export NOTION_API_TOKEN="get_from_notion_integrations"
 # ============================================
 # 1PASSWORD VAULT CONFIGURATION
 # ============================================
-VAULT_NAME="Private"  # Your 1Password vault name
+VAULT_NAME="AI DEV"  # Your 1Password vault name
 
 # ============================================
 # CLAUDE CODE MCP SERVERS (from 1Password)
@@ -558,8 +556,12 @@ You:
    bash: which op
 
 2. If not installed:
-   bash: brew install 1password-cli  # macOS
-   # or follow Linux installation steps
+   bash: curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
+     sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+   bash: echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] \
+     https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" | \
+     sudo tee /etc/apt/sources.list.d/1password.list
+   bash: sudo apt update && sudo apt install 1password-cli
 
 3. Authenticate 1Password
    bash: op signin
@@ -581,7 +583,7 @@ You:
 
 8. Setup shell hook
    bash: echo $SHELL
-   bash: echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+   bash: grep -q 'eval "$(direnv hook bash)"' ~/.bashrc || echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
    bash: source ~/.bashrc
 
 9. Navigate to project
@@ -864,11 +866,9 @@ brew install 1password-cli
 # Linux (Debian/Ubuntu)
 curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
   sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] \
-  https://downloads.1password.com/linux/debian/amd64 stable main" | \
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] \
+  https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" | \
   sudo tee /etc/apt/sources.list.d/1password.list
-sudo apt update && sudo apt install 1password-cli
-
 # Verify installation
 op --version
 ```

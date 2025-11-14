@@ -1,0 +1,31 @@
+# Product Requirements Document Template
+
+## Project Overview
+[Describe the project at a high level]
+
+## Objectives
+- [Primary objective 1]
+- [Primary objective 2]
+
+## Key Features
+1. **Feature Name**
+   - Description: [What this feature does]
+   - Priority: High/Medium/Low
+   - Dependencies: [List any prerequisites]
+
+## Technical Requirements
+- [Technical constraint or requirement 1]
+- [Technical constraint or requirement 2]
+
+## Success Criteria
+- [Measurable success criterion 1]
+- [Measurable success criterion 2]
+
+## Testing Strategy
+- [How this will be tested]
+
+## Timeline
+- [Milestone or deadline information]
+
+## Notes
+[Any additional context or considerations]

@@ -77,7 +77,7 @@ Copy user-facing documentation:
 
 - [ ] Check if current project already has `PROJECT_ROADMAP.md`
   - If YES: Ask user if they want to preserve it or replace it
-  - If NO: Copy `PROJECT_ROADMAP.md` from source to current project
+  - If NO: Copy `.claude/templates/PROJECT_ROADMAP.template.md` from source to `PROJECT_ROADMAP.md` in the current project
 - [ ] If copied, update the roadmap header with current project name
 - [ ] Clear any existing tasks from the copied template (start fresh)
 - [ ] Set "Last Updated" to current date (2025-11-15)

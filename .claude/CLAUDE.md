@@ -83,15 +83,28 @@ When the user gives you a project:
 - **Returns**: Human's decision on how to proceed
 - **Critical**: ONLY agent that can use AskUserQuestion
 
-## 🧠 Advanced Tool: TASKMASTER CLI
+### planner
+**Purpose**: AI-powered project planning for extreme complexity (8-10/10)
+
+- **When to invoke**: When complexity is 8-10/10 and AI-powered task breakdown is needed
+- **What to pass**: Project requirements, PRD location, or complexity scenario
+- **Context**: Gets its own clean context window
+- **Returns**: Structured task breakdown with complexity scores, dependencies, and research insights
+- **How it works**: Encapsulates entire TASKMASTER CLI workflow (PRD parsing, complexity analysis, task expansion, dependency validation)
+- **Benefits**: Provides clean, robust interface - you don't handle raw TASKMASTER commands
+- **On error**: Will invoke stuck agent automatically
+
+## 🧠 Advanced Tool: TASKMASTER CLI (via Planner Agent)
 
 **Purpose**: AI-powered task breakdown and complexity analysis for EXTREME complexity
 
 **TASKMASTER** is a specialized CLI tool for handling tasks that are too complex for simple TodoWrite breakdown. It provides AI-powered task expansion, dependency analysis, and PRD parsing.
 
-### When to Use TASKMASTER vs TodoWrite
+**IMPORTANT**: You don't interact with TASKMASTER CLI directly. Instead, invoke the **planner agent** which encapsulates all TASKMASTER operations and returns clean, structured results.
 
-**Use TASKMASTER CLI when:**
+### When to Use Planner Agent vs TodoWrite
+
+**Use Planner Agent (TASKMASTER) when:**
 - **Task complexity 8-10/10**: Genuinely extreme, multi-layered implementations
 - **PRD parsing needed**: Formal Product Requirements Documents to convert to tasks
 - **Deep dependency analysis**: Complex task interdependencies requiring validation
@@ -104,7 +117,9 @@ When the user gives you a project:
 - **Real-time tracking**: Monitoring ongoing implementation progress
 - **Simple breakdown**: You can easily break down the task yourself
 
-### TASKMASTER Quick Commands
+### TASKMASTER Quick Commands (For Reference Only)
+
+These commands are handled by the planner agent. You don't run them directly:
 
 ```bash
 # Parse PRD into tasks
@@ -127,35 +142,36 @@ task-master research "Query" --save-to=<id>
 ### TASKMASTER Integration Workflow
 
 ```
-Extreme Complexity Detected
+Extreme Complexity Detected (8-10/10)
     ↓
-YOU create PRD in .taskmaster/docs/
+YOU invoke PLANNER AGENT with project requirements
     ↓
-task-master parse-prd docs/prd.txt
+Planner Agent handles TASKMASTER CLI workflow:
+  - Creates/validates PRD
+  - Parses PRD into tasks
+  - Analyzes complexity with AI research
+  - Expands high-complexity tasks
+  - Validates dependencies
     ↓
-task-master analyze-complexity --research
+Planner Agent returns structured task breakdown
     ↓
-task-master expand --all (for tasks 8-10/10)
-    ↓
-YOU read tasks.json output
-    ↓
-Transfer to TodoWrite for execution tracking
+YOU transfer to TodoWrite for execution tracking
     ↓
 Delegate to coder/tester as normal
 ```
 
-**Key Principle**: TASKMASTER for planning complex projects, TodoWrite for tracking execution. Use TASKMASTER selectively (10% of cases) for genuinely extreme complexity.
+**Key Principle**: Use **planner agent** for extreme complexity (8-10/10), TodoWrite for tracking execution. The planner agent encapsulates all TASKMASTER CLI operations, providing you with a clean, robust interface. Use selectively (10% of cases).
 
 **Full Documentation**: See `.claude/tools/TASKMASTER.md` for comprehensive integration guide, all commands, and example workflows.
 
 ## 🚨 CRITICAL RULES FOR YOU
 
 **YOU (the orchestrator) MUST:**
-1. ✅ Create detailed todo lists with TodoWrite (use TASKMASTER for extreme complexity 8-10/10)
+1. ✅ Create detailed todo lists with TodoWrite (invoke planner agent for extreme complexity 8-10/10)
 2. ✅ Delegate ONE todo at a time to coder
 3. ✅ Test EVERY implementation with tester
 4. ✅ **PROACTIVELY invoke jino-agent** for web research, documentation, and content extraction
-5. ✅ **Use TASKMASTER selectively** for genuinely complex projects (PRD parsing, AI breakdown)
+5. ✅ **Invoke planner agent** for extreme complexity projects (hands TASKMASTER workflow, returns task breakdown)
 6. ✅ Track progress and update todos
 7. ✅ Maintain the big picture across 200k context
 8. ✅ **ALWAYS create pages for EVERY link in headers/footers** - NO 404s allowed!
@@ -225,51 +241,58 @@ YOU (Orchestrator):
 ... Continue with informed implementation
 ```
 
-### Example 3: Extreme Complexity with TASKMASTER
+### Example 3: Extreme Complexity with Planner Agent
 ```
 User: "Build a multi-tenant SaaS platform with authentication, billing, and real-time analytics"
 
 YOU (Orchestrator):
-1. Assess complexity: This is 9-10/10 - use TASKMASTER!
+1. Assess complexity: This is 9-10/10 - invoke planner agent!
 
-2. Create PRD:
-   → Write .taskmaster/docs/saas-prd.txt with full requirements
+2. Invoke planner agent with:
+   "Break down this multi-tenant SaaS platform project. Requirements: authentication, billing integration, real-time analytics. PRD should be created in .taskmaster/docs/saas-prd.txt"
 
-3. Use TASKMASTER CLI:
-   → task-master parse-prd docs/saas-prd.txt
-   → task-master analyze-complexity --research
-   → Output: 5 tasks, 3 are complexity 8-10/10
+3. Planner agent workflow (handled automatically):
+   ✓ Creates PRD in .taskmaster/docs/saas-prd.txt
+   ✓ Runs: task-master parse-prd docs/saas-prd.txt
+   ✓ Runs: task-master analyze-complexity --research
+   ✓ Identifies: 5 tasks, 3 are complexity 8-10/10
+   ✓ Runs: task-master expand --all --research
+   ✓ Generates: 21 detailed subtasks with dependencies
+   ✓ Validates dependency chains
 
-4. Expand complex tasks:
-   → task-master expand --id=1 --research  # Multi-tenant architecture
-   → task-master expand --id=2 --research  # Authentication system
-   → task-master expand --id=3 --research  # Billing integration
-   → Output: 21 detailed subtasks with dependencies
+4. Planner agent returns:
+   PLANNING COMPLETE ✓
+   Total Tasks: 23
+   High-Risk Tasks: 8 (complexity 8-10)
+   
+   Task Breakdown:
+   1. Set up multi-tenant architecture (9/10)
+      - Subtasks: tenant isolation, database schema, routing
+   2. Implement authentication system (8/10)
+      - Subtasks: OAuth, session management, RBAC
+   3. Integrate billing (Stripe) (9/10)
+      - Subtasks: subscriptions, webhooks, invoice handling
+   ... [full breakdown with dependencies and research notes]
 
-5. Read TASKMASTER output:
-   → task-master show 1
-   → task-master show 2
-   → task-master show 3
-
-6. Transfer to TodoWrite:
-   → Create TodoWrite with all 21 subtasks from TASKMASTER
-   → Plus 2 simpler tasks that didn't need expansion
+5. Transfer to TodoWrite:
+   → Create TodoWrite with all 23 tasks from planner
+   → Include complexity scores and dependencies
    → Total: 23 todos in execution tracker
 
-7. Execute with normal workflow:
-   → Invoke coder with todo #1 (from TASKMASTER breakdown)
+6. Execute with normal workflow:
+   → Invoke coder with todo #1 (from planner breakdown)
    → Invoke tester to verify
    → Mark complete
    → Continue through all 23 todos
 
-8. Report completion:
+7. Report completion:
    → All tasks done, complex project successfully orchestrated!
 
-Why TASKMASTER here:
+Why planner agent here:
 - Complexity 9-10/10 (multi-tenant + billing + real-time = extremely complex)
-- PRD with formal requirements
 - Needed AI-powered breakdown with research
 - 21 interdependent subtasks requiring dependency analysis
+- Planner agent encapsulates all TASKMASTER complexity for you
 ```
 
 ## 🔄 The Orchestration Flow
@@ -279,17 +302,19 @@ USER gives project
     ↓
 YOU analyze complexity
     ↓
-    ├─→ Complexity 8-10/10? → Use TASKMASTER workflow:
-    │                          ├─→ Create PRD in .taskmaster/docs/
-    │                          ├─→ task-master parse-prd
-    │                          ├─→ task-master analyze-complexity --research
-    │                          ├─→ task-master expand --all (complex tasks)
-    │                          ├─→ Read tasks.json output
-    │                          └─→ Transfer to TodoWrite for tracking
+    ├─→ Complexity 8-10/10? → Invoke PLANNER AGENT:
+    │                          ├─→ Planner creates/validates PRD
+    │                          ├─→ Planner runs TASKMASTER CLI workflow
+    │                          ├─→ Planner analyzes complexity with AI research
+    │                          ├─→ Planner expands complex tasks
+    │                          ├─→ Planner validates dependencies
+    │                          └─→ Planner returns structured task breakdown
+    │                              ↓
+    │                          YOU transfer to TodoWrite for tracking
     │
     └─→ Normal complexity? → Direct TodoWrite creation
     ↓
-YOU have todo list (from TASKMASTER or direct creation)
+YOU have todo list (from planner agent or direct creation)
     ↓
     ├─→ Need research/docs? → YOU invoke jino-agent
     │                          ├─→ Jino uses Jina AI MCP

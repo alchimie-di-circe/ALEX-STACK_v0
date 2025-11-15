@@ -30,7 +30,7 @@ PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
 # Check if the image exists, if not build it
 if ! docker image inspect alex-stack-e2b:latest &> /dev/null; then
     echo -e "${YELLOW}Docker image not found. Building...${NC}"
-    docker build -f "$SCRIPT_DIR/Dockerfile.e2b" -t alex-stack-e2b:latest "$PROJECT_ROOT"
+    (cd "$SCRIPT_DIR" && docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .)
     echo -e "${GREEN}Build complete!${NC}"
     echo ""
 else

@@ -1,6 +1,16 @@
 # TASKMASTER + TodoWrite Integration - Complete Workflow Example
 
-This document demonstrates a real-world workflow using TASKMASTER CLI integrated with the ALEX-STACK orchestrator system.
+This document demonstrates a real-world workflow using TASKMASTER for extreme complexity scenarios.
+
+## Two Approaches
+
+### Recommended: Planner Agent (New)
+The orchestrator delegates to the **planner agent**, which handles all TASKMASTER CLI operations automatically. This is the robust, encapsulated approach described in the QODO MERGE suggestions.
+
+### Manual: Direct CLI (Reference)
+The orchestrator runs TASKMASTER CLI commands directly. This approach is shown below for reference and understanding, but the planner agent approach is preferred for production use.
+
+---
 
 ## Scenario: Building an E-Commerce Platform
 
@@ -10,7 +20,103 @@ This document demonstrates a real-world workflow using TASKMASTER CLI integrated
 
 ---
 
-## Step 1: Orchestrator Creates PRD
+## 🎯 RECOMMENDED APPROACH: Using Planner Agent
+
+### Step 1: Orchestrator Invokes Planner Agent
+
+```
+Orchestrator → planner agent:
+
+"Break down this e-commerce platform project with the following requirements:
+- Product catalog with search and filtering
+- Shopping cart with real-time updates
+- Checkout flow with address validation
+- Payment processing (Stripe integration)
+- Order management and history
+- User authentication and profiles
+
+PRD should be created in .taskmaster/docs/ecommerce-prd.txt"
+```
+
+### Step 2: Planner Agent Works Automatically
+
+The planner agent internally:
+1. ✅ Creates PRD in `.taskmaster/docs/ecommerce-prd.txt`
+2. ✅ Runs: `task-master parse-prd docs/ecommerce-prd.txt`
+3. ✅ Runs: `task-master analyze-complexity --research`
+4. ✅ Runs: `task-master expand --all` for high-complexity tasks
+5. ✅ Validates dependency chains
+6. ✅ Parses output from `.taskmaster/tasks/tasks.json`
+
+### Step 3: Planner Agent Returns Structured Breakdown
+
+```
+PLANNING COMPLETE ✓
+
+Project: E-Commerce Platform
+Total Tasks: 45
+High-Risk Tasks: 12 (complexity 8-10)
+
+TASK BREAKDOWN (execution order):
+
+1. Database Schema Setup (6/10)
+   - Design normalized schema for products, carts, orders
+   - Set up migrations
+   - Dependencies: None
+
+2. Product Model & API (7/10)
+   - Create Product model with validation
+   - Implement CRUD endpoints
+   - Add image upload handling
+   - Dependencies: [1]
+
+3. Elasticsearch Integration (9/10) ⚠️ HIGH RISK
+   - Set up Elasticsearch cluster
+   - Create product indexing pipeline
+   - Implement full-text search with filters
+   - Performance optimization for large catalogs
+   - Dependencies: [2]
+   - Notes: Research shows Elasticsearch 8.x best practices...
+
+... [42 more tasks with details]
+
+RECOMMENDATIONS:
+- Start with database schema to establish data foundation
+- Elasticsearch integration is highest risk - allocate extra time
+- Stripe webhook handling requires careful error handling
+- Consider Redis for cart state caching
+- Security review needed for payment processing
+
+Ready for transfer to TodoWrite for execution tracking.
+```
+
+### Step 4: Orchestrator Transfers to TodoWrite
+
+```javascript
+// Orchestrator creates TodoWrite from planner output
+TodoWrite: [
+  "✓ Database Schema Setup (6/10)",
+  "✓ Product Model & API (7/10)", 
+  "✓ Elasticsearch Integration (9/10) - HIGH RISK",
+  ... 42 more tasks
+]
+```
+
+### Step 5: Normal Execution Flow
+
+Orchestrator proceeds with standard workflow:
+- Invoke coder with task #1
+- Invoke tester to verify
+- Mark complete
+- Continue through all 45 tasks
+
+---
+
+## 📚 REFERENCE: Manual CLI Approach (Old)
+
+This section shows what happens "under the hood" when you use the planner agent.
+
+### Step 1: Orchestrator Creates PRD
 
 The orchestrator recognizes this is extreme complexity (9/10) and creates a formal PRD.
 
@@ -27,7 +133,7 @@ The orchestrator recognizes this is extreme complexity (9/10) and creates a form
 
 ---
 
-## Step 2: Parse PRD with TASKMASTER
+### Step 2: Parse PRD with TASKMASTER
 
 ```bash
 task-master parse-prd docs/example-ecommerce-prd.txt

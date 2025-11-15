@@ -4,6 +4,10 @@
 
 TASKMASTER is an AI-powered task management system integrated with ALEX-STACK orchestrator to handle **extremely complex** task breakdown and dependency analysis.
 
+> **🎯 IMPORTANT FOR ORCHESTRATOR**: Instead of using TASKMASTER CLI directly, invoke the **planner agent** which encapsulates all TASKMASTER operations and provides a clean, robust interface. The planner agent handles PRD creation, parsing, complexity analysis, task expansion, and dependency validation automatically. See `.claude/agents/planner.md` for details.
+>
+> This guide documents the underlying CLI commands for reference and understanding, but you should delegate to the planner agent rather than executing these commands yourself.
+
 ## Installation Status
 
 ✅ **Installed**: `task-master-ai` (global npm package)

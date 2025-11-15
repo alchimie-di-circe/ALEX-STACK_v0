@@ -362,7 +362,7 @@ When user requests: "Add [Service] credentials"
 
 - [1PASSWORD-INTEGRATION.md](./1PASSWORD-INTEGRATION.md) - Full integration guide
 - [SETUP-LOCAL.md](./SETUP-LOCAL.md) - Local development setup
-- [VAULT_SETUP.md](../VAULT_SETUP.md) - Vault creation and initial setup
+- [VAULT_SETUP.md](SECURITY/VAULT_SETUP.md) - Vault creation and initial setup
 - [.claude/agents/secret-xpert-light.md](../.claude/agents/secret-xpert-light.md) - Secret management agent
 
 ---

@@ -1,0 +1,63 @@
+{
+  "name": "@alex-stack/orchestration-basic",
+  "version": "1.0.0",
+  "description": "Complete Claude Code orchestration system with 6 specialized agents for managing complex software projects",
+  "keywords": [
+    "claude-code",
+    "orchestration",
+    "agents",
+    "mcp",
+    "jina",
+    "notion",
+    "playwright",
+    "automation",
+    "ai",
+    "workflow"
+  ],
+  "author": "ALEX-STACK Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alchimie-di-circe/ALEX-STACK_v0"
+  },
+  "claudeCode": {
+    "type": "plugin",
+    "category": "orchestration",
+    "agentsIncluded": [
+      "jino-agent",
+      "notion-scraper-expert",
+      "coder",
+      "tester",
+      "planner",
+      "stuck"
+    ],
+    "mcpServersRequired": [
+      {
+        "name": "jina-mcp-server",
+        "description": "Jina.ai Remote MCP for web research",
+        "required": true
+      },
+      {
+        "name": "notion",
+        "description": "Suekou Notion MCP for workspace management",
+        "required": true
+      },
+      {
+        "name": "playwright",
+        "description": "Playwright MCP for visual testing",
+        "required": true
+      }
+    ],
+    "toolsRequired": [
+      {
+        "name": "TASKMASTER CLI",
+        "description": "AI-powered task breakdown for planner agent",
+        "required": false,
+        "onlyFor": "extreme complexity (8-10/10)"
+      }
+    ]
+  },
+  "scripts": {
+    "install-plugin": "./scripts/install-plugin.sh"
+  }
+}

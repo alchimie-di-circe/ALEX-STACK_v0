@@ -38,7 +38,7 @@ Both credentials will be automatically loaded from your 1Password vault 'AI DEV'
 ├── .envrc.local.example        ✅ Fallback template
 ├── .gitignore                  ✅ Protects .envrc.local
 ├── .mcp.json                   ✅ References JINA_API_KEY and NOTION_API_TOKEN
-└── VAULT_SETUP.md              ✅ Setup instructions (in Italian)
+└── ../SECURITY/VAULT_SETUP.md              ✅ Setup instructions (in Italian)
 ```
 
 ---
@@ -417,7 +417,7 @@ direnv allow
 | `Variables not loading` | Check direnv shell hook is installed |
 | `.envrc.local committed accidentally` | Run `git rm --cached .envrc.local` |
 
-See `VAULT_SETUP.md` for detailed troubleshooting.
+See `../SECURITY/VAULT_SETUP.md` for detailed troubleshooting.
 
 ---
 
@@ -429,7 +429,7 @@ See `VAULT_SETUP.md` for detailed troubleshooting.
 | `.envrc.local.example` | ✅ Verified | Template for manual fallback |
 | `.gitignore` | ✅ Verified | Protects .envrc.local |
 | `.mcp.json` | ✅ Verified | References environment variables |
-| `VAULT_SETUP.md` | ✅ Verified | Italian setup guide (existing) |
+| `../SECURITY/VAULT_SETUP.md` | ✅ Verified | Italian setup guide (existing) |
 | `MCP_AUTH_SETUP_STATUS.md` | ✅ Updated | This file (your status report with correct vault references) |
 | `verify-1password-config.sh` | ✅ Created | Automated verification script for complete setup validation |
 
@@ -487,7 +487,7 @@ Once authentication is configured and verified:
 - **direnv**: https://direnv.net/
 - **Jina AI**: https://jina.ai/docs/
 - **Notion API**: https://developers.notion.com/
-- **VAULT_SETUP.md**: Italian setup guide (in this directory)
+- **../SECURITY/VAULT_SETUP.md**: Italian setup guide (in this directory)
 
 ---
 
@@ -496,7 +496,7 @@ Once authentication is configured and verified:
 If you encounter issues:
 
 1. Check troubleshooting section above
-2. Review `VAULT_SETUP.md` for detailed instructions
+2. Review `../SECURITY/VAULT_SETUP.md` for detailed instructions
 3. Run verification checklist
 4. Consult tool documentation links above
 

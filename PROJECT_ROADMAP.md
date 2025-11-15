@@ -181,7 +181,7 @@ TASKMASTER Tasks:
 - `/CLAUDE.md` - Root orchestration guide (UPDATED with roadmap reference)
 - `/.claude/CLAUDE.md` - Orchestrator instructions (UPDATED with roadmap reference)
 - `/.claude/agents/planner.md` - Planner agent (UPDATED with roadmap reference)
-- `/AGENTS.md` - Agent guide for external systems (TO BE UPDATED)
+- `/AGENTS.md` - Agent guide for external systems (UPDATED with roadmap reference)
 
 ### Automatic Sync Points
 

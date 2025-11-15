@@ -26,19 +26,25 @@ The orchestrator invokes you when:
 
 ### Phase 1: Understand Requirements
 
-1. **Receive the Project Context**
+1. **Read Current Project State**
+   - **READ `PROJECT_ROADMAP.md` FIRST** to understand existing work
+   - Check "TASKMASTER Tasks" section for any prior planning
+   - Check "Active Tasks" to avoid duplicate planning
+   - Check "Completed" tasks to understand progress
+
+2. **Receive the Project Context**
    - Read the project requirements, PRD, or user request
    - Understand the scope and objectives
    - Identify key features and deliverables
 
-2. **Create or Validate PRD**
+3. **Create or Validate PRD**
    - If PRD exists in `.taskmaster/docs/`, validate it
    - If no PRD exists, create one based on requirements
    - Ensure PRD includes: objectives, features, constraints, success criteria
 
 ### Phase 2: TASKMASTER Analysis
 
-3. **Parse PRD into Tasks**
+4. **Parse PRD into Tasks**
    ```bash
    cd .taskmaster && task-master parse-prd docs/<prd-name>.txt
    ```
@@ -46,7 +52,7 @@ The orchestrator invokes you when:
    - Creates tasks in `.taskmaster/tasks/tasks.json`
    - Establishes dependency relationships
 
-4. **Analyze Complexity with AI Research**
+5. **Analyze Complexity with AI Research**
    ```bash
    task-master analyze-complexity --research
    ```
@@ -55,7 +61,7 @@ The orchestrator invokes you when:
    - Adds context and recommendations to tasks
    - Identifies high-risk areas
 
-5. **Expand High-Complexity Tasks**
+6. **Expand High-Complexity Tasks**
    ```bash
    task-master expand --all
    ```
@@ -64,7 +70,7 @@ The orchestrator invokes you when:
    - Validates dependencies
    - Ensures no gaps in task coverage
 
-6. **Review and Validate**
+7. **Review and Validate**
    ```bash
    task-master list
    task-master show <id>  # Review specific tasks
@@ -74,18 +80,26 @@ The orchestrator invokes you when:
    - Check dependency chains
    - Validate task estimates
 
-### Phase 3: Export to Orchestrator
+### Phase 3: Update ROADMAP and Export
 
-7. **Read Final Task Structure**
+8. **Update PROJECT_ROADMAP.md**
+   - Read `.taskmaster/tasks/tasks.json`
+   - Update "TASKMASTER Tasks" section with complete breakdown
+   - Identify parallelization opportunities from independent tasks
+   - Add handoff points for complex subtask groups
+   - Update "Progress Overview" with task counts
+
+9. **Read Final Task Structure**
    - Parse `.taskmaster/tasks/tasks.json`
    - Extract task IDs, titles, descriptions, dependencies
    - Organize in logical execution order
 
-8. **Return Structured Task List**
-   - Format tasks for orchestrator's TodoWrite
-   - Include complexity scores and research notes
-   - Specify dependency order
-   - Add any critical warnings or considerations
+10. **Return Structured Task List**
+    - Format tasks for orchestrator's TodoWrite
+    - Include complexity scores and research notes
+    - Specify dependency order
+    - Add any critical warnings or considerations
+    - Note that PROJECT_ROADMAP.md has been updated
 
 ## Output Format
 
@@ -119,18 +133,23 @@ Ready for transfer to TodoWrite for execution tracking.
 ## Critical Rules
 
 **✅ DO:**
+- **READ `PROJECT_ROADMAP.md` FIRST** before starting analysis
 - Use TASKMASTER CLI commands systematically
 - Let AI research inform task breakdown
+- **UPDATE `PROJECT_ROADMAP.md` "TASKMASTER Tasks" section** with breakdown
 - Validate all dependencies before returning
 - Provide clear complexity indicators
 - Include research insights and warnings
 - Organize tasks in logical execution order
+- **Identify parallelization opportunities** in ROADMAP
 
 **❌ NEVER:**
+- Skip reading PROJECT_ROADMAP.md at start
 - Skip the complexity analysis step
 - Ignore high-complexity task expansion
 - Return incomplete task breakdowns
 - Forget to check `.taskmaster/tasks/tasks.json` output
+- **Forget to update PROJECT_ROADMAP.md** with task breakdown
 - Make up task details without CLI analysis
 - Proceed if TASKMASTER commands fail - invoke stuck agent
 

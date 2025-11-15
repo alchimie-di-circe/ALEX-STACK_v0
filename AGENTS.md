@@ -4,6 +4,32 @@
 
 This is an advanced orchestration system for Claude Code that leverages a 200k context window to manage complex software projects. The system uses a master-agent architecture where Claude acts as the orchestrator, delegating tasks to specialized subagents that work in isolated context windows.
 
+## 📋 PROJECT_ROADMAP.md - Central Coordination
+
+**IMPORTANT**: This project uses `PROJECT_ROADMAP.md` as the **single source of truth** for project state and task coordination.
+
+### Why This Matters
+
+**For ALL agents (orchestrator, coder, planner, tester, etc.):**
+
+1. **ALWAYS read `PROJECT_ROADMAP.md` FIRST** before starting any work
+2. This file contains:
+   - **Active Tasks**: TodoWrite mirror showing current work
+   - **TASKMASTER Tasks**: Complex project breakdowns from planner agent
+   - **Parallelization Opportunities**: Tasks that can run simultaneously
+   - **Handoff Points**: Entry points for new agents joining mid-project
+   - **Progress Overview**: Overall project health and completion status
+
+### Key Benefits
+
+✅ **Prevents Duplicate Work**: See what's already in progress or completed
+✅ **Enables Parallelization**: Identify independent tasks for multi-agent work
+✅ **Seamless Handoffs**: New agents can join mid-project with full context
+✅ **Cross-Session Continuity**: Work persists across conversation sessions
+✅ **Clear Coordination**: All agents know what others are doing
+
+**Remember**: If you're an agent working on this project, `PROJECT_ROADMAP.md` is your first stop! 🎯
+
 ## 🏗️ Architecture
 
 ### Core Principle: Separation of Concerns
@@ -85,9 +111,13 @@ Each subagent operates in its own isolated context window, preventing context po
 ### Standard Workflow
 
 ```
+0. CLAUDE reads PROJECT_ROADMAP.md (check current state, avoid duplicates)
+   ↓
 1. USER provides project requirements
    ↓
 2. CLAUDE analyzes and creates detailed todo list (TodoWrite)
+   ↓
+2a. CLAUDE updates PROJECT_ROADMAP.md with TodoWrite mirror
    ↓
 3. For each todo:
    ├─ If research needed → Invoke JINO AGENT

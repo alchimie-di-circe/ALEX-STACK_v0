@@ -150,6 +150,50 @@ Each subagent operates in its own isolated context window, preventing context po
 8. CLAUDE reports final results when all todos complete
 ```
 
+## 🗺️ Project Roadmap - Unified Task Coordination
+
+### The Central Coordination Hub
+
+**File**: `/PROJECT_ROADMAP.md`
+
+This file serves as the **single source of truth** for all project tasks and progress, enabling:
+- **Parallelization**: Multiple agents can work simultaneously by seeing what's available
+- **Continuity**: Any agent can pick up where others left off
+- **Visibility**: All task status, dependencies, and progress at a glance
+- **Coordination**: Prevents duplicate work and conflicting changes
+
+### What's Tracked
+
+The roadmap mirrors and consolidates:
+1. **TodoWrite Tasks**: Real-time session tasks from the orchestrator
+2. **TASKMASTER Tasks**: Strategic planning tasks from the planner agent
+3. **Task Status**: pending, in_progress, completed, blocked
+4. **Dependencies**: What must complete before a task can start
+5. **Session History**: Record of what was done and when
+
+### Usage Protocol
+
+**ALL AGENTS (INCLUDING YOU) MUST:**
+
+1. ✅ **READ `/PROJECT_ROADMAP.md` FIRST** before starting any work
+   - Check what tasks exist and their status
+   - Identify dependencies before starting
+   - See what previous agents completed
+   - Avoid duplicate or conflicting work
+
+2. ✅ **UPDATE `/PROJECT_ROADMAP.md`** when appropriate:
+   - **Orchestrator**: Updates after TodoWrite changes, task completions
+   - **Planner Agent**: Updates after TASKMASTER operations
+   - **Other Agents**: Read-only (use for coordination)
+
+3. ✅ **COORDINATE** through the roadmap:
+   - Pick up incomplete tasks
+   - Respect dependencies
+   - Enable seamless handoffs between agents
+   - Maintain project continuity across sessions
+
+**This enables true multi-agent parallelization and coordination!**
+
 ## 🚨 Critical Design Principles
 
 ### 1. No Fallbacks Policy
@@ -263,13 +307,20 @@ No implementation is marked complete without visual verification.
 
 ### As an Orchestrator (Claude)
 
-1. **Always create detailed todo lists** immediately when given a project
-2. **Delegate one todo at a time** - no batch processing
-3. **Test every implementation** before marking complete
-4. **Never skip the research phase** when docs/best practices are needed
-5. **Maintain todo list accuracy** - update in real-time
-6. **Never implement code yourself** - always delegate to coder
-7. **Create all pages referenced in navigation** - prevent 404s
+1. **Check PROJECT_ROADMAP.md first** before starting any work
+2. **Always create detailed todo lists** immediately when given a project
+3. **Update PROJECT_ROADMAP.md** when creating/completing tasks
+4. **Delegate strategically**:
+   - Simple features (1-3/10): Single coder agent
+   - Moderate features (4-7/10): Break into 4-8 tasks, parallelize independent ones
+   - Complex features (8-10/10): Invoke planner agent for TASKMASTER breakdown
+5. **Parallelize when possible**: Invoke multiple coder agents for independent tasks
+6. **Test every implementation** before marking complete
+7. **Never skip the research phase** when docs/best practices are needed
+8. **Maintain todo list accuracy** - update in real-time
+9. **Never implement code yourself** - always delegate to coder
+10. **Create all pages referenced in navigation** - prevent 404s
+11. **Preserve existing patterns**: Minimal changes, follow project architecture
 
 ### As a User
 
@@ -479,9 +530,11 @@ A successful orchestration session exhibits:
 
 ## 🎓 Learning Resources
 
+- **Project Roadmap**: `/PROJECT_ROADMAP.md` - **CHECK THIS FIRST!** Single source of truth for all tasks
 - **Repository**: `.claude/CLAUDE.md` - Full orchestrator instructions
 - **Agents**: `.claude/agents/*.md` - Individual subagent definitions
 - **MCP Config**: `.mcp.json` - Server configurations
+- **TASKMASTER**: `.taskmaster/tasks/tasks.json` - Strategic planning tasks
 - **Examples**: `README.md` - User-friendly examples and walkthroughs
 
 ## 🔄 Adapting This System

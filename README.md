@@ -8,6 +8,8 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 
 - **🧠 Claude (You)** - The orchestrator with 200k context managing todos and the big picture
 - **🔍 Jino Agent** - Web research specialist powered by Jina.ai MCP for docs extraction and searches
+- **📚 Notion Scraper Expert** - Notion workspace specialist powered by Suekou MCP for knowledge extraction
+- **📋 Planner Agent** - AI-powered project planning using TASKMASTER CLI for complex breakdowns
 - **✍️ Coder Subagent** - Implements one todo at a time in its own clean context
 - **👁️ Tester Subagent** - Verifies implementations using Playwright in its own context
 - **🆘 Stuck Subagent** - Human escalation point when ANY problem occurs
@@ -23,6 +25,46 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 - **🆕 Local E2B Sandbox**: Secure Docker container for running GitHub Copilot CLI with MCP integrations
 - **🆕 E2B Cloud Sandbox**: Cloud-powered sandboxes with Docker MCP Gateway (200+ tools)
 - **🆕 Awesome Copilot MCP**: Access community prompts and instructions directly
+
+## 📦 Using in Other Projects
+
+Want to use this orchestration system in your own projects? It's **super easy**!
+
+### Quick Import (Recommended)
+
+From any project, just ask Claude:
+
+```bash
+cd /path/to/your-project
+claude
+
+# Then use the slash command:
+/import-orchestration from /path/to/ALEX-STACK_v0
+
+# Or simply ask:
+"Import the orchestration plugin from /path/to/ALEX-STACK_v0"
+```
+
+Claude will automatically:
+- ✅ Copy all orchestration files (`.claude/`, `PROJECT_ROADMAP.md`, `.taskmaster/`)
+- ✅ Verify installation
+- ✅ Switch to orchestrator mode
+- ✅ Be ready to build!
+
+**That's it!** Claude is now your orchestrator in the new project.
+
+### After import, your project has:
+- **Orchestrator** - Claude with 200k context managing everything
+- **Agent delegation** - coder, tester, planner, jino-agent, notion-scraper-expert, stuck
+- **PROJECT_ROADMAP.md** - Unified task tracking for multi-agent coordination
+- **TASKMASTER** - AI-powered breakdown for extreme complexity (8-10/10)
+- **Parallelization** - Multiple coder agents work on independent tasks
+
+### Learn More
+
+📖 **See [QUICKSTART.md](./QUICKSTART.md)** for detailed import instructions, troubleshooting, and examples.
+
+---
 
 ## 🚀 Quick Start
 
@@ -181,6 +223,45 @@ Repeat until all todos done ✅
 - Finding code examples or technical resources
 - Any task where Jina AI's extraction is superior to basic web fetch
 
+### Notion Scraper Expert (Knowledge Extraction)
+**Fresh Context Per Notion Task**
+
+- Gets invoked when Notion workspace content needs to be extracted
+- Works in its own clean context window
+- Uses **Suekou Notion MCP Server** for Notion operations:
+  - **Page Retrieval**: Get Notion pages with properties and content
+  - **Database Queries**: Query databases with filters and sorts
+  - **Markdown Conversion**: Auto-convert to token-efficient Markdown
+  - **Content Management**: Create, edit, delete with user approval
+- **Preferred over manual Notion API** for knowledge extraction
+- **Never uses fallbacks** - invokes stuck agent immediately on errors
+- Returns clean, optimized Markdown to Claude
+
+**When it's used**:
+- Extracting documentation from Notion pages
+- Querying Notion databases for project information
+- Converting Notion content to implementation specs
+- Organizing Notion workspace programmatically
+- When user provides Notion URLs in requirements
+
+### Planner Agent (Strategic Planning)
+**Fresh Context Per Planning Session**
+
+- Gets invoked for extreme complexity projects (8-10/10)
+- Works in its own clean context window
+- Uses **TASKMASTER CLI** for AI-powered task breakdown:
+  - **PRD Parsing**: Convert requirements to structured tasks
+  - **Complexity Analysis**: AI scores tasks with web research
+  - **Task Expansion**: Break down high-complexity tasks automatically
+  - **Dependency Validation**: Ensure proper task ordering
+- Returns comprehensive task breakdown to orchestrator
+- Updates PROJECT_ROADMAP.md with strategic tasks
+
+**When it's used**:
+- Multi-layered, complex projects requiring strategic planning
+- Large-scale feature implementations
+- When intelligent task breakdown with dependencies is needed
+
 ### Coder Subagent
 **Fresh Context Per Task**
 
@@ -309,6 +390,8 @@ Coder: Reports completion to Claude
 │   ├── CLAUDE.md              # Orchestration instructions for main Claude
 │   └── agents/
 │       ├── jino-agent.md     # Jino Agent - Web research specialist (Jina.ai MCP)
+│       ├── notion-scraper-expert.md # Notion Scraper - Notion workspace specialist (Suekou MCP)
+│       ├── planner.md        # Planner - AI-powered planning (TASKMASTER CLI)
 │       ├── coder.md          # Coder subagent definition
 │       ├── tester.md         # Tester subagent definition
 │       └── stuck.md          # Stuck subagent definition
@@ -376,7 +459,25 @@ This system uses three powerful MCP servers to enhance agent capabilities:
 - Verifies responsive design
 - Checks console errors
 
-### 3. Awesome Copilot MCP Server 🆕
+### 3. Suekou Notion MCP Server 🆕
+**Purpose:** Notion workspace extraction and management
+
+**Used by:** Notion Scraper Expert for knowledge extraction
+
+**Features:**
+- **Page Retrieval:** Get Notion pages with properties and content
+- **Database Queries:** Query databases with filters and sorts  
+- **Markdown Conversion:** Auto-convert to token-efficient Markdown
+- **Content Management:** Create, edit, delete pages (with approval)
+- **Workspace Search:** Search across entire Notion workspace
+- **Token Optimization:** Dramatically reduces token usage
+
+**API Key Setup:**
+1. Create a Notion integration at [notion.so/my-integrations](https://www.notion.so/my-integrations)
+2. Set the environment variable: `export NOTION_API_TOKEN="your-api-key-here"`
+3. Enable Markdown conversion: `export NOTION_MARKDOWN_CONVERSION="true"`
+
+### 4. Awesome Copilot MCP Server
 **Purpose:** Community prompts and instructions discovery
 
 **Used by:** Developers and AI agents for enhanced Copilot capabilities

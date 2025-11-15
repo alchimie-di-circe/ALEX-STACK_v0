@@ -34,10 +34,10 @@
 
 ## 🎯 Current Project Status
 
-**Project Name**: ALEX-STACK_v0
-**Last Updated**: 2025-11-15
-**Active Branch**: `claude/add-project-roadmap-mirror-01WUCCnENcs1f5pAokVQsUbP`
-**Overall Progress**: Initialization Phase
+**Project Name**: [Your Project Name]
+**Last Updated**: [Date]
+**Active Branch**: [branch-name]
+**Overall Progress**: [Initialization/Development/Testing/Complete]
 
 ---
 
@@ -45,77 +45,31 @@
 
 | Source | Total | Pending | In Progress | Completed |
 |--------|-------|---------|-------------|-----------|
-| TodoWrite (Session) | 6 | 5 | 1 | 0 |
+| TodoWrite (Session) | 0 | 0 | 0 | 0 |
 | TASKMASTER (Strategic) | 0 | 0 | 0 | 0 |
-| **TOTAL** | **6** | **5** | **1** | **0** |
+| **TOTAL** | **0** | **0** | **0** | **0** |
 
 ---
 
 ## 🔄 Active TodoWrite Tasks (Current Session)
 
-### Task 1: ✏️ IN PROGRESS
-**Content**: Create PROJECT_ROADMAP.md with mirror structure for tasks.json and TodoWrite
-**Active Form**: Creating PROJECT_ROADMAP.md mirror file
-**Status**: `in_progress`
-**Assigned To**: Orchestrator
-**Dependencies**: None
-**Notes**: Core infrastructure for agent coordination
-
----
-
-### Task 2: ⏳ PENDING
-**Content**: Update .claude/CLAUDE.md to reference PROJECT_ROADMAP.md
-**Active Form**: Updating orchestrator instructions
+### Task 1: ⏳ PENDING
+**Content**: [Task description]
 **Status**: `pending`
-**Dependencies**: Task 1
-**Notes**: Add instructions to check PROJECT_ROADMAP.md before any work
+**Assigned To**: [Agent name or "Unassigned"]
+**Dependencies**: [Task IDs or "None"]
+**Notes**: [Additional context]
 
 ---
 
-### Task 3: ⏳ PENDING
-**Content**: Update planner agent instructions to reference PROJECT_ROADMAP.md
-**Active Form**: Updating planner agent instructions
-**Status**: `pending`
-**Dependencies**: Task 1
-**Notes**: Ensure planner updates roadmap after TASKMASTER operations
-
----
-
-### Task 4: ⏳ PENDING
-**Content**: Update root CLAUDE.md to reference PROJECT_ROADMAP.md
-**Active Form**: Updating root CLAUDE.md
-**Status**: `pending`
-**Dependencies**: Task 1
-**Notes**: Make roadmap check mandatory for all agents
-
----
-
-### Task 5: ⏳ PENDING
-**Content**: Check for and update AGENTS.md if it exists
-**Active Form**: Checking and updating AGENTS.md
-**Status**: `pending`
-**Dependencies**: Task 1
-**Notes**: Extend roadmap integration to AGENTS.md
-
----
-
-### Task 6: ⏳ PENDING
-**Content**: Commit and push all changes
-**Active Form**: Committing and pushing changes
-**Status**: `pending`
-**Dependencies**: Tasks 2, 3, 4, 5
-**Notes**: Final step - ensure all changes are persisted
-
----
-
-## 🎓 TASKMASTER Strategic Tasks
+## 🗺️ TASKMASTER Strategic Tasks
 
 ### Master Branch Tasks
 
 **Source**: `.taskmaster/tasks/tasks.json`
-**Last Synced**: 2025-11-15
+**Last Synced**: [Date]
 
-Currently empty - no TASKMASTER tasks defined. When the planner agent creates tasks via TASKMASTER CLI, they will appear here.
+*When the planner agent creates tasks via TASKMASTER CLI, they will appear here.*
 
 **Example Structure (when populated):**
 
@@ -138,11 +92,7 @@ Currently empty - no TASKMASTER tasks defined. When the planner agent creates ta
 
 ```
 Current Session (TodoWrite):
-Task 1 (PROJECT_ROADMAP.md creation)
-  ↓
-Tasks 2, 3, 4, 5 (Documentation updates - can run in parallel)
-  ↓
-Task 6 (Commit and push)
+[Task 1] → [Task 2] → [Task 3]
 
 TASKMASTER Tasks:
 (None defined yet)
@@ -154,23 +104,20 @@ TASKMASTER Tasks:
 
 ### Current Session
 
-- **Can Run in Parallel** (after Task 1 completes):
-  - Task 2: Update .claude/CLAUDE.md
-  - Task 3: Update planner.md
-  - Task 4: Update CLAUDE.md
-  - Task 5: Update AGENTS.md
+- **Can Run in Parallel**:
+  - [List independent tasks that can run simultaneously]
 
 - **Must Run Sequentially**:
-  - Task 1 → Tasks 2-5 → Task 6
+  - [List dependent tasks that must complete in order]
 
 ---
 
 ## 📝 Session History
 
-### 2025-11-15 - Initial Roadmap Setup
-- Created PROJECT_ROADMAP.md
-- Established update protocols
-- Defined integration points
+### [Date] - [Session Name]
+- [Bullet point summary of what was accomplished]
+- [Key decisions made]
+- [Issues encountered and resolved]
 
 ---
 
@@ -178,10 +125,10 @@ TASKMASTER Tasks:
 
 ### Files that Reference This Roadmap
 
-- `/CLAUDE.md` - Root orchestration guide (UPDATED with roadmap reference)
-- `/.claude/CLAUDE.md` - Orchestrator instructions (UPDATED with roadmap reference)
-- `/.claude/agents/planner.md` - Planner agent (UPDATED with roadmap reference)
-- `/AGENTS.md` - Agent guide for external systems (UPDATED with roadmap reference)
+- `/CLAUDE.md` - Root orchestration guide
+- `/.claude/CLAUDE.md` - Orchestrator instructions
+- `/.claude/agents/planner.md` - Planner agent
+- `/AGENTS.md` - Agent guide for external systems
 
 ### Automatic Sync Points
 
@@ -254,7 +201,7 @@ TASKMASTER Tasks:
 
 | Version | Date | Change | Author |
 |---------|------|--------|--------|
-| 1.0.0 | 2025-11-15 | Initial creation | Orchestrator |
+| 1.0.0 | [Date] | Initial creation | Orchestrator |
 
 ---
 

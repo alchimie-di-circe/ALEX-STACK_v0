@@ -356,14 +356,22 @@ Coder: Reports completion to Claude
 │       └── stuck.md          # Stuck subagent definition
 ├── .devcontainer/
 │   └── devcontainer.json      # DevContainer configuration (Anthropic official)
-├── .mcp.json                  # MCP servers configuration (Playwright + Jina AI)
+├── .mcp.json                  # MCP servers configuration (Playwright + Jina AI + Notion)
 ├── .env.example               # Environment variables template
-├── .mcp.json                  # MCP servers configuration (Playwright + Jina AI + Awesome Copilot)
-├── Dockerfile.e2b             # Docker configuration for E2B sandbox
-├── docker-entrypoint.sh       # Entry point script for E2B container
-├── e2b-sandbox.config.json    # E2B sandbox configuration
-├── E2B_SETUP_GUIDE.md         # Comprehensive E2B setup documentation
-├── COPILOT_QUICK_START.md     # Quick start guide for GitHub Copilot CLI
+├── e2b/                       # E2B sandbox implementation files
+│   ├── Dockerfile.e2b         # Docker configuration for E2B sandbox
+│   ├── Dockerfile.e2b.local   # Local development Dockerfile
+│   ├── docker-entrypoint.sh   # Entry point script for E2B container
+│   ├── e2b-sandbox.config.json # E2B sandbox configuration
+│   ├── start-e2b-sandbox.sh   # One-command launcher script
+│   └── src/
+│       └── e2b-cloud-sandbox.js # E2B cloud sandbox implementation
+├── docs/                      # Documentation organized by topic
+│   ├── E2B/                   # E2B sandbox documentation
+│   ├── MCP/                   # MCP servers documentation
+│   ├── SECURITY/              # Secrets and security guides
+│   ├── COPILOT_QUICK_START.md
+│   └── SETUP-LOCAL.md
 ├── .gitignore
 └── README.md
 ```
@@ -448,10 +456,10 @@ Self-hosted Docker container on your machine with manual MCP configuration.
 
 ```bash
 # Quick start with launcher script
-./start-e2b-sandbox.sh
+./e2b/start-e2b-sandbox.sh
 
 # Or build manually
-docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .
+docker build -f e2b/Dockerfile.e2b -t alex-stack-e2b:latest .
 docker run -it --rm -v $(pwd):/workspace alex-stack-e2b:latest
 ```
 

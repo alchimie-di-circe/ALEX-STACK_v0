@@ -18,7 +18,7 @@ chmod +x start-e2b-sandbox.sh
 
 ```bash
 # Build and run the E2B sandbox
-docker build -f Dockerfile.e2b -t alex-stack-e2b:latest . && \
+docker build -f ../e2b/Dockerfile.e2b -t alex-stack-e2b:latest . && \
 docker run -it --rm \
   -v $(pwd):/workspace \
   -e GITHUB_TOKEN=$GITHUB_TOKEN \

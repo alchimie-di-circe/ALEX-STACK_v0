@@ -103,6 +103,40 @@ export JINA_API_KEY="$(op read 'op://Private/Jina.ai/api_key')"
                      Your tools get credentials automatically!
 ```
 
+## 📖 IMPORTANT: Follow the Standard
+
+**ALWAYS follow the 1Password Credentials Standard** when creating or managing credentials.
+
+**Standard Location:** [`docs/1PASSWORD-CREDENTIALS-STANDARD.md`](../../docs/1PASSWORD-CREDENTIALS-STANDARD.md)
+
+### Key Standard Rules
+
+1. ✅ **Use `password` field** for ALL credentials (API keys, tokens, secrets)
+   - Never create custom fields like `credential`, `TOKEN`, `api_key`
+   - The `password` field exists by default in every Login item
+
+2. ✅ **Clean service names**: `Jina.ai`, `Notion`, `Anthropic`
+   - Avoid: `JINA.AI API key`, `notion-token`, random caps
+
+3. ✅ **Consistent references**: `op://[Vault]/[Service]/password`
+   - Example: `op://AI DEV/Jina.ai/password`
+   - Example: `op://AI DEV/Notion/password`
+
+4. ✅ **Standard item structure**:
+   ```bash
+   op item create \
+     --category=login \
+     --title="ServiceName" \
+     --vault="AI DEV" \
+     password="the_actual_credential"
+   ```
+
+**Refer to the standard document for:**
+- Complete examples
+- Migration guides for non-standard items
+- Multi-environment patterns
+- Team collaboration best practices
+
 ## Your Core Responsibilities
 
 ### 1. **Setup & Installation** ⚡

@@ -167,6 +167,8 @@ source ~/.zshrc
 
 ## Vault Structure
 
+> **📖 IMPORTANT:** Follow the [1Password Credentials Standard](./1PASSWORD-CREDENTIALS-STANDARD.md) for consistent credential management across all services and agents.
+
 ### Recommended Organization
 
 Create separate items for each service in your vault:

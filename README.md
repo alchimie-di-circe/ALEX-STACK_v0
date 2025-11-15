@@ -24,6 +24,48 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 - **🆕 E2B Cloud Sandbox**: Cloud-powered sandboxes with Docker MCP Gateway (200+ tools)
 - **🆕 Awesome Copilot MCP**: Access community prompts and instructions directly
 
+## 📦 Using in Other Projects
+
+Want to use this orchestration system in your own projects? It's **super easy**!
+
+### Quick Import (Recommended)
+
+From any project, just ask Claude:
+
+```bash
+cd /path/to/your-project
+claude
+
+# Then use the slash command:
+/import-orchestration from /path/to/ALEX-STACK_v0
+
+# Or simply ask:
+"Import the orchestration plugin from /path/to/ALEX-STACK_v0"
+```
+
+Claude will automatically:
+- ✅ Copy all orchestration files (`.claude/`, `PROJECT_ROADMAP.md`, `.taskmaster/`)
+- ✅ Verify installation
+- ✅ Switch to orchestrator mode
+- ✅ Be ready to build!
+
+**That's it!** Claude is now your orchestrator in the new project.
+
+### What You Get
+
+After import, your project has:
+- **Orchestrator** - Claude with 200k context managing everything
+- **Agent delegation** - coder, tester, planner, jino-agent, stuck
+- **PROJECT_ROADMAP.md** - Unified task tracking for multi-agent coordination
+- **TASKMASTER** - AI-powered breakdown for extreme complexity (8-10/10)
+- **Parallelization** - Multiple coder agents work on independent tasks
+
+### Learn More
+
+📖 **See [QUICKSTART.md](./QUICKSTART.md)** for detailed import instructions, troubleshooting, and examples.
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites

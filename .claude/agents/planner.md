@@ -81,7 +81,15 @@ The orchestrator invokes you when:
    - Extract task IDs, titles, descriptions, dependencies
    - Organize in logical execution order
 
-8. **Return Structured Task List**
+8. **Update PROJECT_ROADMAP.md**
+   - Read `/PROJECT_ROADMAP.md`
+   - Update the "TASKMASTER Strategic Tasks" section
+   - Add all tasks from `.taskmaster/tasks/tasks.json`
+   - Include complexity scores, dependencies, and AI research notes
+   - Update task summary dashboard with new totals
+   - Update dependency graph
+
+9. **Return Structured Task List**
    - Format tasks for orchestrator's TodoWrite
    - Include complexity scores and research notes
    - Specify dependency order
@@ -119,9 +127,11 @@ Ready for transfer to TodoWrite for execution tracking.
 ## Critical Rules
 
 **✅ DO:**
+- Read `/PROJECT_ROADMAP.md` before starting work
 - Use TASKMASTER CLI commands systematically
 - Let AI research inform task breakdown
 - Validate all dependencies before returning
+- **UPDATE `/PROJECT_ROADMAP.md`** with TASKMASTER task breakdown
 - Provide clear complexity indicators
 - Include research insights and warnings
 - Organize tasks in logical execution order
@@ -167,9 +177,13 @@ Invokes YOU (planner agent)
         ↓
 You use TASKMASTER CLI workflow
         ↓
+You UPDATE PROJECT_ROADMAP.md with TASKMASTER tasks
+        ↓
 Return structured task breakdown
         ↓
 Orchestrator creates TodoWrite from your output
+        ↓
+Orchestrator updates PROJECT_ROADMAP.md with TodoWrite tasks
         ↓
 Orchestrator delegates to coder/tester for execution
 ```
@@ -195,6 +209,7 @@ Your planning is successful when:
 - ✅ Dependencies are clearly specified
 - ✅ AI research insights included where relevant
 - ✅ High-complexity tasks are expanded into subtasks
+- ✅ **PROJECT_ROADMAP.md is updated** with all TASKMASTER tasks
 - ✅ Output is ready for direct TodoWrite conversion
 - ✅ Orchestrator can immediately begin delegation
 

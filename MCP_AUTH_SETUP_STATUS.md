@@ -51,8 +51,9 @@ The `.envrc` file has been updated with intelligent fallback logic:
 
 ```bash
 # Primary: Try to load from 1Password vault "AI DEV"
-JINA_API_KEY="$(op read "op://AI DEV/Jina.ai/api_key")"
-NOTION_API_TOKEN="$(op read "op://AI DEV/Notion MCP Suekou/token")"
+# Using actual item names and field names from the vault
+JINA_API_KEY="$(op read "op://AI DEV/JINA.AI API key/credential")"
+NOTION_API_TOKEN="$(op read "op://AI DEV/NOTION SUEKOU MCP server/TOKEN")"
 
 # Fallback: If 1Password not available, use .envrc.local
 if [ -z "$JINA_API_KEY" ] && [ -z "$NOTION_API_TOKEN" ]; then
@@ -60,10 +61,16 @@ if [ -z "$JINA_API_KEY" ] && [ -z "$NOTION_API_TOKEN" ]; then
 fi
 ```
 
+**Current Vault Item References:**
+- Jina AI: Item name `JINA.AI API key`, field `credential`
+- Notion: Item name `NOTION SUEKOU MCP server`, field `TOKEN`
+
 This means:
 - If you have 1Password CLI installed and authenticated → credentials auto-load from vault
 - If you don't have 1Password CLI → falls back to .envrc.local
 - Supports both cloud and local workflows seamlessly
+
+**Note:** These items use non-standard field names. For future credentials, follow the [1Password Credentials Standard](./docs/1PASSWORD-CREDENTIALS-STANDARD.md) which recommends using the `password` field for all credentials.
 
 ### MCP Server Configuration
 
@@ -148,25 +155,46 @@ op vault list
 # Should show "AI DEV" (and possibly "Personal")
 ```
 
-### Step 4: Create Vault Items (if not already created)
+### Step 4: Verify Vault Items Exist
 
-If you don't already have these items in your "AI DEV" vault, create them:
+The configuration expects these specific items in your "AI DEV" vault:
 
+**Required Items:**
+1. Item name: `JINA.AI API key`
+   - Field name: `credential`
+   - Reference: `op://AI DEV/JINA.AI API key/credential`
+
+2. Item name: `NOTION SUEKOU MCP server`
+   - Field name: `TOKEN`
+   - Reference: `op://AI DEV/NOTION SUEKOU MCP server/TOKEN`
+
+**Verify they exist:**
 ```bash
-# Create Jina.ai item
-op item create \
-  --category=login \
-  --title="Jina.ai" \
-  --vault="AI DEV" \
-  api_key="YOUR_ACTUAL_JINA_API_KEY_HERE"
+# Check if Jina item exists
+op item get "JINA.AI API key" --vault "AI DEV"
 
-# Create Notion MCP Suekou item
+# Check if Notion item exists
+op item get "NOTION SUEKOU MCP server" --vault "AI DEV"
+```
+
+**If items don't exist, create them:**
+```bash
+# Create Jina.AI API key item with 'credential' field
 op item create \
   --category=login \
-  --title="Notion MCP Suekou" \
+  --title="JINA.AI API key" \
   --vault="AI DEV" \
-  token="YOUR_ACTUAL_NOTION_TOKEN_HERE"
+  credential[text]="YOUR_ACTUAL_JINA_API_KEY_HERE"
+
+# Create Notion SUEKOU MCP server item with 'TOKEN' field
+op item create \
+  --category=login \
+  --title="NOTION SUEKOU MCP server" \
+  --vault="AI DEV" \
+  TOKEN[text]="YOUR_ACTUAL_NOTION_TOKEN_HERE"
 ```
+
+**Note:** These items use custom field names (`credential` and `TOKEN`) instead of the standard `password` field. For future credentials, follow the [1Password Credentials Standard](./docs/1PASSWORD-CREDENTIALS-STANDARD.md).
 
 ### Step 5: Setup direnv Shell Hook
 
@@ -208,6 +236,23 @@ Expected output:
 JINA_API_KEY: jina_xxxxxxxxxxxxx...
 NOTION_API_TOKEN: secret_xxxxxxxxxxx...
 ```
+
+**Automated Verification:**
+
+Run the comprehensive verification script to check all components:
+
+```bash
+./verify-1password-config.sh
+```
+
+This script checks:
+- 1Password CLI installation and authentication
+- Vault and item existence with correct field names
+- direnv installation and configuration
+- Environment variable loading
+- .mcp.json configuration
+
+It will provide detailed feedback on any missing or misconfigured components.
 
 ---
 
@@ -260,8 +305,8 @@ Before using MCP servers, verify each step:
 - [ ] 1Password CLI installed: `which op`
 - [ ] 1Password authenticated: `op vault list`
 - [ ] Vault "AI DEV" exists: `op vault list | grep "AI DEV"`
-- [ ] Jina item exists: `op item get "Jina.ai" --vault "AI DEV"`
-- [ ] Notion item exists: `op item get "Notion MCP Suekou" --vault "AI DEV"`
+- [ ] Jina item exists: `op item get "JINA.AI API key" --vault "AI DEV"`
+- [ ] Notion item exists: `op item get "NOTION SUEKOU MCP server" --vault "AI DEV"`
 - [ ] direnv shell hook installed: `grep direnv ~/.bashrc` or `~/.zshrc`
 - [ ] direnv allowed in project: `direnv status` (not blocked)
 - [ ] JINA_API_KEY loaded: `echo $JINA_API_KEY` (shows key)
@@ -380,12 +425,13 @@ See `VAULT_SETUP.md` for detailed troubleshooting.
 
 | File | Status | Purpose |
 |------|--------|---------|
-| `.envrc` | ✅ Updated | Configured with 1Password integration + fallback |
+| `.envrc` | ✅ Updated | Configured with 1Password integration + fallback using correct vault item names |
 | `.envrc.local.example` | ✅ Verified | Template for manual fallback |
 | `.gitignore` | ✅ Verified | Protects .envrc.local |
 | `.mcp.json` | ✅ Verified | References environment variables |
 | `VAULT_SETUP.md` | ✅ Verified | Italian setup guide (existing) |
-| `MCP_AUTH_SETUP_STATUS.md` | ✅ Created | This file (your status report) |
+| `MCP_AUTH_SETUP_STATUS.md` | ✅ Updated | This file (your status report with correct vault references) |
+| `verify-1password-config.sh` | ✅ Created | Automated verification script for complete setup validation |
 
 ---
 

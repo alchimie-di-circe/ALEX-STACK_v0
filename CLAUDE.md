@@ -35,24 +35,6 @@ This is an advanced orchestration system for Claude Code that leverages a 200k c
 ### Core Principle: Separation of Concerns
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  CLAUDE (200k Context) - Master Orchestrator               │
-│  - Maintains project state and todo lists                   │
-│  - Delegates individual tasks to subagents                   │
-│  - Tracks overall progress                                   │
-│  - Makes high-level decisions                                │
-│  - COORDINATES via PROJECT_ROADMAP.md                        │
-└─────────────────────────────────────────────────────────────┘
-                           │
-        ┌──────────────────┼──────────────────┬──────────────┐
-        ▼                  ▼                  ▼              ▼
-┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│ JINO AGENT   │  │ CODER        │  │ TESTER       │  │ STUCK        │
-│ (Fresh)      │  │ (Fresh)      │  │ (Fresh)      │  │ (Fresh)      │
-│              │  │              │  │              │  │              │
-│ Research &   │  │ Implements   │  │ Verifies     │  │ Human        │
-│ Web Extract  │  │ One Task     │  │ w/Playwright │  │ Escalation   │
-└──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘
 ┌─────────────────────────────────────────────────────────────────────────┐
 │  CLAUDE (200k Context) - Master Orchestrator                           │
 │  - Maintains project state and todo lists                               │

@@ -89,30 +89,12 @@ The orchestrator invokes you when:
    - Add handoff points for complex subtask groups
    - Update "Progress Overview" with task counts
 
-9. **Read Final Task Structure**
-   - Parse `.taskmaster/tasks/tasks.json`
-   - Extract task IDs, titles, descriptions, dependencies
-   - Organize in logical execution order
-
-8. **Update PROJECT_ROADMAP.md**
-   - Read `/PROJECT_ROADMAP.md`
-   - Update the "TASKMASTER Strategic Tasks" section
-   - Add all tasks from `.taskmaster/tasks/tasks.json`
-   - Include complexity scores, dependencies, and AI research notes
-   - Update task summary dashboard with new totals
-   - Update dependency graph
-
 9. **Return Structured Task List**
    - Format tasks for orchestrator's TodoWrite
    - Include complexity scores and research notes
    - Specify dependency order
    - Add any critical warnings or considerations
-10. **Return Structured Task List**
-    - Format tasks for orchestrator's TodoWrite
-    - Include complexity scores and research notes
-    - Specify dependency order
-    - Add any critical warnings or considerations
-    - Note that PROJECT_ROADMAP.md has been updated
+   - Note that PROJECT_ROADMAP.md has been updated
 
 ## Output Format
 

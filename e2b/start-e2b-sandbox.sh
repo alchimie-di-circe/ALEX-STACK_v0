@@ -23,16 +23,20 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
+# Detect script directory and project root
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+
 # Check if the image exists, if not build it
 if ! docker image inspect alex-stack-e2b:latest &> /dev/null; then
     echo -e "${YELLOW}Docker image not found. Building...${NC}"
-    docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .
+    (cd "$SCRIPT_DIR" && docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .)
     echo -e "${GREEN}Build complete!${NC}"
     echo ""
 else
     # Check if Dockerfile is newer than the image
-    if [[ "Dockerfile.e2b" -nt $(docker image inspect -f '{{.Created}}' alex-stack-e2b:latest) ]]; then
-        echo -e "${YELLOW}Dockerfile.e2b has been updated. Consider rebuilding the image with 'docker build -f Dockerfile.e2b -t alex-stack-e2b:latest .'${NC}"
+    if [[ "$SCRIPT_DIR/Dockerfile.e2b" -nt $(docker image inspect -f '{{.Created}}' alex-stack-e2b:latest) ]]; then
+        echo -e "${YELLOW}Dockerfile.e2b has been updated. Consider rebuilding the image with 'docker build -f e2b/Dockerfile.e2b -t alex-stack-e2b:latest .'${NC}"
         echo ""
     fi
 fi

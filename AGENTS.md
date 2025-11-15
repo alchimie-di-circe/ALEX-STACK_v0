@@ -4,28 +4,57 @@
 
 This is an advanced orchestration system for Claude Code that leverages a 200k context window to manage complex software projects. The system uses a master-agent architecture where Claude acts as the orchestrator, delegating tasks to specialized subagents that work in isolated context windows.
 
+## 📋 PROJECT_ROADMAP.md - Central Coordination
+
+**IMPORTANT**: This project uses `PROJECT_ROADMAP.md` as the **single source of truth** for project state and task coordination.
+
+### Why This Matters
+
+**For ALL agents (orchestrator, coder, planner, tester, etc.):**
+
+1. **ALWAYS read `PROJECT_ROADMAP.md` FIRST** before starting any work
+2. This file contains:
+   - **Active Tasks**: TodoWrite mirror showing current work
+   - **TASKMASTER Tasks**: Complex project breakdowns from planner agent
+   - **Parallelization Opportunities**: Tasks that can run simultaneously
+   - **Handoff Points**: Entry points for new agents joining mid-project
+   - **Progress Overview**: Overall project health and completion status
+
+### Key Benefits
+
+✅ **Prevents Duplicate Work**: See what's already in progress or completed
+✅ **Enables Parallelization**: Identify independent tasks for multi-agent work
+✅ **Seamless Handoffs**: New agents can join mid-project with full context
+✅ **Cross-Session Continuity**: Work persists across conversation sessions
+✅ **Clear Coordination**: All agents know what others are doing
+
+**Remember**: If you're an agent working on this project, `PROJECT_ROADMAP.md` is your first stop! 🎯
+
 ## 🏗️ Architecture
 
 ### Core Principle: Separation of Concerns
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  CLAUDE (200k Context) - Master Orchestrator               │
-│  - Maintains project state and todo lists                   │
-│  - Delegates individual tasks to subagents                   │
-│  - Tracks overall progress                                   │
-│  - Makes high-level decisions                                │
-└─────────────────────────────────────────────────────────────┘
-                           │
-        ┌──────────────────┼──────────────────┬──────────────┐
-        ▼                  ▼                  ▼              ▼
-┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│ JINO AGENT   │  │ CODER        │  │ TESTER       │  │ STUCK        │
-│ (Fresh)      │  │ (Fresh)      │  │ (Fresh)      │  │ (Fresh)      │
-│              │  │              │  │              │  │              │
-│ Research &   │  │ Implements   │  │ Verifies     │  │ Human        │
-│ Web Extract  │  │ One Task     │  │ w/Playwright │  │ Escalation   │
-└──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│  CLAUDE (200k Context) - Master Orchestrator                           │
+│  - Maintains project state and todo lists                               │
+│  - Delegates individual tasks to subagents                               │
+│  - Tracks overall progress                                               │
+│  - Makes high-level decisions                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+        ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
+        ▼           ▼           ▼           ▼           ▼           ▼           ▼
+    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
+    │ JINO   │  │ NOTION │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
+    │ AGENT  │  │SCRAPER │  │        │  │        │  │        │  │        │  │ XPERT  │
+    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
+    │        │  │        │  │        │  │        │  │        │  │        │  │        │
+    │Research│  │ Notion │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
+    │& Web   │  │Extract │  │One Task│  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
+    │Extract │  │& Mgmt  │  │        │  │wright  │  │down    │  │ation   │  │direnv+ │
+    │        │  │        │  │        │  │        │  │        │  │        │  │1Pass   │
+    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
 ```
 
 ### The Subagent System
@@ -38,40 +67,73 @@ Each subagent operates in its own isolated context window, preventing context po
    - Performs AI-powered web searches
    - Returns structured research to orchestrator
 
-2. **Coder** - Implementation specialist
+2. **Notion Scraper Expert** - Notion workspace specialist
+   - Uses Suekou Notion MCP for Notion operations
+   - Extracts knowledge from Notion pages/databases
+   - Converts Notion content to optimized Markdown
+   - Manages Notion content (create, edit, delete with approval)
+   - Returns structured documentation to orchestrator
+
+3. **Coder** - Implementation specialist
    - Receives ONE specific todo item
    - Implements clean, functional code
    - Reports completion status
    - Escalates immediately on errors
 
-3. **Tester** - Visual verification specialist
+4. **Tester** - Visual verification specialist
    - Uses Playwright MCP for browser automation
    - Takes screenshots for visual validation
    - Tests interactions and navigation
    - Reports pass/fail results
 
-4. **Stuck** - Human escalation point
+5. **Planner** - AI-powered project planning specialist
+   - Uses TASKMASTER CLI for extreme complexity (8-10/10)
+   - Breaks down complex projects into structured tasks
+   - Analyzes complexity with AI-powered research
+   - Validates task dependencies
+   - Returns comprehensive task breakdown to orchestrator
+
+6. **Stuck** - Human escalation point
    - ONLY agent allowed to use AskUserQuestion
    - Presents clear options to user
    - Blocks progress until human decision
    - Returns decision to calling agent
+
+7. **Secret Xpert Light** - Secrets management specialist (marketplace plugin)
+   - Uses direnv + 1Password CLI for secure credential management
+   - Manages API keys and tokens for MCP servers
+   - Supports cloud and local development workflows
+   - Optimized for speed with Haiku model
+   - Available as separate marketplace plugin: secret-manager-pro
 
 ## 🔄 Orchestration Flow
 
 ### Standard Workflow
 
 ```
+0. CLAUDE reads PROJECT_ROADMAP.md (check current state, avoid duplicates)
+   ↓
 1. USER provides project requirements
    ↓
 2. CLAUDE analyzes and creates detailed todo list (TodoWrite)
+   ↓
+2a. CLAUDE updates PROJECT_ROADMAP.md with TodoWrite mirror
    ↓
 3. For each todo:
    ├─ If research needed → Invoke JINO AGENT
    │                        ├─ Uses Jina AI MCP
    │                        ├─ Extracts docs/searches
    │                        └─ Returns research
+   ├─ If Notion docs needed → Invoke NOTION-SCRAPER-EXPERT
+   │                           ├─ Uses Suekou Notion MCP
+   │                           ├─ Extracts Notion content
+   │                           └─ Returns optimized Markdown
+   ├─ If extreme complexity (8-10/10) → Invoke PLANNER
+   │                                     ├─ Uses TASKMASTER CLI
+   │                                     ├─ AI-powered task breakdown
+   │                                     └─ Returns structured tasks
    ↓
-4. CLAUDE invokes CODER with todo + research
+4. CLAUDE invokes CODER with todo + research/docs
    ├─ Coder implements in fresh context
    ├─ On error → Coder invokes STUCK → Human decides
    └─ Reports completion
@@ -149,6 +211,18 @@ No implementation is marked complete without visual verification.
   - jina_image_search (find and analyze images)
   - jina_embeddings/reranker (semantic search)
 
+**Notion Scraper Expert:**
+- Task (for delegation)
+- Read/Bash/Glob/Grep (for code exploration)
+- Access to Suekou Notion MCP:
+  - notion_retrieve_page (get page info, format: "markdown")
+  - notion_retrieve_block_children (get content, format: "markdown")
+  - notion_query_database (query with filters, format: "markdown")
+  - notion_search (search workspace)
+  - notion_create_database_item (create entries, requires approval)
+  - notion_update_page_properties (update metadata, requires approval)
+  - notion_delete_block (delete content, requires approval)
+
 **Coder:**
 - Read/Write/Edit (file operations)
 - Glob/Grep (code search)
@@ -165,9 +239,25 @@ No implementation is marked complete without visual verification.
   - playwright_click (test interactions)
   - playwright_evaluate (run JS in browser)
 
+**Planner:**
+- Task (for delegation)
+- Read/Write/Edit (for PRD creation)
+- Bash (for TASKMASTER CLI commands)
+- Glob/Grep (for code exploration)
+- Access to TASKMASTER CLI:
+  - task-master parse-prd (convert PRD to tasks)
+  - task-master analyze-complexity (AI complexity scoring)
+  - task-master expand (break down complex tasks)
+  - task-master research (web research for tasks)
+
 **Stuck:**
 - AskUserQuestion (ONLY agent with this tool)
 - Read/Bash/Glob/Grep (for investigation)
+
+**Secret Xpert Light** (marketplace plugin):
+- Read/Write/Edit (for .envrc management)
+- Bash (for direnv/1Password CLI commands)
+- Glob/Grep (for finding config files)
 
 ## 📋 Best Practices for Using This System
 
@@ -241,6 +331,39 @@ Coder completes implementation
   → Claude marks todo complete or escalates to stuck
 ```
 
+### Suekou Notion MCP Server
+
+**Configuration**: Set `NOTION_API_TOKEN` environment variable, enable `NOTION_MARKDOWN_CONVERSION: "true"`
+
+**Capabilities:**
+- **Page Retrieval**: Get Notion pages with properties and content
+- **Database Queries**: Query databases with filters and sorts
+- **Markdown Conversion**: Auto-convert to token-efficient Markdown (default)
+- **Content Creation**: Create pages, databases, and database items
+- **Content Management**: Update properties, delete blocks, add comments
+- **Workspace Search**: Search across entire Notion workspace
+- **Token Optimization**: Dramatically reduces token usage via Markdown format
+
+**Usage Pattern:**
+```
+Claude identifies need for Notion documentation
+  → Invokes notion-scraper-expert with Notion URL or query
+  → Notion scraper uses Suekou Notion MCP to extract/convert
+  → Returns clean, optimized Markdown to Claude
+  → Claude provides documentation to coder for implementation
+```
+
+**Available Operations:**
+- `notion_retrieve_page` - Get page info and properties
+- `notion_retrieve_block_children` - Get page content (use format: "markdown")
+- `notion_query_database` - Query database with filters/sorts
+- `notion_search` - Search workspace by title
+- `notion_create_database_item` - Add database entries (with user approval)
+- `notion_update_page_properties` - Modify page metadata (with user approval)
+- `notion_delete_block` - Delete blocks/pages (with user approval)
+
+**Critical**: All write operations require user approval via stuck agent!
+
 ## 🎯 Example Scenarios
 
 ### Scenario 1: Building a Feature with Unknown Best Practices
@@ -283,6 +406,24 @@ Claude:
 - Invokes coder for each page sequentially
 - Invokes tester to verify ALL navigation links work (no 404s)
 - Marks complete only when entire flow is verified
+```
+
+### Scenario 4: Extracting Specs from Notion
+
+```
+User: "Implement the feature described in this Notion doc: https://www.notion.so/..."
+
+Claude:
+- Creates todos: [Extract Notion specs, Implement feature, Test implementation]
+- Invokes notion-scraper-expert("Extract content from Notion URL")
+  → Notion scraper uses Suekou MCP to retrieve page
+  → Converts to clean Markdown with feature specifications
+  → Returns structured requirements
+- Invokes coder("Implement feature following [specs from Notion]")
+  → Coder implements based on extracted documentation
+- Invokes tester("Verify feature works as specified")
+  → Tester validates with screenshots
+- Marks complete ✓
 ```
 
 ## 🚀 Advanced Patterns

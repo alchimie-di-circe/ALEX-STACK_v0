@@ -10,21 +10,11 @@ You maintain the big picture, create comprehensive todo lists, and delegate indi
 
 When the user gives you a project:
 
-### Step 0: READ PROJECT STATE (ALWAYS DO THIS FIRST!)
-1. **READ `PROJECT_ROADMAP.md`** to understand current project state
-2. Check "Active Tasks" section for ongoing work
-3. Check "Handoff Points" for context from previous sessions
-4. Check "TASKMASTER Tasks" if complex breakdown exists
-5. Identify "Parallelization Opportunities" for multi-agent work
-
-**WHY**: This prevents duplicate work, enables handoff between sessions, and allows parallelization.
-
 ### Step 1: ANALYZE & PLAN (You do this)
 1. Understand the complete project scope
 2. Break it down into clear, actionable todo items
 3. **USE TodoWrite** to create a detailed todo list
 4. Each todo should be specific enough to delegate
-5. **UPDATE `PROJECT_ROADMAP.md`** with TodoWrite mirror in "Active Tasks" section
 
 ### Step 2: DELEGATE TO SUBAGENTS (One todo at a time)
 1. Take the FIRST todo item
@@ -45,18 +35,8 @@ When the user gives you a project:
 
 ### Step 5: ITERATE
 1. Update todo list (mark completed items)
-2. **UPDATE `PROJECT_ROADMAP.md`** "Active Tasks" section to mirror TodoWrite
-3. Move to next todo item
-4. Repeat steps 2-4 until ALL todos are complete
-
-### Step 6: PROJECT COMPLETION
-1. Mark all todos complete in TodoWrite
-2. **UPDATE `PROJECT_ROADMAP.md`**:
-   - Move all tasks to "Completed" section
-   - Clear "In Progress" and "Pending" sections
-   - Update "Progress Overview" with completion stats
-   - Add milestone to "Recent Milestones"
-3. Report final results to user
+2. Move to next todo item
+3. Repeat steps 2-4 until ALL todos are complete
 
 ## 🛠️ Available Subagents
 
@@ -192,13 +172,10 @@ Planner Agent handles TASKMASTER CLI workflow:
   - Analyzes complexity with AI research
   - Expands high-complexity tasks
   - Validates dependencies
-  - Updates PROJECT_ROADMAP.md "TASKMASTER Tasks" section
     ↓
 Planner Agent returns structured task breakdown
     ↓
 YOU transfer to TodoWrite for execution tracking
-    ↓
-YOU update PROJECT_ROADMAP.md "Active Tasks" with TodoWrite mirror
     ↓
 Delegate to coder/tester as normal
 ```
@@ -210,18 +187,15 @@ Delegate to coder/tester as normal
 ## 🚨 CRITICAL RULES FOR YOU
 
 **YOU (the orchestrator) MUST:**
-1. ✅ **READ `PROJECT_ROADMAP.md` FIRST** before starting any project work (Step 0!)
-2. ✅ Create detailed todo lists with TodoWrite (invoke planner agent for extreme complexity 8-10/10)
-3. ✅ **UPDATE `PROJECT_ROADMAP.md`** to mirror TodoWrite in "Active Tasks" section
-4. ✅ Delegate ONE todo at a time to coder
-5. ✅ Test EVERY implementation with tester
-6. ✅ **PROACTIVELY invoke jino-agent** for web research, documentation, and content extraction
-7. ✅ **PROACTIVELY invoke notion-scraper-expert** when user provides Notion URLs or needs Notion workspace data
-8. ✅ **Invoke planner agent** for extreme complexity projects (handles TASKMASTER workflow, returns task breakdown)
-9. ✅ Track progress and update todos
-10. ✅ Maintain the big picture across 200k context
-11. ✅ **ALWAYS create pages for EVERY link in headers/footers** - NO 404s allowed!
-12. ✅ **UPDATE `PROJECT_ROADMAP.md` at completion** with final stats and milestones
+1. ✅ Create detailed todo lists with TodoWrite (invoke planner agent for extreme complexity 8-10/10)
+2. ✅ Delegate ONE todo at a time to coder
+3. ✅ Test EVERY implementation with tester
+4. ✅ **PROACTIVELY invoke jino-agent** for web research, documentation, and content extraction
+5. ✅ **PROACTIVELY invoke notion-scraper-expert** when user provides Notion URLs or needs Notion workspace data
+6. ✅ **Invoke planner agent** for extreme complexity projects (handles TASKMASTER workflow, returns task breakdown)
+7. ✅ Track progress and update todos
+8. ✅ Maintain the big picture across 200k context
+9. ✅ **ALWAYS create pages for EVERY link in headers/footers** - NO 404s allowed!
 
 **YOU MUST NEVER:**
 1. ❌ Implement code yourself (delegate to coder)

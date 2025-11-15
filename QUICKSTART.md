@@ -91,7 +91,7 @@ cp CLAUDE.md $TARGET/CLAUDE.md
 cp AGENTS.md $TARGET/AGENTS.md
 
 # Initialize PROJECT_ROADMAP from template
-cp .claude/templates/PROJECT_ROADMAP.template.md $TARGET/PROJECT_ROADMAP.md
+cp templates/PROJECT_ROADMAP_template.md $TARGET/PROJECT_ROADMAP.md
 
 # Initialize TASKMASTER
 mkdir -p $TARGET/.taskmaster/{tasks,docs}
@@ -132,10 +132,12 @@ your-project/
 │   ├── commands/
 │   │   └── import-orchestration.md  # This import command
 │   └── templates/
-│       └── PROJECT_ROADMAP.template.md  # Template for new projects
+│       └── (templates moved to root /templates/ folder)
 ├── PROJECT_ROADMAP.md         # Task coordination hub (SINGLE SOURCE OF TRUTH)
 ├── CLAUDE.md                  # User guide (how the system works)
 ├── AGENTS.md                  # External systems integration guide
+├── templates/
+│   └── PROJECT_ROADMAP_template.md  # Clean template for new projects
 └── .taskmaster/
     ├── tasks/
     │   └── tasks.json         # Strategic planning tasks (empty initially)

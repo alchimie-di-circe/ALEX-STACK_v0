@@ -96,7 +96,8 @@ cp .claude/templates/PROJECT_ROADMAP.template.md $TARGET/PROJECT_ROADMAP.md
 # Initialize TASKMASTER
 mkdir -p $TARGET/.taskmaster/{tasks,docs}
 cp -r .taskmaster/config.json $TARGET/.taskmaster/ 2>/dev/null || true
-echo '{"master":{"tasks":[],"metadata":{"version":"1.0.0"}}}' > $TARGET/.taskmaster/tasks/tasks.json
+TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)
+echo '{"master":{"tasks":[],"metadata":{"version":"1.0.0","created":"'$TIMESTAMP'","lastModified":"'$TIMESTAMP'","tags":["master"]}}}' > $TARGET/.taskmaster/tasks/tasks.json
 
 # Verify
 ls -la $TARGET/.claude/CLAUDE.md

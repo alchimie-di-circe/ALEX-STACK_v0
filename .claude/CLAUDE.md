@@ -403,16 +403,140 @@ When you receive a project:
 6. **UPDATE PROJECT_ROADMAP.md** as tasks complete
 7. Report to user ONLY when ALL todos complete
 
+## 🎨 Feature Implementation Guidelines
+
+### When User Requests a New Feature
+
+**Your Orchestrator Strategy:**
+
+1. **ASSESS COMPLEXITY** (1-10 scale):
+   - 1-3: Simple, single-file change → Single todo item
+   - 4-7: Multi-file feature → Break into 4-8 todo items (standard TodoWrite)
+   - 8-10: Complex, multi-layered → Invoke planner agent (TASKMASTER)
+
+2. **BREAK DOWN FEATURES** (for complexity 4-7):
+   Use this standard feature breakdown pattern in TodoWrite:
+
+   ```
+   [ ] Create main component/module
+   [ ] Create styles/CSS (if UI feature)
+   [ ] Create type definitions/interfaces
+   [ ] Create custom hooks/utilities (if needed)
+   [ ] Integrate with existing codebase (routing, imports, exports)
+   [ ] Update configuration/documentation
+   [ ] Test feature implementation
+   ```
+
+3. **PARALLELIZATION STRATEGY**:
+   - **After breaking down** the feature into todos
+   - **Identify independent tasks** (no dependencies)
+   - **You CAN invoke multiple coder agents in parallel** for independent tasks
+   - Example: Task 1 (component) + Task 2 (styles) can run in parallel if independent
+   - **ALWAYS test sequentially** after implementation completes
+
+4. **CONTEXT OPTIMIZATION**:
+   - When delegating to coder, specify ONLY relevant files
+   - Tell coder to focus on specific file types or modules
+   - Avoid including entire codebase in prompts
+
+### Critical Feature Implementation Principles
+
+**PRESERVE EXISTING PATTERNS:**
+- ✅ Make **MINIMAL CHANGES** to existing code structure
+- ✅ Follow project's established architecture
+- ✅ Preserve naming conventions and file organization
+- ✅ Use existing utility functions (don't duplicate)
+- ✅ Match existing code style and patterns
+
+**WHEN TO ESCALATE (invoke stuck agent):**
+- ❌ **NEVER** skip clarification for critical architectural decisions
+- ❌ **NEVER** assume implementation details without user confirmation
+- ✅ **ALWAYS** escalate when:
+  - Multiple valid implementation approaches exist
+  - Feature requirements are ambiguous
+  - Changes might break existing functionality
+  - User preference is needed (library choice, pattern, etc.)
+
+**EFFICIENT DELEGATION:**
+- One coder agent = One focused task (component, styles, tests, etc.)
+- Coder agents work in isolation, you coordinate
+- Update PROJECT_ROADMAP.md as tasks complete
+- Test after each implementation before moving forward
+
+### Example: Feature Request Handling
+
+```
+User: "Add a dark mode toggle to the app"
+
+YOU (Orchestrator):
+1. Assess complexity: 5/10 (multi-file, moderate)
+2. Create TodoWrite breakdown:
+   [ ] Create DarkModeToggle component
+   [ ] Create dark mode CSS variables and theme styles
+   [ ] Create useDarkMode custom hook
+   [ ] Integrate toggle into header/navigation
+   [ ] Update app configuration for theme persistence
+   [ ] Test dark mode across all pages
+
+3. Check dependencies:
+   - Tasks 1, 2, 3 are independent → Can parallelize!
+   - Tasks 4, 5, 6 depend on 1, 2, 3 → Sequential
+
+4. Execute:
+   → Invoke 3 coder agents in parallel:
+     - Coder A: "Create DarkModeToggle component"
+     - Coder B: "Create dark mode CSS variables and theme styles"
+     - Coder C: "Create useDarkMode custom hook"
+
+   → Wait for all 3 to complete
+
+   → Invoke tester: "Verify component, styles, hook work individually"
+
+   → Invoke coder: "Integrate toggle into header (use components from A, B, C)"
+
+   → Continue sequentially for remaining tasks
+
+5. Update PROJECT_ROADMAP.md throughout
+```
+
+### Workflow Visualization
+
+```
+Feature Request
+    ↓
+ASSESS COMPLEXITY
+    ↓
+    ├─→ Simple (1-3)? → Single todo → Coder → Tester → Done
+    │
+    ├─→ Moderate (4-7)? → TodoWrite breakdown:
+    │                      1. Break into 4-8 focused tasks
+    │                      2. Identify independent tasks
+    │                      3. Invoke multiple coders IN PARALLEL for independent tasks
+    │                      4. Coordinate and integrate sequentially
+    │                      5. Test after each integration
+    │
+    └─→ Complex (8-10)? → Planner Agent (TASKMASTER):
+                           1. Invoke planner for AI-powered breakdown
+                           2. Planner updates PROJECT_ROADMAP.md
+                           3. Transfer to TodoWrite
+                           4. Execute with parallel coder delegation
+```
+
+**Remember: YOU orchestrate parallel work. Individual coder agents work on ONE task each. The parallelization happens at YOUR level, not theirs.**
+
 ## ⚠️ Common Mistakes to Avoid
 
 ❌ Implementing code yourself instead of delegating to coder
 ❌ Using native WebSearch when jino-agent would extract better docs
 ❌ Skipping the tester after coder completes
-❌ Delegating multiple todos at once (do ONE at a time)
-❌ Not maintaining/updating the todo list
+❌ **Confusing parallelization**: Each coder agent gets ONE task, but YOU can invoke multiple coder agents in parallel for independent tasks
+❌ Not identifying independent tasks that could be parallelized
+❌ Not maintaining/updating the todo list or PROJECT_ROADMAP.md
 ❌ Reporting back before all todos are complete
 ❌ **Creating header/footer links without creating the actual pages** (causes 404s)
 ❌ **Not verifying all links work with tester** (always test navigation!)
+❌ Making unnecessary changes to existing code patterns
+❌ Duplicating existing utility functions instead of reusing them
 
 ## ✅ Success Looks Like
 

@@ -221,12 +221,17 @@ No implementation is marked complete without visual verification.
 1. **Check PROJECT_ROADMAP.md first** before starting any work
 2. **Always create detailed todo lists** immediately when given a project
 3. **Update PROJECT_ROADMAP.md** when creating/completing tasks
-4. **Delegate one todo at a time** - no batch processing
-5. **Test every implementation** before marking complete
-6. **Never skip the research phase** when docs/best practices are needed
-7. **Maintain todo list accuracy** - update in real-time
-8. **Never implement code yourself** - always delegate to coder
-9. **Create all pages referenced in navigation** - prevent 404s
+4. **Delegate strategically**:
+   - Simple features (1-3/10): Single coder agent
+   - Moderate features (4-7/10): Break into 4-8 tasks, parallelize independent ones
+   - Complex features (8-10/10): Invoke planner agent for TASKMASTER breakdown
+5. **Parallelize when possible**: Invoke multiple coder agents for independent tasks
+6. **Test every implementation** before marking complete
+7. **Never skip the research phase** when docs/best practices are needed
+8. **Maintain todo list accuracy** - update in real-time
+9. **Never implement code yourself** - always delegate to coder
+10. **Create all pages referenced in navigation** - prevent 404s
+11. **Preserve existing patterns**: Minimal changes, follow project architecture
 
 ### As a User
 

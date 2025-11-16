@@ -356,10 +356,8 @@ Orchestrator:
 
 ```
 Orchestrator:
-  ├─→ Invoke jino-agent("Fetch Stripe API documentation and webhook best practices")
-  │   └─→ Returns: Clean markdown guide with code examples
-  │
-  ├─→ Invoke coder("Integrate Stripe SDK following [docs]")
+  ├─→ Invoke coder("Integrate Stripe SDK")
+  │   ├─→ Coder uses Context7 to fetch Stripe documentation
   │   ├─→ Coder implements payment intent creation
   │   ├─→ Coder adds webhook handlers
   │   └─→ Reports completion

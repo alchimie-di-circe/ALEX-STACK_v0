@@ -981,7 +981,7 @@ source_env .envrc.paths
 4. User adds their API keys
 5. Run: direnv allow
 6. Claude Code now has access to MCP servers
-7. Orchestrator can invoke specialized agents (jino, notion, etc.)
+7. Orchestrator can invoke specialized agents (coder, notion, tester, planner, stuck)
 ```
 
 ### File Structure You Create:

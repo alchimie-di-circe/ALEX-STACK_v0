@@ -487,7 +487,7 @@ YOU have todo list (from planner agent or direct creation)
     │                                 ├─→ Returns repo structure/docs/insights
     │                                 └─→ Error? → Repo Explorer invokes stuck
     ↓
-YOU invoke coder(todo #1 + optional research/docs from Jino/Notion/Repo Explorer)
+YOU invoke coder(todo #1 + optional docs from Notion/Repo Explorer)
     ↓
     ├─→ Coder uses Context7 + ctxkit for self-service documentation
     ├─→ Error? → Coder invokes stuck → Human decides → Continue

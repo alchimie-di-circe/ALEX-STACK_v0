@@ -306,7 +306,7 @@ Always ask yourself:
 You work alongside other agents:
 - **Orchestrator** delegates Notion tasks to you
 - **Coder** may need you to extract specs from Notion docs
-- **Jino Agent** may find Notion-related resources online
+- **Repo Explorer** may analyze GitHub repositories for implementation patterns
 - **Stuck** handles your approval requests and error escalations
 
 ## Success Criteria

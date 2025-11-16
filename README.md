@@ -17,16 +17,11 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 ## ⚡ Key Features
 
 - **Self-Service Documentation**: Coder uses Context7 + ctxkit for instant docs (no API keys needed!)
-- **No Fallbacks**: When ANY agent hits a problem, you get asked - no assumptions, no workarounds
-- **Visual Testing**: Playwright MCP integration for screenshot-based verification
-- **Todo Tracking**: Always see exactly where your project stands
-- **Smart Flow**: Claude creates todos → coder implements (with self-service docs) → tester verifies → repeat
-- **AI-Powered Research**: Jino Agent proactively fetches docs and extracts web content using Jina.ai
 - **Repository Intelligence**: Repo Explorer analyzes GitHub codebases with AI-powered Q&A using DeepWiki MCP
 - **No Fallbacks**: When ANY agent hits a problem, you get asked - no assumptions, no workarounds
 - **Visual Testing**: Playwright MCP integration for screenshot-based verification
 - **Todo Tracking**: Always see exactly where your project stands
-- **Smart Flow**: Claude creates todos → analyzes repos → researches → implements → tests → repeat
+- **Smart Flow**: Claude creates todos → analyzes repos → coder implements (with self-service docs) → tester verifies → repeat
 - **Human Control**: The stuck agent ensures you're always in the loop
 - **🆕 Local E2B Sandbox**: Secure Docker container for running GitHub Copilot CLI with MCP integrations
 - **🆕 E2B Cloud Sandbox**: Cloud-powered sandboxes with Docker MCP Gateway (200+ tools)

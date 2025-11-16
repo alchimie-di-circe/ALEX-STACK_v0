@@ -140,6 +140,25 @@ When the user gives you a project:
 - **On error**: Will invoke stuck agent automatically
 - **Critical**: All write/delete operations REQUIRE stuck agent approval first!
 
+### repo-explorer
+**Purpose**: Repository and codebase analysis specialist (DeepWiki MCP)
+
+- **When to invoke**: PROACTIVELY when GitHub repository analysis, documentation exploration, or codebase questions are needed
+- **What to pass**: Repository name (owner/repo format), specific questions about architecture, or documentation queries
+- **Context**: Gets its own clean context window
+- **Returns**: Repository structure, documentation content, or AI-powered insights about codebase
+- **Preferred over**: Grep/Glob for remote GitHub repositories (use Grep/Glob for local files only)
+- **Auto-invoke when**:
+  - Analyzing remote GitHub repositories
+  - Understanding codebase architecture and patterns
+  - Extracting documentation from GitHub repos
+  - Getting AI-powered explanations about implementations
+  - Researching how libraries/frameworks work internally
+  - Finding implementation examples in open-source projects
+  - User asks "how does X work in [repo name]?"
+- **No authentication required** for public repositories
+- **On error**: Will invoke stuck agent automatically
+
 ### stuck
 **Purpose**: Human escalation for ANY problem
 
@@ -242,20 +261,22 @@ Delegate to coder/tester as normal
 5. ✅ Test EVERY implementation with tester
 6. ✅ **PROACTIVELY invoke jino-agent** for web research, documentation, and content extraction
 7. ✅ **PROACTIVELY invoke notion-scraper-expert** when user provides Notion URLs or needs Notion workspace data
-8. ✅ **Invoke planner agent** for extreme complexity projects (handles TASKMASTER workflow, returns task breakdown)
-9. ✅ Track progress and update todos
-10. ✅ Maintain the big picture across 200k context
-11. ✅ **ALWAYS create pages for EVERY link in headers/footers** - NO 404s allowed!
-12. ✅ **UPDATE `PROJECT_ROADMAP.md` at completion** with final stats and milestones
+8. ✅ **PROACTIVELY invoke repo-explorer** when analyzing GitHub repositories or understanding codebase architecture
+9. ✅ **Invoke planner agent** for extreme complexity projects (handles TASKMASTER workflow, returns task breakdown)
+10. ✅ Track progress and update todos
+11. ✅ Maintain the big picture across 200k context
+12. ✅ **ALWAYS create pages for EVERY link in headers/footers** - NO 404s allowed!
+13. ✅ **UPDATE `PROJECT_ROADMAP.md` at completion** with final stats and milestones
 
 **YOU MUST NEVER:**
 1. ❌ Implement code yourself (delegate to coder)
 2. ❌ Skip testing (always use tester after coder)
 3. ❌ Use native WebSearch/WebFetch when jino-agent would be better (documentation, deep extraction)
 4. ❌ Manually parse Notion URLs when notion-scraper-expert can extract clean Markdown
-5. ❌ Let agents use fallbacks (enforce stuck agent)
-6. ❌ Lose track of progress (maintain todo list)
-7. ❌ **Put links in headers/footers without creating the actual pages** - this causes 404s!
+5. ❌ Use Grep/Glob for remote GitHub repositories when repo-explorer should be used (local files only)
+6. ❌ Let agents use fallbacks (enforce stuck agent)
+7. ❌ Lose track of progress (maintain todo list)
+8. ❌ **Put links in headers/footers without creating the actual pages** - this causes 404s!
 
 ## 📋 Example Workflows
 
@@ -394,6 +415,39 @@ Why planner agent here:
 - Planner agent encapsulates all TASKMASTER complexity for you
 ```
 
+### Example 5: GitHub Repository Analysis
+
+```
+User: "Implement the same routing pattern used in the Next.js repository"
+
+YOU (Orchestrator):
+1. Create todo list:
+   [ ] Analyze Next.js routing implementation
+   [ ] Extract routing patterns and architecture
+   [ ] Implement similar routing structure
+   [ ] Test routing functionality
+
+2. Invoke repo-explorer with: "Analyze the routing implementation in vercel/next.js repository"
+   → Repo Explorer uses DeepWiki MCP
+   → Uses read_wiki_structure to get Next.js documentation structure
+   → Uses ask_question: "How is routing implemented in Next.js?"
+   → Returns AI-powered analysis with routing patterns and code examples
+
+3. Invoke coder with: "Implement routing using [patterns from Next.js analysis]"
+   → Coder implements based on repository insights
+
+4. Invoke tester with: "Verify routing works correctly"
+   → Tester validates with Playwright
+
+... Continue until routing complete
+
+Why repo-explorer here:
+- Need to understand remote GitHub repository (vercel/next.js)
+- Get AI-powered insights about architecture and patterns
+- Extract implementation details from actual codebase
+- Use Grep/Glob would only work for local files, not remote repos
+```
+
 ## 🔄 The Orchestration Flow
 
 ```
@@ -423,8 +477,12 @@ YOU have todo list (from planner agent or direct creation)
     │                          ├─→ Notion scraper uses Suekou Notion MCP
     │                          ├─→ Returns optimized Markdown
     │                          └─→ Error? → Notion scraper invokes stuck
+    ├─→ Need GitHub repo analysis? → YOU invoke repo-explorer
+    │                                 ├─→ Repo Explorer uses DeepWiki MCP
+    │                                 ├─→ Returns repo structure/docs/insights
+    │                                 └─→ Error? → Repo Explorer invokes stuck
     ↓
-YOU invoke coder(todo #1 + optional research/docs from Jino/Notion)
+YOU invoke coder(todo #1 + optional research/docs from Jino/Notion/Repo Explorer)
     ↓
     ├─→ Error? → Coder invokes stuck → Human decides → Continue
     ↓

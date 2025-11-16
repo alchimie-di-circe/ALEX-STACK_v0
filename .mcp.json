@@ -31,6 +31,15 @@
         "NOTION_API_TOKEN": "${NOTION_API_TOKEN}",
         "NOTION_MARKDOWN_CONVERSION": "true"
       }
+    },
+    "deepwiki": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.deepwiki.com/sse"
+      ],
+      "env": {},
+      "description": "DeepWiki MCP server for analyzing GitHub repositories, exploring documentation structure, and AI-powered codebase Q&A. No authentication required for public repos."
     }
   }
 }

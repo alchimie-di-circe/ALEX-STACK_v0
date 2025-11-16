@@ -9,6 +9,7 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 - **🧠 Claude (You)** - The orchestrator with 200k context managing todos and the big picture
 - **🔍 Jino Agent** - Web research specialist powered by Jina.ai MCP for docs extraction and searches
 - **📚 Notion Scraper Expert** - Notion workspace specialist powered by Suekou MCP for knowledge extraction
+- **🗂️ Repo Explorer** - Repository analysis specialist powered by DeepWiki MCP for GitHub codebase exploration
 - **📋 Planner Agent** - AI-powered project planning using TASKMASTER CLI for complex breakdowns
 - **✍️ Coder Subagent** - Implements one todo at a time in its own clean context
 - **👁️ Tester Subagent** - Verifies implementations using Playwright in its own context
@@ -17,10 +18,11 @@ This is a **custom Claude Code orchestration system** that transforms how you bu
 ## ⚡ Key Features
 
 - **AI-Powered Research**: Jino Agent proactively fetches docs and extracts web content using Jina.ai
+- **Repository Intelligence**: Repo Explorer analyzes GitHub codebases with AI-powered Q&A using DeepWiki MCP
 - **No Fallbacks**: When ANY agent hits a problem, you get asked - no assumptions, no workarounds
 - **Visual Testing**: Playwright MCP integration for screenshot-based verification
 - **Todo Tracking**: Always see exactly where your project stands
-- **Smart Flow**: Claude creates todos → Jino researches → coder implements → tester verifies → repeat
+- **Smart Flow**: Claude creates todos → analyzes repos → researches → implements → tests → repeat
 - **Human Control**: The stuck agent ensures you're always in the loop
 - **🆕 Local E2B Sandbox**: Secure Docker container for running GitHub Copilot CLI with MCP integrations
 - **🆕 E2B Cloud Sandbox**: Cloud-powered sandboxes with Docker MCP Gateway (200+ tools)
@@ -262,6 +264,28 @@ Repeat until all todos done ✅
 - Large-scale feature implementations
 - When intelligent task breakdown with dependencies is needed
 
+### Repo Explorer (Repository Analysis)
+**Fresh Context Per Repository Analysis**
+
+- Gets invoked when GitHub repository analysis or codebase understanding is needed
+- Works in its own clean context window
+- Uses **DeepWiki Remote MCP Server** for repository operations:
+  - **Structure Discovery**: Get complete documentation topics for any GitHub repo
+  - **Documentation Extraction**: View full documentation from repositories
+  - **AI-Powered Q&A**: Ask questions about codebases with context-grounded responses
+  - **No Authentication Required**: Free access to all public GitHub repositories
+- **Preferred over Grep/Glob** for remote repository analysis (use Grep/Glob for local files)
+- **Never uses fallbacks** - invokes stuck agent immediately on errors
+- Returns repository structure, documentation, and AI insights to Claude
+
+**When it's used**:
+- Analyzing remote GitHub repositories
+- Understanding codebase architecture and patterns
+- Extracting documentation from GitHub repos
+- Getting AI-powered explanations about implementations
+- Researching how libraries/frameworks work internally
+- Finding implementation examples in open-source projects
+
 ### Coder Subagent
 **Fresh Context Per Task**
 
@@ -419,7 +443,7 @@ Coder: Reports completion to Claude
 
 ## 🔌 MCP Servers Configuration
 
-This system uses three powerful MCP servers to enhance agent capabilities:
+This system uses powerful MCP servers to enhance agent capabilities:
 
 ### 1. Jina AI Remote MCP Server ⭐
 **Purpose:** Web search, content extraction, and AI-powered research
@@ -501,6 +525,34 @@ docker run -i --rm -p 8080:8080 awesome-copilot:latest
   "disabled": false
 }
 ```
+
+### 5. DeepWiki Remote MCP Server 🆕
+**Purpose:** GitHub repository analysis and codebase exploration
+
+**Used by:** Repo Explorer for repository intelligence
+
+**Features:**
+- **Repository Structure Discovery:** Get complete documentation topics for any GitHub repo
+- **Documentation Extraction:** View full documentation from repositories
+- **AI-Powered Q&A:** Ask questions about codebases with context-grounded responses
+- **Public Repository Access:** Free access to all public GitHub repositories
+- **No Rate Limits:** Unlimited queries for public repos
+
+**API Key Setup:**
+**NO API KEY REQUIRED** - Works out of the box for all public GitHub repositories!
+
+Simply add to `.mcp.json`:
+```json
+"deepwiki": {
+  "command": "npx",
+  "args": [
+    "mcp-remote",
+    "https://mcp.deepwiki.com/sse"
+  ]
+}
+```
+
+**Note:** For private repositories, authentication is required. Use `https://mcp.devin.ai/sse` with Bearer token.
 
 ## 🔒 E2B Sandboxes for Secure Code Execution
 

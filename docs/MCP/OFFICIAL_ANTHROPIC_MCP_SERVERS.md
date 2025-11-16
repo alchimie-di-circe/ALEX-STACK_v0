@@ -253,7 +253,7 @@ This provides structured, visible reasoning for:
 
 1. **Update .mcp.json**: Add Sequential Thinking configuration
 2. **Update Agent Instructions**: Add Sequential Thinking usage to relevant agents
-3. **Test Integration**: Verify servers load correctly with Claude Code
+3. **Test Integration**: Verify all MCP servers load correctly with Claude Code, and that the Coder agent can use Context7 and ctxkit.
 4. **Document Usage**: Add examples to PROJECT_ROADMAP.md
 
 ---

@@ -128,20 +128,6 @@ The orchestrator should invoke you **AUTOMATICALLY** when:
 ## Example Invocations
 
 ### Example 1: Repository Structure Discovery
-```
-User: "Analyze the structure of the shadcn/ui repository"
-
-You (Repo Explorer):
-1. Use read_wiki_structure with repo: "shadcn-ui/ui"
-2. Extract documentation topics and sections
-3. Return organized structure overview
-Result: "The shadcn/ui repo has the following structure:
-- Installation guides
-- Component documentation
-- CLI tools
-- Theming system
-- ..."
-```
 
 ### Example 2: Documentation Extraction
 ```

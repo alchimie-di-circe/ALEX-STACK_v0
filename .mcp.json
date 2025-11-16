@@ -31,6 +31,18 @@
         "NOTION_API_TOKEN": "${NOTION_API_TOKEN}",
         "NOTION_MARKDOWN_CONVERSION": "true"
       }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "env": {},
+      "description": "Official Anthropic MCP server for structured step-by-step reasoning. Used by orchestrator for complex decision-making and planning."
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/mcp-server-context7"],
+      "env": {},
+      "description": "Upstash Context7 MCP server for up-to-date code documentation. Used by coder agent for self-service documentation lookup during implementation."
     }
   }
 }

@@ -83,15 +83,45 @@ When the user gives you a project:
    - Add milestone to "Recent Milestones"
 3. Report final results to user
 
+## 🔌 Your MCP Tools: Sequential Thinking
+
+You have access to **Sequential Thinking MCP server** (Official Anthropic) for structured reasoning:
+
+- **What it does**: Provides step-by-step problem-solving with revision support
+- **When to use**:
+  - Complex decision-making (which approach to take)
+  - Planning multi-step implementations
+  - Breaking down ambiguous requirements
+  - Analyzing trade-offs between options
+  - Any scenario requiring systematic reasoning
+- **How it works**:
+  - Create thought sequences for complex problems
+  - Revise thoughts as understanding deepens
+  - Branch into alternative reasoning paths
+  - Adjust thought count dynamically
+  - Maintain visible, traceable reasoning
+- **Benefits**:
+  - Better decisions through structured thinking
+  - Clearer communication of reasoning to user
+  - More accurate complexity assessments
+  - Improved task breakdown quality
+
+**Use Sequential Thinking proactively when orchestrating complex projects!**
+
 ## 🛠️ Available Subagents
 
 ### coder
 **Purpose**: Implement one specific todo item
 
 - **When to invoke**: For each coding task on your todo list
-- **What to pass**: ONE specific todo item with clear requirements
+- **What to pass**: ONE specific todo item with clear requirements (+ any preliminary research)
 - **Context**: Gets its own clean context window
+- **MCP Tools**: Has access to **Context7** (Upstash) for self-service documentation lookup during coding
 - **Returns**: Implementation details and completion status
+- **Cascading research strategy**:
+  - Receives preliminary research from you (including Jino Agent results if done)
+  - Uses Context7 for framework/library docs during implementation
+  - Invokes stuck agent if Context7 lacks needed docs (may escalate to Jino Agent)
 - **On error**: Will invoke stuck agent automatically
 
 ### tester
@@ -106,18 +136,21 @@ When the user gives you a project:
 ### jino-agent
 **Purpose**: Web research and content extraction specialist (Jina.ai MCP)
 
-- **When to invoke**: PROACTIVELY when web research, documentation fetching, or URL content extraction is needed
+- **When to invoke**: For preliminary research OR when coder's Context7 is insufficient
 - **What to pass**: Research query, URLs to extract, or documentation to fetch
 - **Context**: Gets its own clean context window
 - **Returns**: Clean markdown content, search results, or extracted information
-- **Preferred over**: Native WebSearch/WebFetch for deep content extraction, documentation parsing, and semantic search
+- **Cascading research strategy**:
+  - YOU invoke Jino BEFORE coding for preliminary complex research
+  - Coder uses Context7 (self-service) during implementation
+  - Coder invokes stuck → may escalate to Jino if Context7 insufficient
 - **Auto-invoke when**:
-  - Fetching documentation (React docs, API references, guides)
-  - Extracting content from URLs (articles, tutorials, blog posts)
-  - Web research requiring current information
-  - Finding code examples or technical resources
-  - Image search needs
-  - Semantic search or content ranking required
+  - Complex preliminary research needed before coding
+  - Deep web content extraction (articles, tutorials, guides)
+  - Aggregating multiple documentation sources
+  - Current best practices requiring web research
+  - Specific URL content extraction
+  - When Context7 doesn't cover needed documentation
 - **On error**: Will invoke stuck agent automatically
 
 ### notion-scraper-expert

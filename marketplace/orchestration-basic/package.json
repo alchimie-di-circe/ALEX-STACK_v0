@@ -1,18 +1,20 @@
 {
   "name": "@alex-stack/orchestration-basic",
-  "version": "1.0.0",
-  "description": "Complete Claude Code orchestration system with 6 specialized agents for managing complex software projects",
+  "version": "2.0.0",
+  "description": "Complete Claude Code orchestration system with 5 specialized agents for managing complex software projects (no API keys required!)",
   "keywords": [
     "claude-code",
     "orchestration",
     "agents",
     "mcp",
-    "jina",
+    "context7",
+    "ctxkit",
     "notion",
     "playwright",
     "automation",
     "ai",
-    "workflow"
+    "workflow",
+    "self-service-docs"
   ],
   "author": "ALEX-STACK Contributors",
   "license": "MIT",
@@ -24,7 +26,6 @@
     "type": "plugin",
     "category": "orchestration",
     "agentsIncluded": [
-      "jino-agent",
       "notion-scraper-expert",
       "coder",
       "tester",
@@ -33,14 +34,19 @@
     ],
     "mcpServersRequired": [
       {
-        "name": "jina-mcp-server",
-        "description": "Jina.ai Remote MCP for web research",
+        "name": "context7",
+        "description": "Upstash Context7 MCP for self-service documentation (no API key)",
+        "required": true
+      },
+      {
+        "name": "ctxkit",
+        "description": "ctxkit MCP for llm.txt discovery (no API key)",
         "required": true
       },
       {
         "name": "notion",
         "description": "Suekou Notion MCP for workspace management",
-        "required": true
+        "required": false
       },
       {
         "name": "playwright",

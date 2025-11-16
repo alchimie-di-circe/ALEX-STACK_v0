@@ -3,6 +3,7 @@
 > **Date**: 2025-11-16
 > **Branch**: `claude/add-mcp-servers-01Jor5eu3eC7YrgqzfZvRbdz`
 > **Status**: ✅ Integrated and Documented
+> **Updated**: 2025-11-16 - Removed Jino Agent and Memory MCP references
 
 ---
 
@@ -52,63 +53,71 @@
 
 ---
 
-## 🔄 Cascading Research Architecture
+### 3. ctxkit MCP Server (Third-Party)
+**For**: Coder Agent
+**Package**: `ctxkit`
 
-The new MCP integration introduces a **cascading research strategy** that optimizes resource usage:
+**Purpose**: Fallback documentation discovery via llm.txt files
+
+**Capabilities**:
+- Discover llm.txt files in official documentation
+- Free to use, no API keys required
+- Works as backup when Context7 doesn't have documentation
+
+**When Coder Uses It**:
+- When Context7 lacks the needed documentation
+- For projects/frameworks not covered by Context7
+- As a fallback documentation source
+
+---
+
+## 🔄 Self-Service Documentation Architecture
+
+The new MCP integration introduces a **self-service documentation strategy** for the coder agent:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ ORCHESTRATOR (Sequential Thinking for complex decisions)   │
 └─────────────────────────────────────────────────────────────┘
-                        │
-        ┌───────────────┴───────────────┐
-        │                               │
-        ▼                               ▼
-┌──────────────────┐          ┌──────────────────┐
-│   JINO AGENT     │          │   CODER AGENT    │
-│ (Preliminary     │          │  (Context7 for   │
-│  Research)       │          │   self-service)  │
-└──────────────────┘          └──────────────────┘
-        │                               │
-        │                               │
-        └──────────┬────────────────────┘
-                   │
-                   ▼
-         ┌──────────────────┐
-         │   STUCK AGENT    │
-         │ (May escalate to │
-         │   Jino if needed)│
-         └──────────────────┘
+                         │
+                         │ Delegates task
+                         │
+                         ▼
+              ┌──────────────────┐
+              │   CODER AGENT    │
+              │  (Self-Service   │
+              │   Documentation) │
+              └──────────────────┘
+                         │
+          ┌──────────────┼──────────────┐
+          │              │              │
+          ▼              ▼              ▼
+  ┌────────────┐  ┌────────────┐  ┌────────────┐
+  │ Context7   │  │  ctxkit    │  │   STUCK    │
+  │  (Try      │  │ (Fallback) │  │  (Human    │
+  │  FIRST)    │  │            │  │  Help)     │
+  └────────────┘  └────────────┘  └────────────┘
 ```
 
 ### Flow Explanation:
 
-#### Stage 1: Preliminary Research (Optional)
-**Actor**: Orchestrator
-**Tool**: Jino Agent (Jina AI MCP)
-
-- Orchestrator assesses if preliminary complex research is needed
-- If YES → Invokes Jino Agent BEFORE coding starts
-- Jino performs deep web research, multi-source aggregation
-- Results passed to Coder along with todo item
-
-#### Stage 2: Implementation with Self-Service Docs
+#### Stage 1: Implementation with Self-Service Docs
 **Actor**: Coder Agent
-**Tool**: Context7 (Upstash MCP)
+**Tools**: Context7 (primary), ctxkit (fallback)
 
-- Coder receives todo + any preliminary research
-- Uses Context7 for self-service documentation during coding
+- Coder receives task from orchestrator
+- Uses Context7 FIRST for documentation during coding
 - Context7 provides quick framework/library docs
-- No need to invoke orchestrator or Jino for standard docs
+- If Context7 lacks needed docs, tries ctxkit
+- No need to invoke orchestrator for standard documentation
 
-#### Stage 3: Escalation (If Needed)
+#### Stage 2: Escalation (If Needed)
 **Actor**: Stuck Agent
-**Tool**: May invoke Jino Agent
+**Tool**: Human assistance
 
-- If Context7 lacks needed documentation
+- If both Context7 and ctxkit lack needed documentation
 - Or if Coder encounters other problems
-- Coder invokes Stuck Agent
-- Stuck may escalate to Jino Agent for deep research
+- Coder invokes Stuck Agent for human assistance
 
 ---
 
@@ -116,22 +125,23 @@ The new MCP integration introduces a **cascading research strategy** that optimi
 
 ### Before Integration:
 ```
-Every documentation need → Orchestrator → Jino Agent
-                          (overhead)   (deep research tool)
+Every documentation need → Orchestrator → Research Agent
+                          (overhead)      (deep research)
 ```
 
 ### After Integration:
 ```
-Complex research → Jino Agent (preliminary)
 Standard docs    → Context7 (coder self-service)
-Missing docs     → Stuck → Jino (escalation only)
+Missing docs     → ctxkit (coder fallback)
+Still missing    → Stuck (human help)
 ```
 
 **Benefits**:
-- ✅ Reduced Jino Agent invocations (only for complex/deep research)
+- ✅ No API keys required (secure for Claude Code Web)
 - ✅ Faster coder workflow (self-service via Context7)
 - ✅ Better resource utilization across agent system
 - ✅ Orchestrator uses Sequential Thinking for better decisions
+- ✅ Simplified architecture with fewer agents
 
 ---
 
@@ -158,22 +168,15 @@ Missing docs     → Stuck → Jino (escalation only)
 **Added**:
 - Section on Sequential Thinking MCP tools
 - When and how to use Sequential Thinking
-- Updated coder section with Context7 capabilities
-- Updated jino-agent section with cascading strategy
+- Updated coder section with Context7 and ctxkit capabilities
+- Removed Jino Agent references (agent deprecated)
 
 ### 3. `.claude/agents/coder.md` (Coder Agent)
 **Added**:
-- MCP server configuration: `mcp_servers: context7`
+- MCP server configuration: `mcp_servers: context7, ctxkit`
 - Section on using Context7 for documentation
-- Cascading research strategy explanation
-- Context7 vs Jino Agent decision guide
-
-### 4. `.claude/agents/jino-agent.md` (Jino Agent)
-**Added**:
-- Cascading research architecture explanation
-- New role definition (preliminary + escalation)
-- Context7 vs Jino decision criteria
-- Updated use case examples
+- Section on using ctxkit as fallback
+- Self-service documentation strategy
 
 ---
 
@@ -187,40 +190,26 @@ Missing docs     → Stuck → Jino (escalation only)
    - Breaking down ambiguous requirements
    - Analyzing trade-offs
 
-2. **Invoke Jino Agent** for:
-   - Preliminary complex research BEFORE coding
-   - Aggregating best practices from multiple sources
-   - Current web research requiring latest information
-   - Deep documentation beyond Context7's scope
-
-3. **Delegate to Coder** with:
-   - Todo item + any preliminary research from Jino
-   - Trust that Coder will use Context7 for additional docs
+2. **Delegate to Coder** with:
+   - Clear task description
+   - Trust that Coder will use Context7/ctxkit for documentation
 
 ### For Coder Agent:
 
-1. **Use Context7** for:
+1. **Use Context7 FIRST** for:
    - Framework documentation (React, Next.js, Vue, etc.)
    - Library API references (TypeScript, Tailwind, etc.)
    - Code examples and best practices
    - Quick lookups during implementation
 
-2. **Invoke Stuck Agent** if:
-   - Context7 lacks needed documentation
-   - Need deep web research beyond standard frameworks
+2. **Use ctxkit as fallback** for:
+   - Documentation not available in Context7
+   - Projects/frameworks with llm.txt files
+   - Official documentation discovery
+
+3. **Invoke Stuck Agent** if:
+   - Both Context7 and ctxkit lack needed documentation
    - Encounter any other problem or blocker
-
-### For Jino Agent:
-
-1. **Your primary roles**:
-   - Preliminary research (invoked by orchestrator)
-   - Deep research escalation (invoked via stuck agent)
-   - Complex multi-source aggregation
-   - Specific URL content extraction
-
-2. **You complement Context7**:
-   - Context7 = Quick framework docs
-   - You = Deep web research, complex docs, current best practices
 
 ---
 
@@ -230,32 +219,30 @@ To verify the integration works:
 
 - [ ] Orchestrator can access Sequential Thinking tools
 - [ ] Coder can access Context7 for documentation
-- [ ] Jino Agent still works for complex research
-- [ ] Cascading flow works: Jino (preliminary) → Coder (Context7) → Stuck (escalation)
+- [ ] Coder can access ctxkit as fallback
+- [ ] Self-service flow works: Coder (Context7) → Coder (ctxkit) → Stuck (human help)
 - [ ] All agents understand their updated roles
 
 ---
 
 ## 📚 Additional Documentation
 
+- **Simplified Architecture**: `docs/MCP/SIMPLIFIED_ARCHITECTURE_NO_API_KEYS.md`
 - **Official Anthropic MCP Servers**: `docs/MCP/OFFICIAL_ANTHROPIC_MCP_SERVERS.md`
 - **Sequential Thinking Details**: See official Anthropic docs
 - **Context7 Details**: See Upstash MCP server docs
-- **Jina AI MCP**: Already integrated, docs in README.md
+- **ctxkit Details**: See ctxkit documentation
 
 ---
 
 ## 🔮 Future Considerations
 
-### Memory MCP Server (Skipped)
-**Why Skipped**: Requires local file storage, not compatible with Claude Code Web
-
-**Alternative**: Use PROJECT_ROADMAP.md for cross-session state persistence
-
 ### Other Potential MCP Servers
 - Filesystem (official) - if needed for advanced file operations
 - Git (official) - if needed for advanced git operations
-- Brave Search (official) - alternative to Jina for web search
+- Brave Search (official) - if web search becomes necessary
+
+**Note**: Memory MCP Server was considered but skipped due to incompatibility with Claude Code Web environment (requires local file storage). PROJECT_ROADMAP.md serves as the cross-session state persistence mechanism.
 
 ---
 
@@ -263,13 +250,14 @@ To verify the integration works:
 
 - ✅ MCP servers configured in `.mcp.json`
 - ✅ Agent instructions updated
-- ✅ Cascading architecture documented
+- ✅ Self-service documentation architecture implemented
 - ✅ All changes committed and pushed
+- ✅ Documentation updated to reflect simplified architecture
 - ⏳ Pending: Integration testing with real project
 
-**Next Steps**: Test the integration with a real coding task to verify cascading flow!
+**Next Steps**: Test the integration with a real coding task to verify self-service documentation flow!
 
 ---
 
 **Last Updated**: 2025-11-16
-**Committed**: cc2e2ec - "Add Sequential Thinking and Context7 MCP servers with cascading research strategy"
+**Updated**: Removed Jino Agent and Memory MCP references per simplified architecture

@@ -1,131 +1,19 @@
 # Official Anthropic MCP Servers Research Report
 
 **Research Date**: 2025-11-16
-**Requested Servers**: Context7, Sequential Thinking, Memory
+**Requested Servers**: Context7, Sequential Thinking
 
 ---
 
 ## Executive Summary
 
-This report covers three MCP servers:
-1. **Memory MCP Server** - Official Anthropic server for persistent knowledge graph memory
-2. **Sequential Thinking MCP Server** - Official Anthropic server for structured problem-solving
-3. **Context7 MCP Server** - Third-party server by Upstash for code documentation (NOT official Anthropic)
+This report covers two MCP servers:
+1. **Sequential Thinking MCP Server** - Official Anthropic server for structured problem-solving
+2. **Context7 MCP Server** - Third-party server by Upstash for code documentation (NOT official Anthropic)
 
 ---
 
-## 1. Memory MCP Server (Official Anthropic)
-
-### Overview
-A knowledge graph-based persistent memory system that allows Claude to remember information about users across chat sessions.
-
-### Key Capabilities
-- **Entity Management**: Create and manage entities (people, organizations, events)
-- **Relationship Mapping**: Define directed connections between entities
-- **Observations**: Store atomic facts about entities
-- **Persistent Storage**: Knowledge graph persists across sessions
-- **Search Capabilities**: Query the graph by entity names, types, or observations
-
-### Core Concepts
-
-**Entities** - Primary nodes with:
-- Unique name (identifier)
-- Entity type (e.g., "person", "organization", "event")
-- List of observations
-
-**Relations** - Directed connections:
-- From entity → To entity
-- Relation type (active voice)
-- Example: "John_Smith" → "works_at" → "Anthropic"
-
-**Observations** - Discrete facts:
-- Atomic (one fact per observation)
-- Attached to specific entities
-- Can be added/removed independently
-
-### Available Tools
-
-1. **create_entities** - Create multiple new entities
-2. **create_relations** - Define relationships between entities
-3. **add_observations** - Add facts to existing entities
-4. **delete_entities** - Remove entities (cascading deletion)
-5. **delete_observations** - Remove specific facts
-6. **delete_relations** - Remove relationships
-7. **read_graph** - Retrieve entire knowledge graph
-8. **search_nodes** - Query based on search terms
-9. **open_nodes** - Retrieve specific entities by name
-
-### Configuration (.mcp.json)
-
-**NPX Installation:**
-```json
-{
-  "mcpServers": {
-    "memory": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"]
-    }
-  }
-}
-```
-
-**Docker Installation:**
-```json
-{
-  "mcpServers": {
-    "memory": {
-      "command": "docker",
-      "args": ["run", "-i", "-v", "claude-memory:/app/dist", "--rm", "mcp/memory"]
-    }
-  }
-}
-```
-
-**With Custom Storage Path:**
-```json
-{
-  "mcpServers": {
-    "memory": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
-      "env": {
-        "MEMORY_FILE_PATH": "/path/to/custom/memory.jsonl"
-      }
-    }
-  }
-}
-```
-
-### Environment Variables
-- `MEMORY_FILE_PATH`: Path to memory storage JSONL file (default: `memory.jsonl`)
-
-### NPM Package
-- **Package**: `@modelcontextprotocol/server-memory`
-- **Version**: 0.6.3
-- **License**: MIT
-- **Author**: Anthropic, PBC
-
-### Use Cases
-- **Chat Personalization**: Remember user preferences, history, and context
-- **Project Context**: Maintain relationships between code, files, and concepts
-- **User Profiling**: Track user identity, behaviors, preferences, goals
-- **Relationship Mapping**: Model connections up to 3 degrees of separation
-
-### Best Practices
-- Create entities for recurring organizations, people, and events
-- Store atomic facts as observations (one fact per observation)
-- Use active voice for relation types
-- Regularly update observations as new information emerges
-- Use search_nodes for discovery, open_nodes for targeted retrieval
-
-### Which Agents Should Use This?
-- **Orchestrator**: For tracking project state, user preferences across sessions
-- **Planner**: For remembering architectural decisions and patterns
-- **All Agents**: For maintaining context about user, project, and domain knowledge
-
----
-
-## 2. Sequential Thinking MCP Server (Official Anthropic)
+## 1. Sequential Thinking MCP Server (Official Anthropic)
 
 ### Overview
 Provides a tool for dynamic and reflective problem-solving through structured, step-by-step thinking processes.
@@ -225,7 +113,7 @@ Provides a tool for dynamic and reflective problem-solving through structured, s
 
 ---
 
-## 3. Context7 MCP Server (Third-Party - Upstash)
+## 2. Context7 MCP Server (Third-Party - Upstash)
 
 ### Overview
 **IMPORTANT**: This is NOT an official Anthropic server. It's a popular third-party MCP server created by Upstash.
@@ -253,13 +141,14 @@ If you need official Anthropic servers for documentation/code assistance, consid
 - **Git MCP Server**: Repository reading and manipulation
 
 ### Recommendation
-If you specifically need Context7's functionality (up-to-date code documentation), you should:
-1. Research the Upstash Context7 repository directly
-2. Review their documentation and configuration
-3. Understand it's a third-party integration (not officially supported by Anthropic)
-4. Follow Upstash's installation and configuration instructions
+While Context7 is a third-party server from Upstash and not an official Anthropic tool, it is the recommended documentation server for this orchestration system.
 
-For this orchestration system, **we recommend using official Anthropic MCP servers** where possible for better support and integration.
+**Why we use Context7:**
+1. **No API Keys:** It operates without requiring API keys, which is a critical security requirement for the Claude Code Web environment.
+2. **Rich Documentation:** It provides up-to-date documentation for a wide range of popular web development frameworks, enabling coder self-sufficiency.
+3. **Simplicity:** It simplifies the agent workflow by removing the need for a separate research agent.
+
+For these reasons, its benefits align with the project's security and architectural goals, making it the preferred choice over other alternatives.
 
 ---
 
@@ -270,13 +159,6 @@ For this orchestration system, **we recommend using official Anthropic MCP serve
 ```json
 {
   "mcpServers": {
-    "memory": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
-      "env": {
-        "MEMORY_FILE_PATH": "/home/user/ALEX-STACK_v0/.memory/knowledge-graph.jsonl"
-      }
-    },
     "sequential-thinking": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
@@ -289,10 +171,11 @@ For this orchestration system, **we recommend using official Anthropic MCP serve
 
 Your current .mcp.json already has:
 - **playwright**: Browser automation
-- **jina-mcp-server**: Web research (Jina AI)
 - **notion**: Notion workspace integration (Suekou)
+- **ctxkit**: Free MCP server for discovering llm.txt files
+- **context7**: Upstash Context7 for code documentation
 
-Adding Memory and Sequential Thinking:
+Adding Sequential Thinking:
 
 ```json
 {
@@ -302,10 +185,6 @@ Adding Memory and Sequential Thinking:
       "args": ["@playwright/mcp@latest"],
       "env": {}
     },
-    "jina-mcp-server": {
-      "command": "npx",
-      "args": ["mcp-remote", "https://mcp.jina.ai/sse", "--header", "Authorization: Bearer ${JINA_API_KEY}"]
-    },
     "notion": {
       "command": "npx",
       "args": ["-y", "@suekou/mcp-notion-server"],
@@ -314,12 +193,15 @@ Adding Memory and Sequential Thinking:
         "NOTION_MARKDOWN_CONVERSION": "true"
       }
     },
-    "memory": {
+    "ctxkit": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
-      "env": {
-        "MEMORY_FILE_PATH": "/home/user/ALEX-STACK_v0/.memory/knowledge-graph.jsonl"
-      }
+      "args": ["-y", "ctxkit"],
+      "env": {}
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/mcp-server-context7"],
+      "env": {}
     },
     "sequential-thinking": {
       "command": "npx",
@@ -332,36 +214,6 @@ Adding Memory and Sequential Thinking:
 ---
 
 ## Agent Integration Recommendations
-
-### Memory MCP Server
-
-**Best For:**
-- **Orchestrator**: Track user preferences, project history, architectural decisions
-- **All Agents**: Maintain context across sessions
-
-**When to Use:**
-- User provides information about themselves or their preferences
-- Need to remember project-specific patterns or decisions
-- Tracking relationships between code entities, files, or concepts
-- Building up domain knowledge over time
-
-**Agent Instructions Update:**
-Add to relevant agent CLAUDE.md files:
-```markdown
-## Memory Integration
-
-When encountering important information about:
-- User identity, preferences, behaviors, goals
-- Project architecture, patterns, decisions
-- Relationships between entities (people, code, organizations)
-- Key observations about the project or domain
-
-Use the Memory MCP tools to:
-1. create_entities for new concepts/people/organizations
-2. create_relations to link related entities
-3. add_observations to record atomic facts
-4. search_nodes to recall relevant context
-```
 
 ### Sequential Thinking MCP Server
 
@@ -399,18 +251,16 @@ This provides structured, visible reasoning for:
 
 ## Next Steps
 
-1. **Update .mcp.json**: Add Memory and Sequential Thinking configurations
-2. **Create Memory Directory**: `mkdir -p /home/user/ALEX-STACK_v0/.memory`
-3. **Update Agent Instructions**: Add Memory/Sequential Thinking usage to relevant agents
-4. **Test Integration**: Verify servers load correctly with Claude Code
-5. **Document Usage**: Add examples to PROJECT_ROADMAP.md
+1. **Update .mcp.json**: Add Sequential Thinking configuration
+2. **Update Agent Instructions**: Add Sequential Thinking usage to relevant agents
+3. **Test Integration**: Verify servers load correctly with Claude Code
+4. **Document Usage**: Add examples to PROJECT_ROADMAP.md
 
 ---
 
 ## Resources
 
 - **MCP Official Servers**: https://github.com/modelcontextprotocol/servers
-- **Memory Server README**: https://github.com/modelcontextprotocol/servers/tree/main/src/memory
 - **Sequential Thinking README**: https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking
 - **MCP Documentation**: https://modelcontextprotocol.io
 - **Context7 (Third-Party)**: https://github.com/upstash/context7 (NOT official Anthropic)
@@ -418,4 +268,4 @@ This provides structured, visible reasoning for:
 ---
 
 **Report Completed**: 2025-11-16
-**Compiled by**: Jino Agent (Web Research Specialist)
+**Updated**: 2025-11-16 - Removed Memory MCP references per security requirements

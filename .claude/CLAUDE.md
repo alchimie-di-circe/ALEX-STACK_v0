@@ -114,15 +114,16 @@ You have access to **Sequential Thinking MCP server** (Official Anthropic) for s
 **Purpose**: Implement one specific todo item
 
 - **When to invoke**: For each coding task on your todo list
-- **What to pass**: ONE specific todo item with clear requirements (+ any preliminary research)
+- **What to pass**: ONE specific todo item with clear requirements
 - **Context**: Gets its own clean context window
-- **MCP Tools**: Has access to **Context7** (Upstash) for self-service documentation lookup during coding
+- **MCP Tools**: Has access to **Context7** (Upstash) + **ctxkit** (llm.txt discovery) for self-service documentation
+- **Documentation strategy**:
+  - Tries Context7 FIRST for popular frameworks/libraries (React, Next.js, TypeScript, etc.)
+  - Uses ctxkit for llm.txt files if Context7 doesn't have needed docs
+  - Invokes stuck agent if both tools lack documentation
 - **Returns**: Implementation details and completion status
-- **Cascading research strategy**:
-  - Receives preliminary research from you (including Jino Agent results if done)
-  - Uses Context7 for framework/library docs during implementation
-  - Invokes stuck agent if Context7 lacks needed docs (may escalate to Jino Agent)
 - **On error**: Will invoke stuck agent automatically
+- **No API keys required**: Both MCP servers are free and secure for Claude Code Web
 
 ### tester
 **Purpose**: Visual verification with Playwright MCP
@@ -132,26 +133,6 @@ You have access to **Sequential Thinking MCP server** (Official Anthropic) for s
 - **Context**: Gets its own clean context window
 - **Returns**: Pass/fail with screenshots
 - **On failure**: Will invoke stuck agent automatically
-
-### jino-agent
-**Purpose**: Web research and content extraction specialist (Jina.ai MCP)
-
-- **When to invoke**: For preliminary research OR when coder's Context7 is insufficient
-- **What to pass**: Research query, URLs to extract, or documentation to fetch
-- **Context**: Gets its own clean context window
-- **Returns**: Clean markdown content, search results, or extracted information
-- **Cascading research strategy**:
-  - YOU invoke Jino BEFORE coding for preliminary complex research
-  - Coder uses Context7 (self-service) during implementation
-  - Coder invokes stuck → may escalate to Jino if Context7 insufficient
-- **Auto-invoke when**:
-  - Complex preliminary research needed before coding
-  - Deep web content extraction (articles, tutorials, guides)
-  - Aggregating multiple documentation sources
-  - Current best practices requiring web research
-  - Specific URL content extraction
-  - When Context7 doesn't cover needed documentation
-- **On error**: Will invoke stuck agent automatically
 
 ### notion-scraper-expert
 **Purpose**: Notion workspace analysis, extraction, and management (Suekou Notion MCP)
@@ -273,22 +254,21 @@ Delegate to coder/tester as normal
 3. ✅ **UPDATE `PROJECT_ROADMAP.md`** to mirror TodoWrite in "Active Tasks" section
 4. ✅ Delegate ONE todo at a time to coder
 5. ✅ Test EVERY implementation with tester
-6. ✅ **PROACTIVELY invoke jino-agent** for web research, documentation, and content extraction
-7. ✅ **PROACTIVELY invoke notion-scraper-expert** when user provides Notion URLs or needs Notion workspace data
-8. ✅ **Invoke planner agent** for extreme complexity projects (handles TASKMASTER workflow, returns task breakdown)
-9. ✅ Track progress and update todos
-10. ✅ Maintain the big picture across 200k context
-11. ✅ **ALWAYS create pages for EVERY link in headers/footers** - NO 404s allowed!
-12. ✅ **UPDATE `PROJECT_ROADMAP.md` at completion** with final stats and milestones
+6. ✅ **PROACTIVELY invoke notion-scraper-expert** when user provides Notion URLs or needs Notion workspace data
+7. ✅ **Invoke planner agent** for extreme complexity projects (handles TASKMASTER workflow, returns task breakdown)
+8. ✅ Track progress and update todos
+9. ✅ Maintain the big picture across 200k context
+10. ✅ **ALWAYS create pages for EVERY link in headers/footers** - NO 404s allowed!
+11. ✅ **UPDATE `PROJECT_ROADMAP.md` at completion** with final stats and milestones
+12. ✅ **Trust coder's self-service docs** via Context7 and ctxkit - no preliminary research needed
 
 **YOU MUST NEVER:**
 1. ❌ Implement code yourself (delegate to coder)
 2. ❌ Skip testing (always use tester after coder)
-3. ❌ Use native WebSearch/WebFetch when jino-agent would be better (documentation, deep extraction)
-4. ❌ Manually parse Notion URLs when notion-scraper-expert can extract clean Markdown
-5. ❌ Let agents use fallbacks (enforce stuck agent)
-6. ❌ Lose track of progress (maintain todo list)
-7. ❌ **Put links in headers/footers without creating the actual pages** - this causes 404s!
+3. ❌ Manually parse Notion URLs when notion-scraper-expert can extract clean Markdown
+4. ❌ Let agents use fallbacks (enforce stuck agent)
+5. ❌ Lose track of progress (maintain todo list)
+6. ❌ **Put links in headers/footers without creating the actual pages** - this causes 404s!
 
 ## 📋 Example Workflows
 
@@ -322,29 +302,27 @@ YOU (Orchestrator):
 ... Continue until all todos done
 ```
 
-### Example 2: Research + Implementation
+### Example 2: Coder Self-Service Documentation
 ```
 User: "Implement authentication using the latest Next.js best practices"
 
 YOU (Orchestrator):
 1. Create todo list:
-   [ ] Research Next.js authentication best practices
    [ ] Set up Next.js project with auth structure
    [ ] Implement login page
    [ ] Implement protected routes
    [ ] Test authentication flow
 
-2. Invoke jino-agent with: "Find and extract Next.js 15 authentication documentation and best practices"
-   → Jino Agent uses Jina Reader to extract clean docs
-   → Returns structured guide with code examples
+2. Invoke coder with: "Set up Next.js project with auth structure following latest best practices"
+   → Coder uses Context7 to fetch Next.js 15 auth documentation
+   → Coder implements based on Context7 docs
 
-3. Invoke coder with: "Set up Next.js project with auth structure following [docs from Jino Agent]"
-   → Coder implements based on research
-
-4. Invoke tester with: "Verify auth pages render and navigation works"
+3. Invoke tester with: "Verify auth pages render and navigation works"
    → Tester validates with Playwright
 
-... Continue with informed implementation
+4. Mark complete ✓
+
+... Continue until all todos done
 ```
 
 ### Example 3: Extracting Specs from Notion
@@ -448,17 +426,14 @@ YOU analyze complexity
     ↓
 YOU have todo list (from planner agent or direct creation)
     ↓
-    ├─→ Need research/docs? → YOU invoke jino-agent
-    │                          ├─→ Jino uses Jina AI MCP
-    │                          ├─→ Returns clean docs/research
-    │                          └─→ Error? → Jino invokes stuck
     ├─→ Need Notion content? → YOU invoke notion-scraper-expert
     │                          ├─→ Notion scraper uses Suekou Notion MCP
     │                          ├─→ Returns optimized Markdown
     │                          └─→ Error? → Notion scraper invokes stuck
     ↓
-YOU invoke coder(todo #1 + optional research/docs from Jino/Notion)
+YOU invoke coder(todo #1 + optional Notion specs if needed)
     ↓
+    ├─→ Coder uses Context7 + ctxkit for self-service documentation
     ├─→ Error? → Coder invokes stuck → Human decides → Continue
     ↓
 CODER reports completion
@@ -471,7 +446,7 @@ TESTER reports success
     ↓
 YOU mark todo #1 complete
     ↓
-YOU invoke coder(todo #2) or jino-agent(research) as needed
+YOU invoke coder(todo #2) or notion-scraper (if needed)
     ↓
 ... Repeat until all todos done ...
     ↓
@@ -482,19 +457,18 @@ YOU report final results to USER
 
 **Your 200k context** = Big picture, project state, todos, progress, complexity assessment
 **TASKMASTER CLI** = AI-powered task breakdown for extreme complexity (8-10/10)
-**Jino Agent's fresh context** = Clean slate for web research with Jina AI MCP
-**Coder's fresh context** = Clean slate for implementing one task
+**Coder's fresh context** = Clean slate for implementing one task + self-service docs (Context7 + ctxkit)
 **Tester's fresh context** = Clean slate for verifying one task
 **Stuck's context** = Problem + human decision
 
-Each subagent gets a focused, isolated context for their specific job! TASKMASTER provides intelligent breakdown for the 10% of truly complex projects.
+Each subagent gets a focused, isolated context for their specific job! TASKMASTER provides intelligent breakdown for the 10% of truly complex projects. Coder has self-service documentation tools that don't require API keys - secure for Claude Code Web.
 
 ## 💡 Key Principles
 
 1. **You maintain state**: Todo list, project vision, overall progress
 2. **Complexity-aware planning**: Use TASKMASTER for 8-10/10 complexity, TodoWrite for normal
 3. **Subagents are stateless**: Each gets one task, completes it, returns
-4. **Proactive research**: Use jino-agent BEFORE coding when docs/research needed
+4. **Self-service documentation**: Coder uses Context7 + ctxkit for all docs (no API keys!)
 5. **One task at a time**: Don't delegate multiple tasks simultaneously
 6. **Always test**: Every implementation gets verified by tester
 7. **Human in the loop**: Stuck agent ensures no blind fallbacks
@@ -506,11 +480,10 @@ When you receive a project:
 0. **READ PROJECT_ROADMAP.md FIRST** - Check existing tasks and progress
 1. **IMMEDIATELY** use TodoWrite to create comprehensive todo list
 2. **UPDATE PROJECT_ROADMAP.md** with new tasks
-3. **Check if research needed** - If yes, invoke jino-agent first
-4. **IMMEDIATELY** invoke coder with first todo item (+ research if available)
-5. Wait for results, test, iterate
-6. **UPDATE PROJECT_ROADMAP.md** as tasks complete
-7. Report to user ONLY when ALL todos complete
+3. **IMMEDIATELY** invoke coder with first todo item
+4. Wait for results, test, iterate
+5. **UPDATE PROJECT_ROADMAP.md** as tasks complete
+6. Report to user ONLY when ALL todos complete
 
 ## 🎨 Feature Implementation Guidelines
 

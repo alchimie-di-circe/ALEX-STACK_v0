@@ -43,18 +43,18 @@ This is an advanced orchestration system for Claude Code that leverages a 200k c
 │  - Makes high-level decisions                                            │
 └─────────────────────────────────────────────────────────────────────────┘
                                     │
-        ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
-        ▼           ▼           ▼           ▼           ▼           ▼           ▼           ▼           ▼
-    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
-    │ JINO   │  │ NOTION │  │  REPO  │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
-    │ AGENT  │  │SCRAPER │  │EXPLORER│  │        │  │        │  │        │  │        │  │ XPERT  │
-    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
-    │        │  │        │  │        │  │        │  │        │  │        │  │        │  │        │
-    │Research│  │ Notion │  │GitHub  │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
-    │& Web   │  │Extract │  │Repo    │  │One Task│  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
-    │Extract │  │& Mgmt  │  │Analysis│  │        │  │wright  │  │down    │  │ation   │  │direnv+ │
-    │        │  │        │  │        │  │        │  │        │  │        │  │        │  │1Pass   │
-    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
+        ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
+        ▼           ▼           ▼           ▼           ▼           ▼           ▼           ▼
+    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
+    │ NOTION │  │  REPO  │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
+    │SCRAPER │  │EXPLORER│  │        │  │        │  │        │  │        │  │ XPERT  │
+    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
+    │        │  │        │  │        │  │        │  │        │  │        │  │        │
+    │ Notion │  │GitHub  │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
+    │Extract │  │Repo    │  │w/Ctx7  │  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
+    │& Mgmt  │  │Analysis│  │+ctxkit │  │wright  │  │down    │  │ation   │  │direnv+ │
+    │        │  │        │  │        │  │        │  │        │  │        │  │1Pass   │
+    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
 ```
 
 ### The Subagent System

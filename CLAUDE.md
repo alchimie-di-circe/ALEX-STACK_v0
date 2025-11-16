@@ -43,18 +43,18 @@ This is an advanced orchestration system for Claude Code that leverages a 200k c
 │  - Makes high-level decisions                                            │
 └─────────────────────────────────────────────────────────────────────────┘
                                     │
-        ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
-        ▼           ▼           ▼           ▼           ▼           ▼           ▼
-    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
-    │ NOTION │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
-    │SCRAPER │  │        │  │        │  │        │  │        │  │ XPERT  │
-    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
-    │        │  │        │  │        │  │        │  │        │  │        │
-    │ Notion │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
-    │Extract │  │w/Ctx7  │  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
-    │& Mgmt  │  │+ctxkit │  │wright  │  │down    │  │ation   │  │direnv+ │
-    │        │  │        │  │        │  │        │  │        │  │1Pass   │
-    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
+        ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
+        ▼           ▼           ▼           ▼           ▼           ▼           ▼           ▼           ▼
+    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
+    │ JINO   │  │ NOTION │  │  REPO  │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
+    │ AGENT  │  │SCRAPER │  │EXPLORER│  │        │  │        │  │        │  │        │  │ XPERT  │
+    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
+    │        │  │        │  │        │  │        │  │        │  │        │  │        │  │        │
+    │Research│  │ Notion │  │GitHub  │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
+    │& Web   │  │Extract │  │Repo    │  │One Task│  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
+    │Extract │  │& Mgmt  │  │Analysis│  │        │  │wright  │  │down    │  │ation   │  │direnv+ │
+    │        │  │        │  │        │  │        │  │        │  │        │  │        │  │1Pass   │
+    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
 ```
 
 ### The Subagent System
@@ -101,6 +101,13 @@ Each subagent operates in its own isolated context window, preventing context po
    - Optimized for speed with Haiku model
    - Available as separate marketplace plugin: secret-manager-pro
 
+8. **Repo Explorer** - Repository and codebase analysis specialist
+   - Uses DeepWiki Remote MCP for GitHub repository analysis
+   - Explores repository structure and documentation
+   - Provides AI-powered answers about codebases
+   - No authentication required for public repositories
+   - Returns comprehensive repository insights to orchestrator
+
 ## 🔄 Orchestration Flow
 
 ### Standard Workflow
@@ -119,6 +126,12 @@ Each subagent operates in its own isolated context window, preventing context po
    │                           ├─ Uses Suekou Notion MCP
    │                           ├─ Extracts Notion content
    │                           └─ Returns optimized Markdown
+   ├─ If GitHub repo analysis needed → Invoke REPO EXPLORER
+   │                                    ├─ Uses DeepWiki MCP
+   │                                    ├─ Analyzes repo structure
+   │                                    ├─ Extracts documentation
+   │                                    ├─ Answers codebase questions
+   │                                    └─ Returns repository insights
    ├─ If extreme complexity (8-10/10) → Invoke PLANNER
    │                                     ├─ Uses TASKMASTER CLI
    │                                     ├─ AI-powered task breakdown
@@ -416,6 +429,40 @@ Claude identifies need for Notion documentation
 
 **Critical**: All write operations require user approval via stuck agent!
 
+### DeepWiki Remote MCP Server
+
+**Configuration**: No authentication required for public repositories
+
+**Capabilities:**
+- **Repository Structure Discovery**: Get complete documentation topics for any GitHub repo
+- **Documentation Extraction**: View full documentation from GitHub repositories
+- **AI-Powered Q&A**: Ask questions about codebases with context-grounded responses
+- **Public Repository Access**: Free access to all public GitHub repositories
+- **No Rate Limits**: Unlimited queries for public repos
+
+**Usage Pattern:**
+```
+Claude identifies need for GitHub repository analysis
+  → Invokes repo-explorer with repository name (owner/repo)
+  → Repo Explorer uses DeepWiki MCP to analyze/extract
+  → Returns repository structure, docs, and AI insights to Claude
+  → Claude provides insights to coder for implementation
+```
+
+**Available Operations:**
+- `read_wiki_structure` - Get list of documentation topics for a GitHub repository
+- `read_wiki_contents` - View documentation about a GitHub repository
+- `ask_question` - Ask AI-powered questions about repository with context-grounded answers
+
+**When to Use:**
+- Analyzing remote GitHub repositories (not local files)
+- Understanding codebase architecture and patterns
+- Extracting documentation from GitHub repos
+- Getting AI-powered explanations about implementations
+- Researching library/framework usage examples
+
+**Note**: For local codebase analysis, use Grep/Glob tools instead. DeepWiki MCP is for remote GitHub repository exploration.
+
 ## 🎯 Example Scenarios
 
 ### Scenario 1: Building a Feature with Unknown Best Practices
@@ -472,6 +519,25 @@ Claude:
 - Invokes coder("Implement feature following [specs from Notion]")
   → Coder implements based on extracted documentation
 - Invokes tester("Verify feature works as specified")
+  → Tester validates with screenshots
+- Marks complete ✓
+```
+
+### Scenario 5: Analyzing GitHub Repository Architecture
+
+```
+User: "Implement authentication similar to how it's done in the shadcn/ui repository"
+
+Claude:
+- Creates todos: [Analyze shadcn/ui auth, Implement auth pattern, Test implementation]
+- Invokes repo-explorer("Analyze authentication in shadcn-ui/ui repository")
+  → Repo Explorer uses DeepWiki MCP
+  → Uses read_wiki_structure to get repo documentation structure
+  → Uses ask_question: "How is authentication implemented in shadcn/ui?"
+  → Returns AI-powered analysis with code patterns and architecture
+- Invokes coder("Implement auth following [shadcn/ui patterns]")
+  → Coder implements using analyzed patterns
+- Invokes tester("Verify authentication flow")
   → Tester validates with screenshots
 - Marks complete ✓
 ```

@@ -40,6 +40,14 @@
       "args": ["-y", "@upstash/mcp-server-context7"],
       "env": {},
       "description": "Upstash Context7 MCP server for up-to-date code documentation. Used by coder agent for self-service documentation lookup during implementation."
+    "deepwiki": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.deepwiki.com/sse"
+      ],
+      "env": {},
+      "description": "DeepWiki MCP server for analyzing GitHub repositories, exploring documentation structure, and AI-powered codebase Q&A. No authentication required for public repos."
     }
   }
 }

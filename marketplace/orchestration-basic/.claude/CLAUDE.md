@@ -570,13 +570,13 @@ YOU (Orchestrator):
      - Coder B: "Create dark mode CSS variables and theme styles"
      - Coder C: "Create useDarkMode custom hook"
 
-   → Wait for all 3 to complete
+   → As each coder agent completes, immediately invoke the tester for that specific task.
+     - Example: Coder A finishes → Invoke tester for DarkModeToggle component.
+     - If a test fails, handle the error immediately (e.g., invoke stuck agent) without waiting for other parallel tasks.
 
-   → Invoke tester: "Verify component, styles, hook work individually"
-
-   → Invoke coder: "Integrate toggle into header (use components from A, B, C)"
-
-   → Continue sequentially for remaining tasks
+   → Once all parallel tasks have completed and been successfully tested:
+     → Invoke coder: "Integrate toggle into header (use components from A, B, C)"
+     → Continue sequentially for remaining tasks
 
 5. Update PROJECT_ROADMAP.md throughout
 ```

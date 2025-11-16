@@ -12,13 +12,16 @@ This orchestration system uses a master-agent architecture where Claude Code act
 
 ### Available Agents
 
-1. **[Jino Agent](./CLAUDE.md#jino-agent)** - Web research specialist (Jina.ai MCP)
-2. **[Notion Scraper Expert](./CLAUDE.md#notion-scraper-expert)** - Notion workspace specialist (Suekou MCP)
-3. **[Coder](./CLAUDE.md#coder)** - Implementation specialist
-4. **[Tester](./CLAUDE.md#tester)** - Visual verification with Playwright
-5. **[Planner](./CLAUDE.md#planner)** - AI-powered project planning (TASKMASTER CLI)
-6. **[Stuck](./CLAUDE.md#stuck)** - Human escalation point
-7. **[Secret Xpert Light](./CLAUDE.md#secret-xpert-light)** - Secrets management (marketplace plugin)
+1. **[Notion Scraper Expert](./CLAUDE.md#notion-scraper-expert)** - Notion workspace specialist (Suekou MCP)
+2. **[Coder](./CLAUDE.md#coder)** - Implementation specialist (Context7 + ctxkit self-service)
+3. **[Tester](./CLAUDE.md#tester)** - Visual verification with Playwright
+4. **[Planner](./CLAUDE.md#planner)** - AI-powered project planning (TASKMASTER CLI)
+5. **[Stuck](./CLAUDE.md#stuck)** - Human escalation point
+6. **[Secret Xpert Light](./CLAUDE.md#secret-xpert-light)** - Secrets management (marketplace plugin)
+
+### Deprecated Agents
+
+- **Jino Agent** - Removed in favor of coder's self-service documentation (Context7 + ctxkit). Preliminary research phase is no longer needed as coder has direct access to documentation during implementation.
 
 ### Key Files
 
@@ -40,16 +43,16 @@ This orchestration system uses a master-agent architecture where Claude Code act
                                     │
         ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
         ▼           ▼           ▼           ▼           ▼           ▼           ▼
-    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
-    │ JINO   │  │ NOTION │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
-    │ AGENT  │  │SCRAPER │  │        │  │        │  │        │  │        │  │ XPERT  │
-    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
-    │        │  │        │  │        │  │        │  │        │  │        │  │        │
-    │Research│  │ Notion │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
-    │& Web   │  │Extract │  │One Task│  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
-    │Extract │  │& Mgmt  │  │        │  │wright  │  │down    │  │ation   │  │direnv+ │
-    │        │  │        │  │        │  │        │  │        │  │        │  │1Pass   │
-    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
+    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
+    │ NOTION │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
+    │SCRAPER │  │        │  │        │  │        │  │        │  │ XPERT  │
+    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
+    │        │  │        │  │        │  │        │  │        │  │        │
+    │ Notion │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
+    │Extract │  │w/Ctx7  │  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
+    │& Mgmt  │  │+ctxkit │  │wright  │  │down    │  │ation   │  │direnv+ │
+    │        │  │        │  │        │  │        │  │        │  │1Pass   │
+    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
 ```
 
 ## 🔗 Integration with Other Systems

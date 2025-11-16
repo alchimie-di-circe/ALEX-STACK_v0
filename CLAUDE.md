@@ -43,63 +43,58 @@ This is an advanced orchestration system for Claude Code that leverages a 200k c
 │  - Makes high-level decisions                                            │
 └─────────────────────────────────────────────────────────────────────────┘
                                     │
-        ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
-        ▼           ▼           ▼           ▼           ▼           ▼           ▼           ▼           ▼
-    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
-    │ JINO   │  │ NOTION │  │  REPO  │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
-    │ AGENT  │  │SCRAPER │  │EXPLORER│  │        │  │        │  │        │  │        │  │ XPERT  │
-    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
-    │        │  │        │  │        │  │        │  │        │  │        │  │        │  │        │
-    │Research│  │ Notion │  │GitHub  │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
-    │& Web   │  │Extract │  │Repo    │  │One Task│  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
-    │Extract │  │& Mgmt  │  │Analysis│  │        │  │wright  │  │down    │  │ation   │  │direnv+ │
-    │        │  │        │  │        │  │        │  │        │  │        │  │        │  │1Pass   │
-    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
+        ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
+        ▼           ▼           ▼           ▼           ▼           ▼           ▼           ▼
+    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
+    │ NOTION │  │  REPO  │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
+    │SCRAPER │  │EXPLORER│  │        │  │        │  │        │  │        │  │ XPERT  │
+    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
+    │        │  │        │  │        │  │        │  │        │  │        │  │        │
+    │ Notion │  │GitHub  │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
+    │Extract │  │Repo    │  │w/Ctx7  │  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
+    │& Mgmt  │  │Analysis│  │+ctxkit │  │wright  │  │down    │  │ation   │  │direnv+ │
+    │        │  │        │  │        │  │        │  │        │  │        │  │1Pass   │
+    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
 ```
 
 ### The Subagent System
 
 Each subagent operates in its own isolated context window, preventing context pollution and ensuring focused execution:
 
-1. **Jino Agent** - Web research specialist
-   - Uses Jina.ai Remote MCP for web operations
-   - Extracts documentation with Jina Reader
-   - Performs AI-powered web searches
-   - Returns structured research to orchestrator
-
-2. **Notion Scraper Expert** - Notion workspace specialist
+1. **Notion Scraper Expert** - Notion workspace specialist
    - Uses Suekou Notion MCP for Notion operations
    - Extracts knowledge from Notion pages/databases
    - Converts Notion content to optimized Markdown
    - Manages Notion content (create, edit, delete with approval)
    - Returns structured documentation to orchestrator
 
-3. **Coder** - Implementation specialist
+2. **Coder** - Implementation specialist
    - Receives ONE specific todo item
+   - Has self-service documentation via Context7 + ctxkit MCP
    - Implements clean, functional code
    - Reports completion status
    - Escalates immediately on errors
 
-4. **Tester** - Visual verification specialist
+3. **Tester** - Visual verification specialist
    - Uses Playwright MCP for browser automation
    - Takes screenshots for visual validation
    - Tests interactions and navigation
    - Reports pass/fail results
 
-5. **Planner** - AI-powered project planning specialist
+4. **Planner** - AI-powered project planning specialist
    - Uses TASKMASTER CLI for extreme complexity (8-10/10)
    - Breaks down complex projects into structured tasks
    - Analyzes complexity with AI-powered research
    - Validates task dependencies
    - Returns comprehensive task breakdown to orchestrator
 
-6. **Stuck** - Human escalation point
+5. **Stuck** - Human escalation point
    - ONLY agent allowed to use AskUserQuestion
    - Presents clear options to user
    - Blocks progress until human decision
    - Returns decision to calling agent
 
-7. **Secret Xpert Light** - Secrets management specialist (marketplace plugin)
+6. **Secret Xpert Light** - Secrets management specialist (marketplace plugin)
    - Uses direnv + 1Password CLI for secure credential management
    - Manages API keys and tokens for MCP servers
    - Supports cloud and local development workflows
@@ -127,10 +122,6 @@ Each subagent operates in its own isolated context window, preventing context po
 2a. CLAUDE updates PROJECT_ROADMAP.md with TodoWrite mirror
    ↓
 3. For each todo:
-   ├─ If research needed → Invoke JINO AGENT
-   │                        ├─ Uses Jina AI MCP
-   │                        ├─ Extracts docs/searches
-   │                        └─ Returns research
    ├─ If Notion docs needed → Invoke NOTION-SCRAPER-EXPERT
    │                           ├─ Uses Suekou Notion MCP
    │                           ├─ Extracts Notion content
@@ -146,7 +137,9 @@ Each subagent operates in its own isolated context window, preventing context po
    │                                     ├─ AI-powered task breakdown
    │                                     └─ Returns structured tasks
    ↓
-4. CLAUDE invokes CODER with todo + research/docs
+4. CLAUDE invokes CODER with todo (+ Notion docs if applicable)
+   ├─ Coder uses Context7 (try FIRST) for self-service documentation
+   ├─ Coder uses ctxkit (fallback) for llm.txt discovery
    ├─ Coder implements in fresh context
    ├─ On error → Coder invokes STUCK → Human decides
    └─ Reports completion
@@ -228,15 +221,15 @@ Each subagent gets a fresh context window for its specific task:
 - **Reduces token waste** on irrelevant history
 - **Enables parallel evolution** of different components
 
-### 3. Proactive Research
+### 3. Self-Service Documentation
 
-The Jino Agent is invoked BEFORE coding when:
-- Documentation needs to be fetched
-- Best practices need to be researched
-- Web content needs extraction
-- Current information is required
+The Coder Agent has built-in documentation access:
+- **Context7 (try FIRST)**: Popular frameworks and libraries
+- **ctxkit (fallback)**: llm.txt discovery for any website
+- **No API keys required**: Free and secure for Claude Code Web
+- **During implementation**: Coder fetches docs as needed
 
-This ensures implementations follow latest standards and best practices.
+This ensures implementations follow latest standards and best practices without preliminary research phase.
 
 ### 4. Visual Verification
 
@@ -259,15 +252,6 @@ No implementation is marked complete without visual verification.
 
 ### Subagent-Specific Tools
 
-**Jino Agent:**
-- Task (for delegation)
-- Read/Bash/Glob/Grep (for code exploration)
-- Access to Jina AI Remote MCP:
-  - jina_reader_search (extract clean markdown from URLs)
-  - jina_web_search (AI-powered web search)
-  - jina_image_search (find and analyze images)
-  - jina_embeddings/reranker (semantic search)
-
 **Notion Scraper Expert:**
 - Task (for delegation)
 - Read/Bash/Glob/Grep (for code exploration)
@@ -285,6 +269,8 @@ No implementation is marked complete without visual verification.
 - Glob/Grep (code search)
 - Bash (build tools, package managers)
 - Task (can delegate subtasks)
+- Access to Context7 MCP (self-service docs, try FIRST)
+- Access to ctxkit MCP (llm.txt discovery, fallback)
 
 **Tester:**
 - Task (for delegation)
@@ -353,26 +339,41 @@ This orchestration pattern can be adapted for:
 
 ## 🔌 MCP Integration
 
-### Jina AI Remote MCP Server
+### Context7 MCP Server
 
-**Configuration**: Set `JINA_API_KEY` environment variable
+**Configuration**: No configuration needed - works out of the box!
 
 **Capabilities:**
-- **Jina Reader**: Converts any URL to clean, LLM-friendly markdown
-  - Removes ads, clutter, navigation
-  - Extracts main content with formatting
-  - Perfect for documentation scraping
-- **Web Search**: Natural language search with ranked results
-- **Image Search**: Find and analyze images across the web
-- **Embeddings & Reranker**: Semantic search and content ranking
+- **Popular Frameworks**: React, Next.js, Vue, Svelte, Angular, and more
+- **Libraries**: TypeScript, Tailwind CSS, shadcn/ui, and more
+- **Pre-indexed Docs**: Fast, instant access to documentation
+- **No API Key Required**: Free and secure for Claude Code Web
 
 **Usage Pattern:**
 ```
-Claude identifies need for research
-  → Invokes jino-agent with research query
-  → Jino uses Jina AI MCP to extract/search
-  → Returns clean, formatted results to Claude
-  → Claude provides research to coder for implementation
+Coder receives implementation task
+  → Coder uses Context7 to fetch framework/library docs
+  → Implements feature using latest best practices from docs
+  → Reports completion to orchestrator
+```
+
+### ctxkit MCP Server
+
+**Configuration**: No configuration needed - works out of the box!
+
+**Capabilities:**
+- **llm.txt Discovery**: Finds llm.txt files on any website
+- **Universal Coverage**: Works with any site that provides llm.txt
+- **Lightweight**: Simple, fast documentation retrieval
+- **No API Key Required**: Free and secure for Claude Code Web
+
+**Usage Pattern:**
+```
+Coder needs docs not in Context7
+  → Coder uses ctxkit to discover llm.txt
+  → Fetches documentation from llm.txt file
+  → Implements feature using retrieved docs
+  → Reports completion to orchestrator
 ```
 
 ### Playwright MCP Server
@@ -470,12 +471,10 @@ Claude identifies need for GitHub repository analysis
 User: "Add authentication to my Next.js app using latest 2025 patterns"
 
 Claude:
-- Creates todos: [Research auth patterns, Implement auth, Test auth flow]
-- Invokes jino-agent("Latest Next.js 15 authentication patterns")
-  → Jino extracts Next.js docs, searches for 2025 best practices
-  → Returns comprehensive guide with code examples
-- Invokes coder("Implement auth following [research]")
-  → Coder implements using latest patterns
+- Creates todos: [Implement auth structure, Add login page, Add protected routes, Test auth flow]
+- Invokes coder("Implement auth structure using latest Next.js 15 patterns")
+  → Coder uses Context7 to fetch Next.js 15 auth documentation
+  → Coder implements using latest patterns from docs
 - Invokes tester("Verify login flow, protected routes")
   → Tester validates with screenshots
 - Marks complete ✓
@@ -545,15 +544,6 @@ Claude:
 
 ## 🚀 Advanced Patterns
 
-### Parallel Research and Implementation
-
-When multiple independent research tasks exist:
-```
-Claude can invoke multiple jino-agent instances for different topics
-→ Collects all research
-→ Delegates implementations with combined knowledge
-```
-
 ### Iterative Refinement
 
 When tests reveal issues:
@@ -565,13 +555,14 @@ Tester reports failure
 → Retests until pass
 ```
 
-### Proactive Documentation Fetching
+### Self-Service Documentation
 
-Before any modern framework usage:
+During implementation:
 ```
-Claude automatically invokes jino-agent to fetch latest docs
+Coder automatically fetches docs via Context7 + ctxkit
 → Ensures implementations use current APIs and patterns
 → Prevents deprecated code
+→ No preliminary research phase needed
 ```
 
 ## 🔐 Security Considerations
@@ -586,13 +577,13 @@ Claude automatically invokes jino-agent to fetch latest docs
 
 A successful orchestration session exhibits:
 - ✅ Detailed todo list created immediately
-- ✅ Research performed before implementation when needed
+- ✅ Coder uses self-service docs (Context7 + ctxkit) during implementation
 - ✅ Each todo implemented → tested → completed sequentially
 - ✅ Human consulted via stuck agent for ambiguities
 - ✅ All navigation links functional (zero 404s)
 - ✅ Visual proof (screenshots) of all implementations
 - ✅ Zero fallbacks or workarounds used
-- ✅ Clean, maintainable code following best practices
+- ✅ Clean, maintainable code following latest best practices
 
 ## 🎓 Learning Resources
 

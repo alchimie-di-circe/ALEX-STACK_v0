@@ -53,13 +53,13 @@ Copy the orchestrator's main instructions:
 Copy all agent definition files:
 
 - [ ] List all files in source `.claude/agents/` directory
-- [ ] For each agent file found:
+- [ ] For each agent file found (SKIP deprecated agents like jino-agent.md):
   - [ ] `planner.md` - AI-powered planning specialist
   - [ ] `coder.md` - Implementation specialist (if exists)
   - [ ] `tester.md` - Visual verification specialist (if exists)
   - [ ] `stuck.md` - Human escalation specialist (if exists)
-  - [ ] `jino-agent.md` - Web research specialist (if exists)
-  - [ ] Any other custom agents in the directory
+  - [ ] `notion-scraper-expert.md` - Notion workspace specialist (if exists)
+  - [ ] Any other custom agents in the directory (except deprecated ones)
 - [ ] Create `.claude/agents/` directory in current project (if not exists)
 - [ ] Copy each agent file from source to current project
 
@@ -143,8 +143,8 @@ Once all steps complete, report to user:
 - ✓ `.claude/agents/coder.md`
 - ✓ `.claude/agents/tester.md`
 - ✓ `.claude/agents/stuck.md`
-- ✓ `.claude/agents/jino-agent.md`
-- ✓ (list any other agents)
+- ✓ `.claude/agents/notion-scraper-expert.md`
+- ✓ (list any other agents, excluding deprecated ones)
 
 ### Documentation
 - ✓ `CLAUDE.md` (user guide)
@@ -163,7 +163,8 @@ Once all steps complete, report to user:
 - 200k context window for project state
 - TodoWrite for real-time task tracking
 - PROJECT_ROADMAP.md for multi-agent coordination
-- Agent delegation: coder, tester, planner, jino-agent, stuck
+- Agent delegation: coder, tester, planner, notion-scraper-expert, stuck
+- Self-service documentation: Context7 + ctxkit (no API keys!)
 - TASKMASTER for extreme complexity (8-10/10)
 - Feature implementation with parallelization support
 

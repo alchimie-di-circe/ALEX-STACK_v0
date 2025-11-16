@@ -11,7 +11,8 @@ Once imported, Claude Code operates as an **orchestrator** with:
 - **200k context** for project state management
 - **TodoWrite** for real-time task tracking
 - **PROJECT_ROADMAP.md** for multi-agent coordination
-- **Agent delegation**: coder, tester, planner, jino-agent, stuck
+- **Agent delegation**: coder, tester, planner, stuck
+- **Self-service docs**: Context7 + ctxkit (no API keys!)
 - **TASKMASTER** for extreme complexity breakdown (8-10/10)
 - **Parallelization** of independent tasks for efficiency
 - **Feature implementation guidelines** with complexity assessment
@@ -125,10 +126,9 @@ your-project/
 │   ├── CLAUDE.md              # Orchestrator instructions (YOU ARE THE ORCHESTRATOR)
 │   ├── agents/
 │   │   ├── planner.md         # AI-powered planning (TASKMASTER)
-│   │   ├── coder.md           # Implementation specialist
+│   │   ├── coder.md           # Implementation specialist (Context7 + ctxkit)
 │   │   ├── tester.md          # Visual verification (Playwright)
-│   │   ├── stuck.md           # Human escalation
-│   │   └── jino-agent.md      # Web research (Jina AI)
+│   │   └── stuck.md           # Human escalation
 │   ├── commands/
 │   │   └── import-orchestration.md  # This import command
 │   └── templates/

@@ -1,42 +1,37 @@
 # Orchestration Basic Plugin
 
-Complete Claude Code orchestration system with 6 specialized agents for managing complex software projects using a master-agent architecture with context isolation, visual verification, and human-in-the-loop escalation.
+Complete Claude Code orchestration system with 5 specialized agents for managing complex software projects using a master-agent architecture with context isolation, visual verification, and human-in-the-loop escalation.
 
 ## 🎯 What's Included
 
-### 6 Core Specialized Agents
+### 5 Core Specialized Agents
 
-1. **🔍 Jino Agent** - Web research & content extraction specialist
-   - Uses Jina.ai Remote MCP for web operations
-   - Extracts documentation with Jina Reader
-   - Performs AI-powered web searches
-   - Returns structured research to orchestrator
-
-2. **📓 Notion Scraper Expert** - Notion workspace specialist
+1. **📓 Notion Scraper Expert** - Notion workspace specialist
    - Uses Suekou Notion MCP for Notion operations
    - Extracts knowledge from Notion pages/databases
    - Converts Notion content to token-efficient Markdown
    - Manages Notion content with user approval
 
-3. **✍️ Coder** - Implementation specialist
+2. **✍️ Coder** - Implementation specialist
    - Receives ONE specific todo item
-   - Implements clean, functional code
+   - Has self-service documentation via Context7 + ctxkit MCP
+   - Implements clean, functional code following best practices
    - Reports completion status
    - Escalates immediately on errors
 
-4. **👁️ Tester** - Visual verification specialist
+3. **👁️ Tester** - Visual verification specialist
    - Uses Playwright MCP for browser automation
    - Takes screenshots for visual validation
    - Tests interactions and navigation
    - Reports pass/fail results
 
-5. **📋 Planner** - AI-powered project planning specialist
+4. **📋 Planner** - AI-powered project planning specialist
    - Uses TASKMASTER CLI for extreme complexity (8-10/10)
    - Breaks down complex projects into structured tasks
    - Analyzes complexity with AI-powered research
    - Validates task dependencies
 
-6. **🆘 Stuck** - Human escalation point
+5. **🆘 Stuck** - Human escalation point
    - ONLY agent allowed to use AskUserQuestion
    - Presents clear options to user
    - Blocks progress until human decision
@@ -58,11 +53,12 @@ git clone <plugin-repo-url> orchestration-basic
 
 ### Required MCP Servers
 
-This plugin requires three MCP servers to be configured in your `.mcp.json`:
+This plugin requires four MCP servers to be configured in your `.mcp.json`:
 
-1. **Jina.ai Remote MCP** - For jino-agent
-2. **Suekou Notion MCP** - For notion-scraper-expert
-3. **Playwright MCP** - For tester
+1. **Context7 MCP** - For coder (self-service docs, no API key)
+2. **ctxkit MCP** - For coder (llm.txt discovery, no API key)
+3. **Suekou Notion MCP** - For notion-scraper-expert (optional)
+4. **Playwright MCP** - For tester
 
 ### MCP Configuration Example
 
@@ -71,14 +67,15 @@ Add to your `.mcp.json`:
 ```json
 {
   "mcpServers": {
-    "jina-mcp-server": {
+    "context7": {
       "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://mcp.jina.ai/sse",
-        "--header",
-        "Authorization: Bearer ${JINA_API_KEY}"
-      ]
+      "args": ["-y", "@upstash/mcp-server-context7"],
+      "env": {}
+    },
+    "ctxkit": {
+      "command": "npx",
+      "args": ["-y", "ctxkit"],
+      "env": {}
     },
     "notion": {
       "command": "npx",
@@ -99,14 +96,13 @@ Add to your `.mcp.json`:
 
 ### Environment Variables
 
-Set the following environment variables:
+Only needed if using Notion integration (optional):
 
 ```bash
-export JINA_API_KEY="your_jina_api_key"
 export NOTION_API_TOKEN="your_notion_token"
 ```
 
-**Recommended**: Use direnv + 1Password CLI for automatic credential management. See [secret-manager-pro plugin](../secret-manager-pro) for setup.
+**Note**: Context7 and ctxkit require NO API keys - they work out of the box!
 
 ## 📖 How It Works
 
@@ -122,7 +118,9 @@ export NOTION_API_TOKEN="your_notion_token"
                     │
         ┌───────┬───────┬───────┬───────┬───────┐
         ▼       ▼       ▼       ▼       ▼       ▼
-     JINO   NOTION  CODER  TESTER PLANNER STUCK
+     NOTION  CODER  TESTER PLANNER STUCK
+            (w/Ctx7
+            +ctxkit)
 ```
 
 ### Standard Workflow
@@ -130,10 +128,9 @@ export NOTION_API_TOKEN="your_notion_token"
 1. **USER** provides project requirements
 2. **CLAUDE** analyzes and creates detailed todo list (TodoWrite)
 3. For each todo:
-   - If research needed → Invoke **JINO AGENT**
    - If Notion docs needed → Invoke **NOTION-SCRAPER-EXPERT**
    - If extreme complexity (8-10/10) → Invoke **PLANNER**
-4. **CLAUDE** invokes **CODER** with todo + research/docs
+4. **CLAUDE** invokes **CODER** (uses Context7 + ctxkit for self-service docs)
 5. **CLAUDE** invokes **TESTER** with implementation
 6. **CLAUDE** marks todo complete
 7. Repeat until all todos done
@@ -157,14 +154,17 @@ Each subagent gets a fresh context window for its specific task:
 - **Reduces token waste** on irrelevant history
 - **Enables parallel evolution** of different components
 
-### Proactive Research
+### Self-Service Documentation
 
-The Jino Agent and Notion Scraper Expert are invoked BEFORE coding when:
-- Documentation needs to be fetched
-- Best practices need to be researched
-- Notion content needs extraction
-- Web content needs extraction
-- Current information is required
+The Coder has built-in self-service documentation via Context7 + ctxkit:
+- **Context7** (try FIRST): Popular frameworks/libraries (React, Next.js, TypeScript, etc.)
+- **ctxkit** (fallback): llm.txt discovery from any website
+- **No API keys required**: Both work out of the box
+- **Instant access**: Documentation during coding, no waiting for orchestrator
+
+The Notion Scraper Expert is invoked BEFORE coding when:
+- Notion content needs extraction for project specs
+- Knowledge needs to be gathered from Notion workspace
 
 ### Visual Verification
 
@@ -197,15 +197,16 @@ Claude:
 - Reports final results
 ```
 
-### Example 2: Research + Implementation
+### Example 2: Self-Service Documentation
 
 ```
 User: "Implement authentication using latest Next.js patterns"
 
 Claude:
 - Creates todo list
-- Invokes jino-agent to fetch Next.js auth docs
-- Invokes coder with extracted documentation
+- Invokes coder ("implement Next.js auth following best practices")
+- Coder uses Context7 to fetch Next.js auth documentation
+- Coder implements using latest patterns from Context7 docs
 - Invokes tester to verify auth flow
 - Marks complete
 ```
@@ -244,7 +245,7 @@ All agent definitions are in `.claude/agents/`. You can customize:
 
 A successful orchestration session exhibits:
 - ✅ Detailed todo list created immediately
-- ✅ Research performed before implementation when needed
+- ✅ Coder uses self-service docs (Context7 + ctxkit) during implementation
 - ✅ Each todo implemented → tested → completed sequentially
 - ✅ Human consulted via stuck agent for ambiguities
 - ✅ All navigation links functional (zero 404s)

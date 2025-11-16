@@ -10,9 +10,10 @@
 │  │              Claude Code Orchestration System               │   │
 │  │                                                              │   │
 │  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  │   │
-│  │  │  Claude  │  │   Jino   │  │  Coder   │  │  Tester  │  │   │
-│  │  │   (200k  │  │  Agent   │  │ Subagent │  │ Subagent │  │   │
-│  │  │ context) │  │          │  │          │  │          │  │   │
+│  │  │  Claude  │  │  Coder   │  │  Tester  │  │ Planner  │  │   │
+│  │  │   (200k  │  │ Subagent │  │ Subagent │  │ Subagent │  │   │
+│  │  │ context) │  │(Ctx7 +   │  │(Play-    │  │(TASK-    │  │   │
+│  │  │          │  │ ctxkit)  │  │wright)   │  │MASTER)   │  │   │
 │  │  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘  │   │
 │  │       │             │             │             │          │   │
 │  │       └─────────────┴─────────────┴─────────────┘          │   │
@@ -34,7 +35,7 @@
 │                                                                      │
 │  ┌────────────────────────────────────────────────────────────┐   │
 │  │              docker-entrypoint.sh                           │   │
-│  │  • Environment checks (GITHUB_TOKEN, JINA_API_KEY)         │   │
+│  │  • Environment checks (GITHUB_TOKEN)                        │   │
 │  │  • System information display                               │   │
 │  │  • MCP server status                                        │   │
 │  └────────────────────────────────────────────────────────────┘   │
@@ -68,9 +69,9 @@
 │       Server            │          │     Services            │
 │                         │          │                         │
 │ • Search instructions   │          │ • Playwright MCP        │
-│ • Load instructions     │          │ • Jina AI MCP           │
-│ • Browse categories     │          │ • Custom MCPs           │
-│ • Preview content       │          │                         │
+│ • Load instructions     │          │ • Context7 MCP          │
+│ • Browse categories     │          │ • ctxkit MCP            │
+│ • Preview content       │          │ • Custom MCPs           │
 └─────────────────────────┘          └─────────────────────────┘
 ```
 
@@ -84,9 +85,9 @@
 - Delegates tasks to E2B sandbox for safe execution
 
 **Subagents**
-- **Jino Agent**: Web research using Jina AI MCP
-- **Coder**: Implements features (can use E2B for testing)
-- **Tester**: Verifies implementations (can use E2B sandbox)
+- **Coder**: Implements features with self-service docs (Context7 + ctxkit MCP)
+- **Tester**: Verifies implementations (can use E2B sandbox with Playwright)
+- **Planner**: AI-powered project planning (TASKMASTER CLI)
 
 **Launcher Script**
 - `start-e2b-sandbox.sh`: One-command setup
@@ -149,12 +150,12 @@
 ### MCP Integration Workflow
 
 ```
-1. Research Request
-   └─> Jino Agent
-       └─> Jina AI MCP Server
-           ├─> Jina Reader (clean content)
-           ├─> Web Search (current info)
-           └─> Results returned to Claude
+1. Documentation Lookup
+   └─> Coder Agent
+       └─> Context7 or ctxkit MCP Server
+           ├─> Framework docs (Context7)
+           ├─> llm.txt discovery (ctxkit)
+           └─> Results returned to Coder
 
 2. Visual Testing Request
    └─> Tester Subagent
@@ -218,7 +219,9 @@
 ```
 .mcp.json
 ├─ playwright (local MCP)
-├─ jina-mcp-server (remote MCP)
+├─ context7 (MCP for documentation)
+├─ ctxkit (MCP for llm.txt discovery)
+├─ sequential-thinking (Official Anthropic MCP)
 └─ awesome-copilot (remote MCP, disabled by default)
 
 e2b-sandbox.config.json
@@ -257,10 +260,9 @@ python generated_script.py
 claude
 
 # User: "Build a feature with latest best practices"
-# Claude: Creates todos, delegates to Jino for research
-# Jino: Uses Jina MCP to fetch docs
-# Claude: Delegates to Coder with research
-# Coder: Generates code, requests E2B for testing
+# Claude: Creates todos
+# Coder: Self-service docs via Context7/ctxkit, generates code
+# Coder: Requests E2B for testing if needed
 # E2B: Copilot CLI analyzes, executes, reports
 # Tester: Verifies with Playwright MCP
 # Claude: Marks complete, moves to next todo
@@ -340,8 +342,8 @@ docker exec -it alex-copilot-sandbox bash
 # Check Awesome Copilot MCP
 curl http://localhost:8080/health
 
-# Check Jina MCP
-curl https://mcp.jina.ai/health
+# Check Context7 MCP (if accessible)
+# (Check via Claude Code MCP: List Servers)
 
 # Playwright MCP status
 # (Check via Claude Code MCP: List Servers)

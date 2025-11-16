@@ -13,20 +13,29 @@ This document analyzes the current ALEX-STACK_v0 repository structure and propos
 ### Agents Inventory
 
 **Existing Agents** (.claude/agents/):
-1. ✅ **coder** - Implementation specialist
-2. ✅ **jino-agent** - Web research specialist (Jina.ai MCP)
-3. ✅ **notion-scraper-expert** - Notion workspace specialist (Suekou Notion MCP) ⚠️ MISSING FROM CLAUDE.md
+1. ✅ **coder** - Implementation specialist (with self-service docs via Context7 + ctxkit)
+2. ✅ **notion-scraper-expert** - Notion workspace specialist (Suekou Notion MCP)
+3. ✅ **repo-explorer** - GitHub repository analysis specialist (DeepWiki MCP)
 4. ✅ **planner** - AI-powered project planning (TASKMASTER CLI)
 5. ✅ **secret-xpert-light** - Secrets management (direnv + 1Password) - In marketplace/
 6. ✅ **stuck** - Human escalation point
 7. ✅ **tester** - Visual verification (Playwright MCP)
 
+**Deprecated:**
+- ❌ **jino-agent** - Removed in favor of coder's self-service documentation (Context7 + ctxkit)
+
 ### MCP Servers (.mcp.json)
 
 1. **playwright** - Browser automation for tester agent
-2. **jina-mcp-server** - Jina.ai remote MCP for jino-agent
-3. **notion** - Suekou Notion MCP for notion-scraper-expert ⚠️ AGENT NOT IN CLAUDE.md
-4. **awesome-copilot** - Disabled, for discovering community prompts
+2. **notion** - Suekou Notion MCP for notion-scraper-expert
+3. **deepwiki** - DeepWiki Remote MCP for repo-explorer agent
+4. **context7** - Context7 MCP for coder self-service docs (popular frameworks)
+5. **ctxkit** - ctxkit MCP for coder self-service docs (llm.txt discovery)
+6. **sequential-thinking** - Sequential Thinking MCP for orchestrator structured reasoning
+7. **awesome-copilot** - Disabled, for discovering community prompts
+
+**Removed:**
+- ❌ **jina-mcp-server** - Removed (required API key, replaced by Context7 + ctxkit)
 
 ### Tools
 
@@ -193,28 +202,25 @@ This document analyzes the current ALEX-STACK_v0 repository structure and propos
 
 ### 1. Add notion-scraper-expert to Architecture Diagram
 
-**Current Diagram** (4 agents):
+**Current Diagram** (7 agents):
 ```
-┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│ JINO AGENT   │  │ CODER        │  │ TESTER       │  │ STUCK        │
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│ NOTION       │  │ REPO         │  │ CODER        │  │ TESTER       │  │ PLANNER      │  │ STUCK        │  │ SECRET       │
+│ SCRAPER      │  │ EXPLORER     │  │              │  │              │  │              │  │              │  │ XPERT        │
+│ (Notion)     │  │ (GitHub)     │  │ (Code w/     │  │ (Verify)     │  │ (Planning)   │  │ (Human)      │  │ (Secrets)    │
+│              │  │              │  │  Ctx7+ctxkit)│  │              │  │              │  │              │  │              │
 ```
 
-**Proposed Diagram** (6 core agents):
-```
-┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐
-│ JINO       │ │ NOTION     │ │ CODER      │ │ TESTER     │ │ PLANNER    │ │ STUCK      │
-│ AGENT      │ │ SCRAPER    │ │            │ │            │ │            │ │            │
-│ (Research) │ │ (Notion)   │ │ (Code)     │ │ (Verify)   │ │ (Planning) │ │ (Human)    │
-└────────────┘ └────────────┘ └────────────┘ └────────────┘ └────────────┘ └────────────┘
-```
+**Deprecated:**
+- ❌ **JINO AGENT** - Removed (required API key, replaced by coder's self-service docs)
 
 ### 2. Add notion-scraper-expert Section to Both CLAUDE.md Files
 
-**Location in Root CLAUDE.md**: After "Jino Agent" section (line ~35-39)
+**Location in Root CLAUDE.md**: In the agent list section (around line ~60-70)
 
 **Content to Add**:
 ```markdown
-2. **Notion Scraper Expert** - Notion workspace specialist
+1. **Notion Scraper Expert** - Notion workspace specialist
    - Uses Suekou Notion MCP for Notion operations
    - Extracts knowledge from Notion pages/databases
    - Converts Notion content to optimized Markdown
@@ -277,10 +283,6 @@ Claude identifies need for Notion documentation
 
 ```markdown
 3. For each todo:
-   ├─ If research needed → Invoke JINO AGENT
-   │                        ├─ Uses Jina AI MCP
-   │                        ├─ Extracts docs/searches
-   │                        └─ Returns research
    ├─ If Notion docs needed → Invoke NOTION-SCRAPER-EXPERT
    │                           ├─ Uses Suekou Notion MCP
    │                           ├─ Extracts Notion content

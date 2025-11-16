@@ -232,9 +232,9 @@ The E2B sandbox integrates seamlessly with the existing Claude Code orchestratio
 - Can use Playwright MCP in sandbox
 - Visual verification in isolated environment
 
-### Jino Agent
-- Web research capabilities available in sandbox
-- Jina MCP server accessible
+### Coder Agent
+- Self-service documentation via Context7 + ctxkit MCP servers
+- Can implement and test code in isolated sandbox
 
 ## Next Steps / Future Enhancements
 

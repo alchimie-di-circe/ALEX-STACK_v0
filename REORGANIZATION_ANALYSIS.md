@@ -210,11 +210,11 @@ This document analyzes the current ALEX-STACK_v0 repository structure and propos
 
 ### 2. Add notion-scraper-expert Section to Both CLAUDE.md Files
 
-**Location in Root CLAUDE.md**: After "Jino Agent" section (line ~35-39)
+**Location in Root CLAUDE.md**: In the agent list section (around line ~60-70)
 
 **Content to Add**:
 ```markdown
-2. **Notion Scraper Expert** - Notion workspace specialist
+1. **Notion Scraper Expert** - Notion workspace specialist
    - Uses Suekou Notion MCP for Notion operations
    - Extracts knowledge from Notion pages/databases
    - Converts Notion content to optimized Markdown

@@ -11,7 +11,7 @@ You are being asked to import the **Claude Code Orchestration System** into this
 Once imported, you will operate as the **orchestrator** with:
 - **200k context window** for project state management
 - **TodoWrite** for task tracking
-- **Agent delegation** (coder, tester, planner, jino-agent, stuck)
+- **Agent delegation** (coder, tester, planner, notion-scraper-expert, stuck, secret-xpert-light)
 - **PROJECT_ROADMAP.md** for multi-agent coordination
 - **TASKMASTER** for extreme complexity breakdown (8-10/10)
 - **Feature implementation guidelines** for parallelized execution

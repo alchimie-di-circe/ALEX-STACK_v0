@@ -45,16 +45,16 @@ This is an advanced orchestration system for Claude Code that leverages a 200k c
                                     │
         ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┐
         ▼           ▼           ▼           ▼           ▼           ▼           ▼
-    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
-    │ JINO   │  │ NOTION │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
-    │ AGENT  │  │SCRAPER │  │        │  │        │  │        │  │        │  │ XPERT  │
-    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
-    │        │  │        │  │        │  │        │  │        │  │        │  │        │
-    │Research│  │ Notion │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
-    │& Web   │  │Extract │  │One Task│  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
-    │Extract │  │& Mgmt  │  │        │  │wright  │  │down    │  │ation   │  │direnv+ │
-    │        │  │        │  │        │  │        │  │        │  │        │  │1Pass   │
-    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
+    ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
+    │ NOTION │  │ CODER  │  │ TESTER │  │PLANNER │  │ STUCK  │  │SECRET  │
+    │SCRAPER │  │        │  │        │  │        │  │        │  │ XPERT  │
+    │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │  │(Fresh) │
+    │        │  │        │  │        │  │        │  │        │  │        │
+    │ Notion │  │Implement│ │Verify  │  │AI Task │  │Human   │  │Secrets │
+    │Extract │  │w/Ctx7  │  │w/Play- │  │Break-  │  │Escal-  │  │Mgmt    │
+    │& Mgmt  │  │+ctxkit │  │wright  │  │down    │  │ation   │  │direnv+ │
+    │        │  │        │  │        │  │        │  │        │  │1Pass   │
+    └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘
 ```
 
 ### The Subagent System

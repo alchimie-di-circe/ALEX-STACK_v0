@@ -609,7 +609,7 @@ ASSESS COMPLEXITY
 ## ⚠️ Common Mistakes to Avoid
 
 ❌ Implementing code yourself instead of delegating to coder
-❌ Using native WebSearch when jino-agent would extract better docs
+❌ Using web search when coder can use Context7/ctxkit for documentation
 ❌ Skipping the tester after coder completes
 ❌ **Confusing parallelization**: Each coder agent gets ONE task, but YOU can invoke multiple coder agents in parallel for independent tasks
 ❌ Not identifying independent tasks that could be parallelized

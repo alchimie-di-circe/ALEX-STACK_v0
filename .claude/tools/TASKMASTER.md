@@ -512,11 +512,11 @@ TASKMASTER can run as MCP server, but we use CLI to avoid token overhead:
 
 ## Integration with ALEX-STACK Components
 
-### With Jino Agent
-Both provide research capabilities:
-- **Jino Agent**: Web content extraction, documentation fetching
-- **TASKMASTER Research**: AI web search, fresh information
-- **Use together**: Jino for docs, TASKMASTER for planning
+### With Coder Agent (Context7 + ctxkit)
+Both provide documentation capabilities:
+- **Coder Agent**: Self-service docs via Context7 and ctxkit MCP servers
+- **TASKMASTER Research**: AI web search for planning, fresh information
+- **Use together**: Coder handles implementation docs, TASKMASTER for complex planning
 
 ### With Coder Agent
 - TASKMASTER: Generates detailed implementation tasks
@@ -542,7 +542,7 @@ Both provide research capabilities:
 | **Complexity** | 1-7/10 | 8-10/10 |
 | **Overhead** | None | Bash + AI calls |
 | **Dependency Tracking** | Manual | Automatic |
-| **Research** | Via Jino Agent | Built-in `--research` |
+| **Research** | Via Coder self-service | Built-in `--research` |
 | **Subtask Expansion** | Manual | AI-powered |
 | **Best For** | Real-time tracking | Planning phase |
 

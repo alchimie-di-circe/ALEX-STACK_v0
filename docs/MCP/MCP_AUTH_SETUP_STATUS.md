@@ -1,10 +1,33 @@
 # MCP Server Authentication Setup Status
 
+> ⚠️ **OUTDATED DOCUMENT** - This document describes the old architecture with Jina MCP Server which has been REMOVED.
+> 
+> **For current architecture**, see `SIMPLIFIED_ARCHITECTURE_NO_API_KEYS.md`
+
 **Project**: ALEX-STACK
-**Date**: 2025-11-15
-**Status**: CONFIGURED & READY (awaiting 1Password CLI authentication)
+**Date**: 2025-11-15 (ARCHIVED)
+**Status**: OBSOLETE - Jina MCP Server removed from project
 
 ---
+
+## ⚠️ This Configuration is No Longer Used
+
+This document describes authentication setup for Jina MCP Server, which was removed from the project due to security concerns with API keys in Claude Code Web environment.
+
+**Current MCP Servers (No API Keys Required):**
+- ✅ Sequential Thinking MCP (Official Anthropic)
+- ✅ Context7 MCP (Upstash)
+- ✅ ctxkit MCP (Free documentation discovery)
+- ✅ Playwright MCP (Browser automation)
+
+**Optional (API Key Required):**
+- Notion MCP (Only if using Notion integration)
+
+For current configuration, see `.mcp.json` in project root.
+
+---
+
+## Historical Content (For Reference Only)
 
 ## Executive Summary
 
